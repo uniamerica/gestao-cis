@@ -20,6 +20,8 @@ public class HelloController {
 
     @GetMapping
     public ResponseEntity<List<Hello>> listAllHellos(){
+
+
         return new ResponseEntity<>(helloService.index(), HttpStatus.OK);
     }
 

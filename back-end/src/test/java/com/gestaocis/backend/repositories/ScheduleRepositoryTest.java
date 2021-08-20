@@ -44,9 +44,9 @@ public class ScheduleRepositoryTest {
         Schedule fakeSchedule = createFakeScheduleData();
         Schedule savedSchedule = scheduleRepository.save(fakeSchedule);
 
-        Optional<Schedule> secretaryInDatabase = scheduleRepository.findById(savedSchedule.getScheduleId());
-
-        Assertions.assertThat(secretaryInDatabase.get().getScheduleId()).isEqualTo(savedSchedule.getScheduleId());
+        Optional<Schedule> scheduleInDatabase = scheduleRepository.findById(savedSchedule.getScheduleId());
+    
+        Assertions.assertThat(scheduleInDatabase.get().getScheduleId()).isEqualTo(savedSchedule.getScheduleId());
     }
 
     @Test

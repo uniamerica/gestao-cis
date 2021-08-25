@@ -4,6 +4,7 @@ import com.gestaocis.backend.utils.enums.Role;
 import com.gestaocis.backend.utils.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,7 +13,9 @@ import java.util.UUID;
 @Entity
 @Builder
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id

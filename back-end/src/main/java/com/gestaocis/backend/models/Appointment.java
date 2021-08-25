@@ -1,145 +1,63 @@
 package com.gestaocis.backend.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Builder
 public class Appointment {
 
-  UUID id;
-  User patient;
-  User professional;
-  LocalDateTime createdAt;
-  LocalDateTime editedAt;
-  LocalDateTime scheduledFor;
-  Room room;
-  String observation;
-  User createdBy;
-  boolean isSupervisioned;
-  boolean isConfirmed;
-  boolean isPaid;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  public Appointment() {}
+  private UUID uuid;
 
-  public Appointment(
-      User patient,
-      User professional,
-      LocalDateTime createdAt,
-      LocalDateTime editedAt,
-      LocalDateTime scheduledFor,
-      Room room,
-      String observation,
-      User createdBy,
-      boolean isSupervisioned,
-      boolean isConfirmed,
-      boolean isPaid) {
-    this.patient = patient;
-    this.professional = professional;
-    this.createdAt = createdAt;
-    this.editedAt = editedAt;
-    this.scheduledFor = scheduledFor;
-    this.room = room;
-    this.observation = observation;
-    this.createdBy = createdBy;
-    this.isSupervisioned = isSupervisioned;
-    this.isConfirmed = isConfirmed;
-    this.isPaid = isPaid;
-  }
+  @ManyToOne
+  @JoinColumn(name = "patientId", nullable = false)
+  private User patient;
 
-  public UUID getId() {
-    return id;
-  }
+  @ManyToOne
+  @JoinColumn(name = "professionalId", nullable = false)
+  private User professional;
 
-  public void setId(UUID id) {
-    this.id = id;
-  }
+  @Column(nullable = false)
+  private LocalDateTime createdAt;
 
-  public User getPatient() {
-    return patient;
-  }
+  @Column(nullable = false)
+  private LocalDateTime editedAt;
 
-  public void setPatient(User patient) {
-    this.patient = patient;
-  }
+  @Column(nullable = false)
+  private LocalDateTime scheduledFor;
 
-  public User getProfessional() {
-    return professional;
-  }
+  @ManyToOne
+  @JoinColumn(name = "roomId", nullable = false)
+  private Room room;
 
-  public void setProfessional(User professional) {
-    this.professional = professional;
-  }
+  @Lob
+  @Column(columnDefinition = "TEXT",nullable = false)
+  private String observation;
 
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
+  @ManyToOne
+  @JoinColumn(name = "creatorId", nullable = false)
+  private User createdBy;
 
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
+  @Column(nullable = false)
+  private boolean isSupervised;
 
-  public LocalDateTime getEditedAt() {
-    return editedAt;
-  }
+  @Column(nullable = false)
+  private boolean isConfirmed;
 
-  public void setEditedAt(LocalDateTime editedAt) {
-    this.editedAt = editedAt;
-  }
-
-  public LocalDateTime getScheduledFor() {
-    return scheduledFor;
-  }
-
-  public void setScheduledFor(LocalDateTime scheduledFor) {
-    this.scheduledFor = scheduledFor;
-  }
-
-  public Room getRoom() {
-    return room;
-  }
-
-  public void setRoom(Room room) {
-    this.room = room;
-  }
-
-  public String getObservation() {
-    return observation;
-  }
-
-  public void setObservation(String observation) {
-    this.observation = observation;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public boolean isSupervisioned() {
-    return isSupervisioned;
-  }
-
-  public void setSupervisioned(boolean supervisioned) {
-    isSupervisioned = supervisioned;
-  }
-
-  public boolean isConfirmed() {
-    return isConfirmed;
-  }
-
-  public void setConfirmed(boolean confirmed) {
-    isConfirmed = confirmed;
-  }
-
-  public boolean isPaid() {
-    return isPaid;
-  }
-
-  public void setPaid(boolean paid) {
-    isPaid = paid;
-  }
+  @Column(nullable = false)
+  private boolean isPaid;
 
   @Override
   public String toString() {
@@ -153,7 +71,7 @@ public class Appointment {
     sb.append(", room=").append(room);
     sb.append(", observation='").append(observation).append('\'');
     sb.append(", createdBy=").append(createdBy);
-    sb.append(", isSupervisioned=").append(isSupervisioned);
+    sb.append(", isSupervised=").append(isSupervised);
     sb.append(", isConfirmed=").append(isConfirmed);
     sb.append(", isPaid=").append(isPaid);
     sb.append('}');

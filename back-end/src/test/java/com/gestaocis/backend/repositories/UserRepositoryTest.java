@@ -51,6 +51,17 @@ class UserRepositoryTest {
     }
 
     @Test
+    @DisplayName("Find User By uuid When Successful")
+    void find_userByUuid_WhenSuccessful(){
+        User userTest = createUser();
+        User userSaved = userRepository.save(userTest);
+
+        Optional<User> userInDatabase = userRepository.findByUuid(userSaved.getUuid());
+
+        Assertions.assertThat(userInDatabase.isPresent()).isTrue();
+    }
+
+    @Test
     @DisplayName("Find User By Cpf When Successful")
     void find_userByCpf_WhenSuccessful(){
         User userTest = createUser();

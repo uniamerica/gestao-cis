@@ -1,3 +1,4 @@
+
 package com.gestaocis.backend.models;
 
 import lombok.AllArgsConstructor;
@@ -14,8 +15,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Builder
-@Table(name = "rooms")
-public class Room {
+@Table(name = "specialties")
+public class Specialty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +26,20 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
-    @Column(unique = true, nullable = false)
-    private Integer roomNumber;
+    @Column(nullable = false)
+    private String title;
 
-    @ManyToMany
-    @JoinTable(
-            name = "specialties_room",
-            joinColumns = @JoinColumn(name = "roomId"),
-            inverseJoinColumns = @JoinColumn(name = "specialtyId")
-    )
-    private Set<Specialty> specialties;
+    @OneToMany(mappedBy = "specialty")
+    private Set<User> especialists;
+
+    @Lob
+    @Column(columnDefinition = "TEXT",nullable = false)
+    private String description;
+
+    @ManyToMany(mappedBy = "specialties")
+    private Set<Room> room;
 
 }
+
+
+

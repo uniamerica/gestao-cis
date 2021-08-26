@@ -11,6 +11,4 @@ class RoomRepositoryTest {
     @Autowired
     private RoomRepository roomRepository;
 
-
-
 }

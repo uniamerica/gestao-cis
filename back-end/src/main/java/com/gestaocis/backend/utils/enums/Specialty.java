@@ -12,7 +12,7 @@ public enum Specialty {
     SPECIALTY_SPEECH_THERAPY("Fonoaudiologia"),
     SPECIALTY_FACE_BODY_AESTHETICS("Estetica facial e corporal");
 
-    public String specialtyValue;
+    private final String specialtyValue;
 
     Specialty(String value){
         specialtyValue = value;

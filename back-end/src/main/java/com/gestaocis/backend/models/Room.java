@@ -29,12 +29,6 @@ public class Room {
     @Column(unique = true, nullable = false)
     private Integer roomNumber;
 
-    @ManyToMany
-    @JoinTable(
-            name = "specialties_room",
-            joinColumns = @JoinColumn(name = "roomId"),
-            inverseJoinColumns = @JoinColumn(name = "specialtyId")
-    )
     private Set<Specialty> specialties;
 
 }

@@ -67,6 +67,7 @@ public class Appointment {
   public String toString() {
     final StringBuilder sb = new StringBuilder("Appointment{");
     sb.append("id=").append(id);
+    sb.append(", uuid=").append(uuid);
     sb.append(", patient=").append(patient);
     sb.append(", professional=").append(professional);
     sb.append(", createdAt=").append(createdAt);

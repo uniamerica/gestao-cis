@@ -1,6 +1,7 @@
 package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.User;
+import com.gestaocis.backend.utils.enums.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,28 +11,28 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @DataJpaTest
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
-    private User createUser(){
+    private User createUserPatient(){
         return User.builder()
-                .cpf("999999999")
+                .role(Role.ROLE_PATIENT)
+                .phone("(45)90909090")
                 .email("email@test.com")
-                .fullName("Fulano de Sicrano")
+                .cpf("999999999")
                 .rg("8888888888")
+                .fullName("Fulano de Sicrano")
                 .password("senhaDoOrkut123")
             .build();
     }
 
     @Test
-    @DisplayName("Save User When Successful")
-    void save_user_whenSuccessful(){
-        User userTest = createUser();
+    @DisplayName("Save User Patient When Successful")
+    void save_userPatient_whenSuccessful(){
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         Assertions.assertThat(userSaved).isNotNull();
@@ -42,7 +43,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Find User By Id When Successful")
     void find_userById_WhenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         Optional<User> userInDatabase = userRepository.findById(userSaved.getId());
@@ -53,7 +54,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Find User By uuid When Successful")
     void find_userByUuid_WhenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         Optional<User> userInDatabase = userRepository.findByUuid(userSaved.getUuid());
@@ -64,7 +65,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Find User By Cpf When Successful")
     void find_userByCpf_WhenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         Optional<User> userInDatabase = userRepository.findByCpf(userSaved.getCpf());
@@ -75,7 +76,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Find User By Email When Successful")
     void find_userByEmail_WhenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         Optional<User> userInDatabase = userRepository.findByEmail(userSaved.getEmail());
@@ -86,8 +87,8 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Update User When Successful")
     void update_user_whenSuccessful(){
-        User userTest = createUser();
-        User userToCompare = createUser();
+        User userTest = createUserPatient();
+        User userToCompare = createUserPatient();
 
         User userSaved = userRepository.save(userTest);
 
@@ -105,7 +106,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Delete User When Successful")
     void delete_user_whenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         userRepository.deleteById(userSaved.getId());
@@ -120,7 +121,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Find List of Users when Successful")
     void find_usersList_whenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
         User userSaved = userRepository.save(userTest);
 
         List<User> usersList = userRepository.findAll();
@@ -132,7 +133,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("Find List of Users that Contains String when Successful")
     void find_userListThatContainsString_whenSuccessful(){
-        User userTest = createUser();
+        User userTest = createUserPatient();
 
         User userSaved = userRepository.save(userTest);
 

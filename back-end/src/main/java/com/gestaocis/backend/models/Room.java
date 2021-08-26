@@ -1,5 +1,6 @@
 package com.gestaocis.backend.models;
 
+import com.gestaocis.backend.utils.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

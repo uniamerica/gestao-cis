@@ -20,7 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 

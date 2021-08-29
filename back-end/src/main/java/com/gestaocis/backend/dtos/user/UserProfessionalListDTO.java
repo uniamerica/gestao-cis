@@ -10,26 +10,16 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserProfessionalDTO {
-
+public class UserProfessionalListDTO {
     private UUID uuid;
-    private String email;
-    private String professionalDocument;
-    private String cpf;
-    private String rg;
     private String fullName;
-    private String phone;
+    private String email;
     private String specialty;
 
-    public UserProfessionalDTO(User user){
+    public UserProfessionalListDTO(User user){
         uuid = user.getUuid();
-        email = user.getEmail();
-        professionalDocument = user.getProfessionalDocument();
-        cpf = user.getCpf();
-        rg = user.getRg();
         fullName = user.getFullName();
-        phone = user.getFullName();
+        email = user.getEmail();
         specialty = user.getSpecialty().getSpecialtyValue();
     }
-
 }

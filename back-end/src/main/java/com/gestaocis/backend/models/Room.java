@@ -1,5 +1,6 @@
 package com.gestaocis.backend.models;
 
+import com.gestaocis.backend.utils.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,12 +30,6 @@ public class Room {
     @Column(unique = true, nullable = false)
     private Integer roomNumber;
 
-    @ManyToMany
-    @JoinTable(
-            name = "specialties_room",
-            joinColumns = @JoinColumn(name = "roomId"),
-            inverseJoinColumns = @JoinColumn(name = "specialtyId")
-    )
     private Set<Specialty> specialties;
 
     @OneToMany

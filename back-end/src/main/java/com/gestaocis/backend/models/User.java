@@ -1,6 +1,7 @@
 package com.gestaocis.backend.models;
 
 import com.gestaocis.backend.utils.enums.Role;
+import com.gestaocis.backend.utils.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
@@ -28,8 +30,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToOne
-    @JoinColumn(name = "specialtyId", nullable = true)
+    @Enumerated(EnumType.STRING)
     private Specialty specialty;
 
     @Column
@@ -52,4 +53,22 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User: {");
+        sb.append("id=").append(id);
+        sb.append(", uuid=").append(uuid);
+        sb.append(", role=").append(role.toString());
+        sb.append(", specialty=").append(professionalDocument);
+        sb.append(", phone=").append(phone);
+        sb.append(", email=").append(email);
+        sb.append(", cpf=").append(rg);
+        sb.append(", fullName=").append(fullName);
+        sb.append(", password=").append(password);
+        sb.append("}");
+        return sb.toString();
+    }
 }
+
+

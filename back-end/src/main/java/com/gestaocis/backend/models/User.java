@@ -1,7 +1,5 @@
 package com.gestaocis.backend.models;
 
-import com.gestaocis.backend.utils.enums.Role;
-import com.gestaocis.backend.utils.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,12 +24,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RoleEntity role;
 
-    @Enumerated(EnumType.STRING)
-    private Specialty specialty;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SpecialtyEntity specialty;
 
     @Column
     private String professionalDocument;
@@ -59,8 +56,9 @@ public class User {
         final StringBuilder sb = new StringBuilder("User: {");
         sb.append("id=").append(id);
         sb.append(", uuid=").append(uuid);
-        sb.append(", role=").append(role.toString());
-        sb.append(", specialty=").append(professionalDocument);
+        sb.append(", role=").append(role);
+        sb.append(", specialty=").append(specialty);
+        sb.append(", professionalDocument").append(professionalDocument);
         sb.append(", phone=").append(phone);
         sb.append(", email=").append(email);
         sb.append(", cpf=").append(rg);

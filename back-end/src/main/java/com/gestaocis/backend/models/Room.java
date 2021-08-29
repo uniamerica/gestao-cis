@@ -1,13 +1,11 @@
 package com.gestaocis.backend.models;
 
-import com.gestaocis.backend.utils.enums.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -28,7 +26,5 @@ public class Room {
 
     @Column(unique = true, nullable = false)
     private Integer roomNumber;
-
-    private Set<Specialty> specialties;
 
 }

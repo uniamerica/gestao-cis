@@ -20,6 +20,5 @@ public class UserProfessionalListDTO {
         uuid = user.getUuid();
         fullName = user.getFullName();
         email = user.getEmail();
-        specialty = user.getSpecialty().getSpecialtyValue();
     }
 }

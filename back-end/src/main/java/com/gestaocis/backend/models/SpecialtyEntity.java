@@ -23,8 +23,6 @@ public class SpecialtyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
 
     @Enumerated(EnumType.STRING)
     private Specialty specialtyName;

@@ -28,7 +28,6 @@ class RoleEntityRepositoryTest {
                 .build();
     }
 
-
     @Test
     @DisplayName("Save all Roles when Successful")
     public void save_allRoles_whenSuccessful(){
@@ -58,8 +57,8 @@ class RoleEntityRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find Role by RoleName when Sucessful")
-    public void find_roleByRoleName_whenSucessful(){
+    @DisplayName("Find Role by RoleName when Successful")
+    public void find_roleByRoleName_whenSuccessful(){
         List<RoleEntity> roles = new ArrayList<>();
         for(Role r : Role.values()){
             roles.add(createRole(r));
@@ -67,10 +66,13 @@ class RoleEntityRepositoryTest {
         roleEntityRepository.saveAll(roles);
 
         Optional<RoleEntity> role = roleEntityRepository.findByRoleName(Role.ROLE_PROFESSIONAL);
-        log.info(role.toString());
+
 
         Assertions.assertThat(role).isNotNull();
         Assertions.assertThat(role.get().getRoleName()).isEqualTo(Role.ROLE_PROFESSIONAL);
     }
+
+
+
 
 }

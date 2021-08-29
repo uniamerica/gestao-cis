@@ -20,7 +20,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 

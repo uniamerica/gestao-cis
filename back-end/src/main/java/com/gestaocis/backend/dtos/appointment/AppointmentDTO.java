@@ -4,6 +4,7 @@ import com.gestaocis.backend.dtos.user.UserPatientDTO;
 import com.gestaocis.backend.dtos.user.UserProfessionalDTO;
 import com.gestaocis.backend.models.Appointment;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AppointmentDTO {
     private UUID uuid;
     private UserPatientDTO patient;

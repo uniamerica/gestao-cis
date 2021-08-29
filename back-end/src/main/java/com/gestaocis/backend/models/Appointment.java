@@ -1,21 +1,27 @@
 package com.gestaocis.backend.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+//@RequiredArgsConstructor
 @Builder
 @Table(name = "appointments")
-public class Appointment {
+public class Appointment implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +39,15 @@ public class Appointment {
   @JoinColumn(name = "professionalId", nullable = false)
   private User professional;
 
-  @Column(nullable = false)
+  @CreationTimestamp
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private LocalDateTime createdAt;
 
-  @Column(nullable = false)
+  @Column(
+      name = "editedAt",
+      nullable = false,
+      insertable = false,
+      columnDefinition = "boolean default false")
   private LocalDateTime editedAt;
 
   @Column(nullable = false)
@@ -47,39 +58,38 @@ public class Appointment {
   private Room room;
 
   @Lob
-  @Column(columnDefinition = "TEXT",nullable = false)
+  @Column(columnDefinition = "TEXT", nullable = false)
   private String observation;
 
   @ManyToOne
   @JoinColumn(name = "creatorId", nullable = false)
   private User createdBy;
 
-  @Column(nullable = false)
-  private boolean isSupervised;
+  @Column(name = "supervised", nullable = false, insertable = false)
+  private boolean supervised;
 
-  @Column(nullable = false)
-  private boolean isConfirmed;
+  @Column(
+      name = "confirmed",
+      nullable = false,
+      insertable = false,
+      columnDefinition = "boolean default false")
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+  private boolean confirmed;
 
-  @Column(nullable = false)
-  private boolean isPaid;
+  @Column(name = "paid", nullable = false, insertable = false)
+  private boolean paid;
 
   @Override
-  public String toString() {
-    final StringBuilder sb = new StringBuilder("Appointment{");
-    sb.append("id=").append(id);
-    sb.append(", uuid=").append(uuid);
-    sb.append(", patient=").append(patient);
-    sb.append(", professional=").append(professional);
-    sb.append(", createdAt=").append(createdAt);
-    sb.append(", editedAt=").append(editedAt);
-    sb.append(", scheduledFor=").append(scheduledFor);
-    sb.append(", room=").append(room);
-    sb.append(", observation='").append(observation).append('\'');
-    sb.append(", createdBy=").append(createdBy);
-    sb.append(", isSupervised=").append(isSupervised);
-    sb.append(", isConfirmed=").append(isConfirmed);
-    sb.append(", isPaid=").append(isPaid);
-    sb.append('}');
-    return sb.toString();
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    Appointment that = (Appointment) o;
+
+    return Objects.equals(id, that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return 558524322;
   }
 }

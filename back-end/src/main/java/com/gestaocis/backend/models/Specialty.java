@@ -1,45 +1,37 @@
-
 package com.gestaocis.backend.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.util.Set;
-import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Data
-@Builder
-@Table(name = "specialties")
 public class Specialty {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+  @Enumerated(EnumType.STRING)
+  @Column(length = 20)
+  private com.gestaocis.backend.utils.enums.Specialty name;
 
-    @Column(nullable = false)
-    private String title;
+  public Specialty() {}
 
-    @OneToMany(mappedBy = "specialty")
-    private Set<User> especialists;
+  public Specialty(com.gestaocis.backend.utils.enums.Specialty name) {
+    this.name = name;
+  }
 
-    @Lob
-    @Column(columnDefinition = "TEXT",nullable = false)
-    private String description;
+  public Long getId() {
+    return id;
+  }
 
-    @ManyToMany(mappedBy = "specialties")
-    private Set<Room> room;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
+  public com.gestaocis.backend.utils.enums.Specialty getName() {
+    return name;
+  }
+
+  public void setName(com.gestaocis.backend.utils.enums.Specialty name) {
+    this.name = name;
+  }
 }
-
-
-

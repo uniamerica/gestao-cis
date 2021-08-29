@@ -2,7 +2,6 @@ package com.gestaocis.backend.dtos.user;
 
 import com.gestaocis.backend.dtos.specialty.SpecialtyDTO;
 import com.gestaocis.backend.models.User;
-import com.gestaocis.backend.models.Specialty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

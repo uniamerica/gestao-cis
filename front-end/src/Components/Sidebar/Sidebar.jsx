@@ -1,6 +1,6 @@
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined'
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined'
-import doctor from '../../assets/images/medic.png'
+import doctor from '../../assets/images/doctor.png'
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined'
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined'
 import { SidebarStyle } from './style'

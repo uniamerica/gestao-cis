@@ -3,7 +3,7 @@ import Roboto from '../../assets/fonts/Roboto-Regular.ttf'
 
 export const SidebarStyle = styled.div`
     width: 250px;
-    height: 90vh;
+    height: 100vh;
     background-color: #1CA78C;
     color: #FFF;
     @font-face {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 
 @RestController
 @RequestMapping("/api/v1/appointments")
@@ -25,7 +24,7 @@ public class AppointmentResource {
         AppointmentDTOPost.builder()
             .patient(new UserPatientDTO())
             .professional(new UserProfessionalDTO())
-            .scheduledFor(LocalDateTime.of(2021, Month.SEPTEMBER, 6, 9, 30))
+            .scheduledFor(LocalDateTime.of(2021, 9, 6, 9, 30, 0, 0))
             .room(new Room())
             .observation("")
             .supervised(false)

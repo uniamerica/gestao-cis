@@ -1,7 +1,10 @@
 package com.gestaocis.backend.repositories;
 
+import com.gestaocis.backend.models.RoleEntity;
+import com.gestaocis.backend.models.SpecialtyEntity;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.utils.enums.Role;
+import com.gestaocis.backend.utils.enums.Specialty;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,134 +23,223 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    private User createUserPatient(){
-        return User.builder()
-                .role(Role.ROLE_PATIENT)
-                .phone("(45)90909090")
-                .email("email@test.com")
-                .cpf("999999999")
-                .rg("8888888888")
-                .fullName("Fulano de Sicrano")
-                .password("senhaDoOrkut123")
-            .build();
-    }
+    @Autowired
+    private RoleEntityRepository roleEntityRepository;
 
-    @Test
-    @DisplayName("Save User Patient When Successful")
-    void save_userPatient_whenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
+    @Autowired
+    private SpecialtyEntityRepository specialtyEntityRepository;
 
-        Assertions.assertThat(userSaved).isNotNull();
-        Assertions.assertThat(userSaved).isEqualTo(userTest);
+    private User createUser(){
+       RoleEntity role = roleEntityRepository
+               .save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
 
-    }
+       SpecialtyEntity specialty = specialtyEntityRepository
+               .save(SpecialtyEntity.builder().specialtyName(Specialty.SPECIALTY_NUTRITION).build());
 
-    @Test
+       return User.builder()
+               .role(role)
+               .specialty(specialty)
+               .professionalDocument("xxxxxxxx")
+               .phone("(45)99999999")
+               .email("teste@test.com")
+               .cpf("898989898989")
+               .rg("88889888898")
+               .fullName("Fulano de Tal")
+               .password("senha1234")
+                .build();
+
+   }
+
+   @Test
+   @DisplayName("Save User When Successful")
+    void save_user_whenSuccessful(){
+        User userToBeSave = createUser();
+
+        User userSaved = userRepository.save(userToBeSave);
+
+       Assertions.assertThat(userSaved).isNotNull();
+       Assertions.assertThat(userSaved.getEmail()).isEqualTo(userToBeSave.getEmail());
+   }
+
+   @Test
     @DisplayName("Find User By Id When Successful")
-    void find_userById_WhenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
+    void find_userById_whenSuccessful(){
+       User userToBeSave = createUser();
 
-        Optional<User> userInDatabase = userRepository.findById(userSaved.getId());
+       User userSaved = userRepository.save(userToBeSave);
 
-        Assertions.assertThat(userInDatabase.isPresent()).isTrue();
-    }
+       Long id = userSaved.getId();
+
+       Optional<User> userFound = userRepository.findById(id);
+
+       Assertions
+               .assertThat(userFound)
+               .isNotNull()
+               .isNotEmpty();
+
+       Assertions.assertThat(userFound.get()).isEqualTo(userSaved);
+   }
+
+  @Test
+  @DisplayName("Find User By Email When Successful")
+   void find_userByEmail_whenSuccessful(){
+      User userToBeSave = createUser();
+
+      User userSaved = userRepository.save(userToBeSave);
+
+      String email = userSaved.getEmail();
+
+      Optional<User> userFound = userRepository.findByEmail(email);
+
+      Assertions
+              .assertThat(userFound)
+              .isNotNull()
+              .isNotEmpty();
+
+      Assertions.assertThat(userFound.get()).isEqualTo(userSaved);
+   }
 
     @Test
-    @DisplayName("Find User By uuid When Successful")
-    void find_userByUuid_WhenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
+    @DisplayName("Find User By Uuid When Successful")
+    void find_userByUuid_whenSuccessful(){
+        User userToBeSave = createUser();
 
-        Optional<User> userInDatabase = userRepository.findByUuid(userSaved.getUuid());
+        User userSaved = userRepository.save(userToBeSave);
 
-        Assertions.assertThat(userInDatabase.isPresent()).isTrue();
+        UUID uuid = userSaved.getUuid();
+
+        Optional<User> userFound = userRepository.findByUuid(uuid);
+
+        Assertions
+                .assertThat(userFound)
+                .isNotNull()
+                .isNotEmpty();
+
+        Assertions.assertThat(userFound.get()).isEqualTo(userSaved);
     }
 
     @Test
     @DisplayName("Find User By Cpf When Successful")
-    void find_userByCpf_WhenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
+    void find_userByCpf_whenSuccessful(){
+        User userToBeSave = createUser();
 
-        Optional<User> userInDatabase = userRepository.findByCpf(userSaved.getCpf());
+        User userSaved = userRepository.save(userToBeSave);
 
-        Assertions.assertThat(userInDatabase.isPresent()).isTrue();
+        String cpf = userSaved.getCpf();
+
+        Optional<User> userFound = userRepository.findByCpf(cpf);
+
+        Assertions
+                .assertThat(userFound)
+                .isNotNull()
+                .isNotEmpty();
+
+        Assertions.assertThat(userFound.get()).isEqualTo(userSaved);
     }
 
     @Test
-    @DisplayName("Find User By Email When Successful")
-    void find_userByEmail_WhenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
+    @DisplayName("Find Users By Full Name Containing Ignore Case When Successful")
+    void find_userByFullNameContainingIgnoreCase_whenSuccessful(){
+        User userToBeSave = createUser();
 
-        Optional<User> userInDatabase = userRepository.findByEmail(userSaved.getEmail());
+        User userSaved = userRepository.save(userToBeSave);
 
-        Assertions.assertThat(userInDatabase.isPresent()).isTrue();
+        String name = "tAl";
+
+        List<User> usersFound = userRepository.findByFullNameContainingIgnoreCase(name);
+
+        Assertions
+                .assertThat(usersFound)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(userSaved);
+    }
+
+    @Test
+    @DisplayName("Find Users By Role When Successful")
+    void find_userByRole_whenSuccessful(){
+        User userToBeSave = createUser();
+
+        User userSaved = userRepository.save(userToBeSave);
+
+        Optional<RoleEntity> role = roleEntityRepository.findByRoleName(Role.ROLE_PROFESSIONAL);
+
+        List<User> usersFound = userRepository.findByRole(role.get());
+
+        Assertions
+                .assertThat(usersFound)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(userSaved);
+
+    }
+
+    @Test
+    @DisplayName("Find Users By Specialty When Successful")
+    void find_userBySpecialty_whenSuccessful(){
+        User userToBeSave = createUser();
+
+        User userSaved = userRepository.save(userToBeSave);
+
+        Optional<SpecialtyEntity> specialty = specialtyEntityRepository.findBySpecialtyName(Specialty.SPECIALTY_NUTRITION);
+
+        List<User> usersFound = userRepository.findBySpecialty(specialty.get());
+
+        Assertions
+                .assertThat(usersFound)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(userSaved);
+
+    }
+
+    @Test
+    @DisplayName("Find Users When Successful")
+    void find_users_whenSuccessful(){
+        User userToBeSave = createUser();
+
+        User userSaved = userRepository.save(userToBeSave);
+
+        List<User> usersFound = userRepository.findAll();
+
+        Assertions
+                .assertThat(usersFound)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(userSaved);
     }
 
     @Test
     @DisplayName("Update User When Successful")
     void update_user_whenSuccessful(){
-        User userTest = createUserPatient();
-        User userToCompare = createUserPatient();
+        User userToBeSave = createUser();
+        User userToCompare = createUser();
+        User userSaved = userRepository.save(userToBeSave);
 
-        User userSaved = userRepository.save(userTest);
-
-        userSaved.setFullName("Sicrano de Fulano");
+        userSaved.setFullName("lalalalalala");
 
         User userUpdated = userRepository.save(userSaved);
 
-        Assertions.assertThat(userUpdated).isNotNull();
-        Assertions.assertThat(userUpdated.getId()).isEqualTo(userSaved.getId());
-        Assertions.assertThat(userUpdated.getFullName()).isNotEqualTo(userToCompare.getFullName());
-
+        Assertions
+                .assertThat(userUpdated.getFullName())
+                .isNotEqualTo(userToCompare.getFullName());
 
     }
 
     @Test
     @DisplayName("Delete User When Successful")
     void delete_user_whenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
+        User userToBeSave = createUser();
 
-        userRepository.deleteById(userSaved.getId());
+        User userSaved = userRepository.save(userToBeSave);
 
-        List<User> usersEmptyList = userRepository.findAll();
+        userRepository.delete(userSaved);
 
-        Assertions.assertThat(usersEmptyList).isNotNull();
-        Assertions.assertThat(usersEmptyList.contains(userSaved)).isFalse();
+        List<User> userListEmpty = userRepository.findAll();
 
-    }
-
-    @Test
-    @DisplayName("Find List of Users when Successful")
-    void find_usersList_whenSuccessful(){
-        User userTest = createUserPatient();
-        User userSaved = userRepository.save(userTest);
-
-        List<User> usersList = userRepository.findAll();
-
-        Assertions.assertThat(usersList).isNotNull();
-        Assertions.assertThat(usersList.contains(userSaved)).isTrue();
-    }
-
-    @Test
-    @DisplayName("Find List of Users that Contains String when Successful")
-    void find_userListThatContainsString_whenSuccessful(){
-        User userTest = createUserPatient();
-
-        User userSaved = userRepository.save(userTest);
-
-        List<User> userList = userRepository.findByFullNameContainingIgnoreCase("AnO");
-
-        Assertions.assertThat(userList).isNotNull();
-
-        Assertions.assertThat(userList.isEmpty()).isFalse();
-
-        Assertions.assertThat(userList.contains(userSaved)).isTrue();
+        Assertions.assertThat(userListEmpty).doesNotContain(userSaved);
 
     }
+
 
 }

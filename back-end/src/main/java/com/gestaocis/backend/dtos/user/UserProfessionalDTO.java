@@ -29,7 +29,6 @@ public class UserProfessionalDTO {
         rg = user.getRg();
         fullName = user.getFullName();
         phone = user.getFullName();
-        specialty = user.getSpecialty().getSpecialtyValue();
     }
 
 }

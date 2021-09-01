@@ -17,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-//@RequiredArgsConstructor
+// @RequiredArgsConstructor
 @Builder
 @Table(name = "appointments")
 public class Appointment implements Serializable {

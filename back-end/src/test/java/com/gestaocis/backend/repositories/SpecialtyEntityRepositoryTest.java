@@ -1,14 +1,12 @@
 package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.SpecialtyEntity;
-import com.gestaocis.backend.utils.enums.Specialty;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,60 +16,75 @@ class SpecialtyEntityRepositoryTest {
     @Autowired
     private SpecialtyEntityRepository specialtyEntityRepository;
 
-    private SpecialtyEntity createSpecialty(Specialty specialty){
-        return SpecialtyEntity.builder()
-                .specialtyName(specialty)
+    private SpecialtyEntity createSpecialty(){
+        return SpecialtyEntity
+                .builder()
+                .specialtyName("FISIOTERAPIA")
                 .build();
     }
 
     @Test
-    @DisplayName("Save All Specialties in Database when successful")
-    public void save_all_specialties_whenSuccessful(){
-        List<SpecialtyEntity> specialties = new ArrayList<>();
-        for(Specialty s : Specialty.values()){
-            specialties.add(createSpecialty(s));
-        }
+    @DisplayName("Save Specialty when successful")
+    void save_specialty_whenSuccessful(){
+        SpecialtyEntity specialty = createSpecialty();
+        SpecialtyEntity specialtySaved = this.specialtyEntityRepository.save(specialty);
 
-        List<SpecialtyEntity> specialtiesSaved = specialtyEntityRepository.saveAll(specialties);
-
-        Assertions.assertThat(specialtiesSaved).isNotNull();
-        Assertions.assertThat(specialtiesSaved).isNotEmpty();
-
+        Assertions.assertThat(specialtySaved).isNotNull();
+        Assertions.assertThat(specialtySaved.getSpecialtyName()).isEqualTo(specialty.getSpecialtyName());
     }
 
     @Test
-    @DisplayName("Find Specialty By SpecialtyName when Successful")
-    public void find_specialtyBySpecialtyName_whenSuccessful(){
-        List<SpecialtyEntity> specialties = new ArrayList<>();
-        for(Specialty s : Specialty.values()){
-            specialties.add(createSpecialty(s));
-        }
+    @DisplayName("Find List of Specialty when successful")
+    void find_listOfSpecialty_WhenSuccessful(){
+        SpecialtyEntity specialty = createSpecialty();
+        SpecialtyEntity specialtySaved = this.specialtyEntityRepository.save(specialty);
 
-        List<SpecialtyEntity> specialtiesSaved = specialtyEntityRepository.saveAll(specialties);
+        List<SpecialtyEntity> specialties = this.specialtyEntityRepository.findAll();
 
-        Optional<SpecialtyEntity> specialty = specialtyEntityRepository.findBySpecialtyName(Specialty.SPECIALTY_GENERAL_PRACTITIONER);
-
-        Assertions.assertThat(specialty).isNotNull();
-        Assertions.assertThat(specialty.isPresent()).isTrue();
-
+        Assertions.assertThat(specialties)
+                .isNotNull()
+                .isNotEmpty()
+                .contains(specialtySaved);
     }
 
     @Test
-    @DisplayName("Find List of Specialties when Successful")
-    public void find_ListOfSpecialtiesWhenSuccessful(){
-        List<SpecialtyEntity> specialties = new ArrayList<>();
-        for(Specialty s : Specialty.values()){
-            specialties.add(createSpecialty(s));
-        }
+    @DisplayName("Find by SpecialtyName when Successuful")
+    void find_specialtyBySpecialtyName_whenSuccessful(){
+        SpecialtyEntity specialty = createSpecialty();
+        SpecialtyEntity specialtySaved = this.specialtyEntityRepository.save(specialty);
 
-        List<SpecialtyEntity> specialtiesSaved = specialtyEntityRepository.saveAll(specialties);
+        Optional<SpecialtyEntity> specialtyFind = this.specialtyEntityRepository.findBySpecialtyNameIgnoreCase("fisioterapia");
 
-        List<SpecialtyEntity> specialtiesList = specialtyEntityRepository.findAll();
-
-        Assertions.assertThat(specialtiesList).isNotNull();
-        Assertions.assertThat(specialtiesList).isNotEmpty();
-
+        Assertions.assertThat(specialtyFind.get())
+                .isNotNull()
+                .isEqualTo(specialtySaved);
     }
 
+    @Test
+    @DisplayName("Update Specialty when Successful")
+    void update_specialty_whenSuccessful(){
+        SpecialtyEntity specialty = createSpecialty();
+        SpecialtyEntity specialtyToCompare = createSpecialty();
+        SpecialtyEntity specialtySaved = this.specialtyEntityRepository.save(specialty);
+
+        specialtySaved.setSpecialtyName("MICROFISIOTERAPIA");
+        SpecialtyEntity specialtyUpdated = this.specialtyEntityRepository.save(specialtySaved);
+
+        Assertions.assertThat(specialtyUpdated.getId()).isEqualTo(specialtySaved.getId());
+        Assertions.assertThat(specialtyUpdated.getSpecialtyName()).isNotEqualTo(specialtyToCompare.getSpecialtyName());
+    }
+
+    @Test
+    @DisplayName("Delete Specialty when Successful")
+    void delete_specialty_whenSuccessful(){
+        SpecialtyEntity specialty = createSpecialty();
+        SpecialtyEntity specialtySaved = this.specialtyEntityRepository.save(specialty);
+
+        this.specialtyEntityRepository.deleteById(specialtySaved.getId());
+
+        List<SpecialtyEntity> specialties = this.specialtyEntityRepository.findAll();
+
+        Assertions.assertThat(specialties).doesNotContain(specialtySaved);
+    }
 
 }

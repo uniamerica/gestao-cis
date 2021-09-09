@@ -4,7 +4,6 @@ import com.gestaocis.backend.models.RoleEntity;
 import com.gestaocis.backend.models.SpecialtyEntity;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.utils.enums.Role;
-import com.gestaocis.backend.utils.enums.Specialty;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class UserRepositoryTest {
                .save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
 
        SpecialtyEntity specialty = specialtyEntityRepository
-               .save(SpecialtyEntity.builder().specialtyName(Specialty.SPECIALTY_NUTRITION).build());
+               .save(SpecialtyEntity.builder().specialtyName("FISIOTERAPIA").build());
 
        return User.builder()
                .role(role)
@@ -179,7 +178,7 @@ class UserRepositoryTest {
 
         User userSaved = userRepository.save(userToBeSave);
 
-        Optional<SpecialtyEntity> specialty = specialtyEntityRepository.findBySpecialtyName(Specialty.SPECIALTY_NUTRITION);
+        Optional<SpecialtyEntity> specialty = specialtyEntityRepository.findBySpecialtyNameIgnoreCase("FISIOTERAPIA");
 
         List<User> usersFound = userRepository.findBySpecialty(specialty.get());
 

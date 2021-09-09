@@ -20,7 +20,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 

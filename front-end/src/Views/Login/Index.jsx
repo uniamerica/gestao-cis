@@ -12,7 +12,7 @@ export default function Login() {
                     <div className='loginHeader'>
                         <section className='cisText'>
                             <h4>
-                                Centro Integrado
+                                Centro<br/>Integrado
                             </h4>
                             <p>
                                 de Saúde
@@ -27,16 +27,16 @@ export default function Login() {
                     <div className='loginBody'>
                         <form noValidate autoComplete="off">
 
-                            <div className='userInput'>
+                            <div className='userInput input'>
                                 <PersonIcon className='icon' />
                                 <TextField id="emailCpf" label="Email ou CPF" />
                             </div>
                             
-                            <div className='passwordInput'>
+                            <div className='passwordInput input'>
                                 <LockIcon className='icon' />
                                 <TextField
                                     id="standard-password-input"
-                                    label="Password"
+                                    label="Senha"
                                     type="password"
                                     autoComplete="current-password"
                                 />
@@ -46,6 +46,16 @@ export default function Login() {
                             <LockIcon className='icon' />
                             Entrar
                         </Button>
+                    </div>
+                    <div className='loginFooter'>
+                        <div className='text-center'>
+                            <a href='#'>Esqueci minha senha</a>
+                        </div>
+                        <div className='text-center'>
+                            <p>Ainda não tem conta?</p>
+                            <a href=''>Crie a sua conta</a>
+                        </div>
+
                     </div>
                 </div>
             </div>

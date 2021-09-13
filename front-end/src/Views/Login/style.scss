@@ -1,0 +1,50 @@
+.loginContainer {
+    background-image: url('../../assets/images/background.png');
+    width: 100%;
+
+    .loginCard {
+        background-color: #fff;
+        width: 500px;
+        position: absolute;
+        margin: 10% 0 0 25%;
+        padding: 5% 0;
+        
+        .loginHeader {
+            justify-content: center;
+            display: flex;
+            text-transform: uppercase;
+            
+            .cisText {
+                border-right: 1px solid #c3c3c3;
+                text-align: right;
+                padding: 5%;
+            }
+            
+            .loginText {
+                text-align: left;
+                padding: 5%;
+                align-self: center;
+            }
+        }
+
+        .loginBody {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5%;
+
+            form {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1rem;
+            }
+
+            .userInput, .passwordInput {
+                align-self: center;
+                display: flex;
+                align-items: flex-end;
+            }
+        }
+    }
+}

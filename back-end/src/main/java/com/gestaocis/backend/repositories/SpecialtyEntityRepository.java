@@ -1,6 +1,6 @@
 package com.gestaocis.backend.repositories;
 
-import com.gestaocis.backend.models.SpecialtyEntity;
+import com.gestaocis.backend.utils.enums.SpecialtyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -2,6 +2,8 @@ package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.*;
 import com.gestaocis.backend.utils.enums.Role;
+import com.gestaocis.backend.utils.enums.RoleEntity;
+import com.gestaocis.backend.utils.enums.SpecialtyEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

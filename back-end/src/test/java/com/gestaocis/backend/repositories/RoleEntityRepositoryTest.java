@@ -1,6 +1,6 @@
 package com.gestaocis.backend.repositories;
 
-import com.gestaocis.backend.models.RoleEntity;
+import com.gestaocis.backend.utils.enums.RoleEntity;
 import com.gestaocis.backend.utils.enums.Role;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Log4j2

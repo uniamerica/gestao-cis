@@ -1,5 +1,6 @@
-package com.gestaocis.backend.models;
+package com.gestaocis.backend.utils.enums;
 
+import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.utils.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

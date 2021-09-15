@@ -1,7 +1,7 @@
 package com.gestaocis.backend.repositories;
 
-import com.gestaocis.backend.models.RoleEntity;
-import com.gestaocis.backend.models.SpecialtyEntity;
+import com.gestaocis.backend.utils.enums.RoleEntity;
+import com.gestaocis.backend.utils.enums.SpecialtyEntity;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.utils.enums.Role;
 import org.assertj.core.api.Assertions;

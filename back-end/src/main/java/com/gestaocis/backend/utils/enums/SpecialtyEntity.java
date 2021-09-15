@@ -1,6 +1,6 @@
-package com.gestaocis.backend.models;
+package com.gestaocis.backend.utils.enums;
 
-import com.gestaocis.backend.utils.enums.Specialty;
+import com.gestaocis.backend.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +23,10 @@ public class SpecialtyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
 
-    @Enumerated(EnumType.STRING)
-    private Specialty specialtyName;
+    private String specialtyName;
 
     @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users = new ArrayList<>();

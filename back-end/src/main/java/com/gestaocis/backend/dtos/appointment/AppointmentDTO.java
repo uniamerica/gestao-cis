@@ -16,18 +16,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class AppointmentDTO {
-    private UUID uuid;
-    private UserPatientDTO patient;
-    private UserProfessionalDTO professional;
-    private LocalDateTime createdAt;
-    private LocalDateTime scheduledFor;
+  private UUID uuid;
+  private UserPatientDTO patient;
+  private UserProfessionalDTO professional;
+  private LocalDateTime createdAt;
+  private LocalDateTime scheduledFor;
 
-    public AppointmentDTO(Appointment appointment){
-        uuid = appointment.getUuid();
-        patient = new UserPatientDTO(appointment.getPatient());
-        professional = new UserProfessionalDTO(appointment.getProfessional());
-        createdAt = appointment.getCreatedAt();
-        scheduledFor = appointment.getScheduledFor();
-    }
-
+  public AppointmentDTO(Appointment appointment) {
+    uuid = appointment.getUuid();
+    patient = new UserPatientDTO(appointment.getPatient());
+    professional = new UserProfessionalDTO(appointment.getProfessional());
+    createdAt = appointment.getCreatedAt();
+    scheduledFor = appointment.getScheduledFor();
+  }
 }

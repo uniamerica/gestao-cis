@@ -1,24 +1,37 @@
 package com.gestaocis.backend.utils.enums;
-public enum Specialty {
 
-    SPECIALTY_GENERAL_PRACTITIONER("Geral"),
-    SPECIALTY_PSYCHOLOGY("Psicologia"),
-    SPECIALTY_PHYSIOTHERAPY("Fisioterapia"),
-    SPECIALTY_NUTRITION("Nutricao"),
-    SPECIALTY_PSYCHIATRY("Psiquiatria"),
-    SPECIALTY_ACUPUNTURE("Acupuntura"),
-    SPECIALTY_MASSAGE("Massagem Terapeutica"),
-    SPECIALTY_PSYCHOPEDAGOGY("Psicopedagogia"),
-    SPECIALTY_SPEECH_THERAPY("Fonoaudiologia"),
-    SPECIALTY_FACE_BODY_AESTHETICS("Estetica facial e corporal");
+import javax.persistence.*;
 
-    private final String specialtyValue;
+@Entity
+public class Specialty {
 
-    Specialty(String value){
-        specialtyValue = value;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public String getSpecialtyValue(){
-        return specialtyValue;
-    }
+  @Enumerated(EnumType.STRING)
+  @Column(length = 20)
+  private com.gestaocis.backend.utils.enums.Specialty name;
+
+  public Specialty() {}
+
+  public Specialty(com.gestaocis.backend.utils.enums.Specialty name) {
+    this.name = name;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public com.gestaocis.backend.utils.enums.Specialty getName() {
+    return name;
+  }
+
+  public void setName(com.gestaocis.backend.utils.enums.Specialty name) {
+    this.name = name;
+  }
 }

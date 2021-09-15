@@ -2,8 +2,8 @@ package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.*;
 import com.gestaocis.backend.utils.enums.Role;
-import com.gestaocis.backend.utils.enums.Specialty;
-import lombok.extern.log4j.Log4j2;
+import com.gestaocis.backend.utils.enums.RoleEntity;
+import com.gestaocis.backend.utils.enums.SpecialtyEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class AppointmentRepositoryTest {
                 .save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
 
         SpecialtyEntity specialtyEntity = specialtyEntityRepository
-                .save(SpecialtyEntity.builder().specialtyName(Specialty.SPECIALTY_PSYCHIATRY).build());
+                .save(SpecialtyEntity.builder().specialtyName("FISIOTERAPIA").build());
 
         return User.builder()
                 .role(roleEntity)
@@ -267,22 +267,3 @@ class AppointmentRepositoryTest {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

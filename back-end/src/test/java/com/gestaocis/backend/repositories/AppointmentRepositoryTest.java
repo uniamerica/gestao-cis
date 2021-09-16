@@ -1,11 +1,11 @@
 package com.gestaocis.backend.repositories;
 
-import com.gestaocis.backend.models.Appointment;
-import com.gestaocis.backend.models.Room;
-import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.enums.SpecialtyEntity;
+import com.gestaocis.backend.models.Appointment;
+import com.gestaocis.backend.models.Room;
+import com.gestaocis.backend.models.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,10 +37,12 @@ class AppointmentRepositoryTest {
     SpecialtyEntity specialtyEntity =
         specialtyEntityRepository.save(
             SpecialtyEntity.builder().specialtyName("FISIOTERAPIA").build());
+    List<SpecialtyEntity> specialtyEntities = new ArrayList<>();
+    specialtyEntities.add(specialtyEntity);
 
     return User.builder()
         .role(roleEntity)
-        .specialty(specialtyEntity)
+        .specialties(specialtyEntities)
         .professionalDocument("xxxxxxxx")
         .phone("(45)99999999")
         .email("teste@test.com")

@@ -1,12 +1,12 @@
-package com.gestaocis.backend.utils.enums;
+package com.gestaocis.backend.enums;
 
 public enum Role {
   ROLE_MANAGER("GESTOR"),
-  ROLE_PATIENT("PACIENTE"),
   ROLE_SECRETARY("SECRETARIA"),
   ROLE_PROFESSIONAL("PROFISSIONAL"),
   ROLE_SUPERVISOR("SUPERVISOR"),
-  ROLE_INTERN("ESTAGIARIO");
+  ROLE_INTERN("ESTAGIARIO"),
+  ROLE_PATIENT("PACIENTE");
 
   private final String roleValue;
 

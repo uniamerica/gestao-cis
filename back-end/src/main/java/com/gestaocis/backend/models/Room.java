@@ -1,6 +1,6 @@
 package com.gestaocis.backend.models;
 
-import com.gestaocis.backend.utils.enums.SpecialtyEntity;
+import com.gestaocis.backend.enums.SpecialtyEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class Room implements Serializable {
   @Column(unique = true, nullable = false)
   private Integer roomNumber;
 
-  @OneToMany private Set<SpecialtyEntity> specialties = new HashSet<>();
+  @ManyToMany private Set<SpecialtyEntity> specialties = new HashSet<>();
 
   @OneToMany private List<Appointment> appointments;
 }

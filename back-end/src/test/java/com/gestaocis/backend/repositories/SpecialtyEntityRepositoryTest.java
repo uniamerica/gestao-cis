@@ -1,6 +1,6 @@
 package com.gestaocis.backend.repositories;
 
-import com.gestaocis.backend.utils.enums.SpecialtyEntity;
+import com.gestaocis.backend.enums.SpecialtyEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

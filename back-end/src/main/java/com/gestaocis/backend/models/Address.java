@@ -1,10 +1,13 @@
 package com.gestaocis.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Address implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -27,7 +30,8 @@ public class Address implements Serializable {
   @Column(nullable = false)
   private String neighborhood;
 
-  @OneToMany private List<User> users = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy = "address") private List<User> users = new ArrayList<>();
 
   public Address() {}
 

@@ -1,7 +1,9 @@
 package com.gestaocis.backend.models;
 
-import com.gestaocis.backend.utils.enums.RoleEntity;
-import com.gestaocis.backend.utils.enums.SpecialtyEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.gestaocis.backend.enums.RoleEntity;
+import com.gestaocis.backend.enums.SpecialtyEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +11,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,37 +29,73 @@ public class User implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID uuid;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  private RoleEntity role;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  private SpecialtyEntity specialty;
-
-  @Column private String professionalDocument;
-
-  @Column(nullable = false)
-  private String phone;
-
-  @Column(unique = true, nullable = false)
-  private String email;
-
   @Column(unique = true, nullable = false)
   private String cpf;
 
   @Column(nullable = false)
   private String rg;
 
+  @Column private String professionalDocument;
+
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID uuid;
+
+  @Column(unique = true, nullable = false)
+  private String email;
+
+  @Column(nullable = false)
+  private String phone;
+
   @Column(nullable = false)
   private String fullName;
 
   @Column(nullable = false)
+  private Instant birthdate;
+
+  private String mothersName;
+
+  @Column(nullable = false)
+  private Character sex;
+
+  private String placeOfBirth;
+
+  @Column(nullable = false)
+  private String addressCountry;
+
+  @Column(nullable = false)
+  private String addressLine2;
+
+  @Column(nullable = false)
   private String password;
+
+  @Column(
+      name = "active",
+      nullable = false,
+      insertable = false,
+      columnDefinition = "boolean default true")
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+  private boolean active;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private RoleEntity role;
+
+  @JoinColumn(name = "addressId")
+  @JsonIgnore
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Address address;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private HealthInsurance healthInsurance;
+
+  @OneToMany(mappedBy = "patient")
+  private List<Appointment> appointments = new ArrayList<>();
+
+  @ManyToMany
+  @JoinTable(
+      name = "user_has_specialties",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+  private List<SpecialtyEntity> specialties = new ArrayList<>();
 
   @Override
   public String toString() {
@@ -62,7 +103,7 @@ public class User implements Serializable {
     sb.append("id=").append(id);
     sb.append(", uuid=").append(uuid);
     sb.append(", role=").append(role);
-    sb.append(", specialty=").append(specialty);
+    sb.append(", specialty=").append(specialties);
     sb.append(", professionalDocument").append(professionalDocument);
     sb.append(", phone=").append(phone);
     sb.append(", email=").append(email);

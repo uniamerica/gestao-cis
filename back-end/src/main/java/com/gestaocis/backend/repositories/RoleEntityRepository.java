@@ -1,7 +1,7 @@
 package com.gestaocis.backend.repositories;
 
-import com.gestaocis.backend.utils.enums.RoleEntity;
-import com.gestaocis.backend.utils.enums.Role;
+import com.gestaocis.backend.enums.RoleEntity;
+import com.gestaocis.backend.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

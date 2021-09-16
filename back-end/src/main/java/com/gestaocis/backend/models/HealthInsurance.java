@@ -1,14 +1,12 @@
 package com.gestaocis.backend.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class HealthInsurance implements Serializable {
   private static final long serialVersionUID = 1L;
 

@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,7 +17,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-// @RequiredArgsConstructor
 @Builder
 @Table(name = "appointments")
 public class Appointment implements Serializable {
@@ -31,35 +30,8 @@ public class Appointment implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID uuid;
 
-  @ManyToOne
-  @JoinColumn(name = "patientId", nullable = false)
-  private User patient;
-
-  @ManyToOne
-  @JoinColumn(name = "professionalId", nullable = false)
-  private User professional;
-
-  @CreationTimestamp
-  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  private Instant createdAt;
-
-  @Column(
-      name = "editedAt",
-      nullable = false,
-      insertable = false,
-      columnDefinition = "boolean default false")
-  private Instant editedAt;
-
   @Column(nullable = false)
-  private Instant scheduledFor;
-
-  @ManyToOne
-  @JoinColumn(name = "roomId", nullable = false)
-  private Room room;
-
-  @ManyToOne
-  @JoinColumn(name = "creatorId", nullable = false)
-  private User createdBy;
+  private LocalDateTime scheduledFor;
 
   @Lob
   @Column(columnDefinition = "TEXT", nullable = false)
@@ -77,6 +49,21 @@ public class Appointment implements Serializable {
   @Column(columnDefinition = "TEXT", nullable = false)
   private String treatment;
 
+  @ManyToOne
+  @JoinColumn(name = "creatorId", nullable = false)
+  private User createdBy;
+
+  @CreationTimestamp
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+  private LocalDateTime createdAt;
+
+  @Column(
+      name = "editedAt",
+      nullable = false,
+      insertable = false,
+      columnDefinition = "boolean default false")
+  private LocalDateTime editedAt;
+
   @Column(
       name = "confirmed",
       nullable = false,
@@ -87,6 +74,18 @@ public class Appointment implements Serializable {
 
   @Column(name = "paid", nullable = false, insertable = false)
   private boolean paid;
+
+  @ManyToOne
+  @JoinColumn(name = "patientId", nullable = false)
+  private User patient;
+
+  @ManyToOne
+  @JoinColumn(name = "professionalId", nullable = false)
+  private User professional;
+
+  @ManyToOne
+  @JoinColumn(name = "roomId", nullable = false)
+  private Room room;
 
   @Override
   public boolean equals(Object o) {

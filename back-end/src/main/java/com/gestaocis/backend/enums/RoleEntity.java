@@ -1,4 +1,4 @@
-package com.gestaocis.backend.utils.enums;
+package com.gestaocis.backend.enums;
 
 import com.gestaocis.backend.models.User;
 import lombok.AllArgsConstructor;

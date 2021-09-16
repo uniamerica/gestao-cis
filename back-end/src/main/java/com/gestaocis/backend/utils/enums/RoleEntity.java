@@ -1,7 +1,6 @@
 package com.gestaocis.backend.utils.enums;
 
 import com.gestaocis.backend.models.User;
-import com.gestaocis.backend.utils.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -20,14 +18,13 @@ import java.util.UUID;
 @Table(name = "roles")
 public class RoleEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
+  @Enumerated(EnumType.STRING)
+  private Role roleName;
 
-    @Enumerated(EnumType.STRING)
-    private Role roleName;
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> users = new ArrayList<>();
+  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<User> users = new ArrayList<>();
 }

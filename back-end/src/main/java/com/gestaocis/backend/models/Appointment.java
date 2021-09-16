@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -41,32 +41,41 @@ public class Appointment implements Serializable {
 
   @CreationTimestamp
   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-  private LocalDateTime createdAt;
+  private Instant createdAt;
 
   @Column(
       name = "editedAt",
       nullable = false,
       insertable = false,
       columnDefinition = "boolean default false")
-  private LocalDateTime editedAt;
+  private Instant editedAt;
 
   @Column(nullable = false)
-  private LocalDateTime scheduledFor;
+  private Instant scheduledFor;
 
   @ManyToOne
   @JoinColumn(name = "roomId", nullable = false)
   private Room room;
 
-  @Lob
-  @Column(columnDefinition = "TEXT", nullable = false)
-  private String observation;
-
   @ManyToOne
   @JoinColumn(name = "creatorId", nullable = false)
   private User createdBy;
 
-  @Column(name = "supervised", nullable = false, insertable = false)
-  private boolean supervised;
+  @Lob
+  @Column(columnDefinition = "TEXT", nullable = false)
+  private String anamnesis;
+
+  @Lob
+  @Column(columnDefinition = "TEXT", nullable = false)
+  private String diagnosticHypotheses;
+
+  @Lob
+  @Column(columnDefinition = "TEXT", nullable = false)
+  private String definitiveDiagnosis;
+
+  @Lob
+  @Column(columnDefinition = "TEXT", nullable = false)
+  private String treatment;
 
   @Column(
       name = "confirmed",

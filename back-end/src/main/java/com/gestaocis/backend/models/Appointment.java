@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class Appointment implements Serializable {
   private UUID uuid;
 
   @Column(nullable = false)
+  @Future
   private LocalDateTime scheduledFor;
 
   @Lob

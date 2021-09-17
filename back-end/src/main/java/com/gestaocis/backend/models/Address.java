@@ -1,6 +1,7 @@
 package com.gestaocis.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.SerializedName;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,19 +20,23 @@ public class Address implements Serializable {
   private String cep;
 
   @Column(nullable = false)
+  @SerializedName(value = "logradouro", alternate = "logradouro")
   private String street;
 
   @Column(nullable = false)
+  @SerializedName(value = "localidade", alternate = "localidade")
   private String city;
 
   @Column(nullable = false)
   private String uf;
 
   @Column(nullable = false)
+  @SerializedName(value = "bairro", alternate = "bairro")
   private String neighborhood;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "address") private List<User> users = new ArrayList<>();
+  @OneToMany(mappedBy = "address")
+  private List<User> users = new ArrayList<>();
 
   public Address() {}
 

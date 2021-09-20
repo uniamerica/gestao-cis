@@ -32,11 +32,7 @@ public class AddressService {
   }
 
   public Address findByCep(String cep) {
-    if (repository.findByCep(cep) == null) {
-      throw new ResourceNotFoundException("Endereço não encontrado. Por favor, tente novamente.");
-    } else {
-      return repository.findByCep(cep);
-    }
+    return repository.findByCep(CepService.formatCep(cep));
   }
 
   @Transactional

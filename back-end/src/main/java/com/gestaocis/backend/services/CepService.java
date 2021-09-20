@@ -34,17 +34,17 @@ public class CepService {
 
       Gson gson = new Gson();
 
-      Address address = gson.fromJson(jsonToString, Address.class);
-
-      return address;
+      return gson.fromJson(jsonToString, Address.class);
     } catch (Exception exception) {
       throw new Exception("Erro: " + exception);
     }
   }
 
   public static String formatCep(String cep) {
-    if (!Pattern.matches("[0-9]{5}-[0-9]{3}", cep)) {
+    if (Pattern.matches("[0-9]{8}", cep)) {
       return addHifen(cep, '-', 5);
+    } else if (Pattern.matches("[0-9]{5}-[0-9]{3}", cep)) {
+      return cep;
     } else {
       return cep;
     }

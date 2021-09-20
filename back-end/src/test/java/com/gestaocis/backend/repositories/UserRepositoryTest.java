@@ -151,20 +151,6 @@ class UserRepositoryTest {
     Assertions.assertThat(usersFound).isNotNull().isNotEmpty().contains(userSaved);
   }
 
-  @Test
-  @DisplayName("Find Users By Specialty When Successful")
-  void find_userBySpecialty_whenSuccessful() {
-    User userToBeSave = createUser();
-
-    User userSaved = userRepository.save(userToBeSave);
-
-    Optional<SpecialtyEntity> specialty =
-        specialtyEntityRepository.findBySpecialtyNameIgnoreCase("FISIOTERAPIA");
-
-    List<User> usersFound = userRepository.findBySpecialty(specialty.get());
-
-    Assertions.assertThat(usersFound).isNotNull().isNotEmpty().contains(userSaved);
-  }
 
   @Test
   @DisplayName("Find Users When Successful")

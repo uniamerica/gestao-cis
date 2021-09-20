@@ -21,5 +21,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByRole(RoleEntity role);
 
-    List<User> findBySpecialty(SpecialtyEntity specialty);
 }

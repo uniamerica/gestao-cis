@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 @Service
 public class CepService {
@@ -16,7 +17,7 @@ public class CepService {
   static String webService = "http://viacep.com.br/ws/";
   static int successStatusCode = 200;
 
-  public static Address findAddressByCep(String cep) throws Exception {
+  public static Address convertCepToAddress(String cep) throws Exception {
     String fullUrl = webService + cep + "/json";
 
     try {
@@ -33,9 +34,25 @@ public class CepService {
 
       Gson gson = new Gson();
 
-      return gson.fromJson(jsonToString, Address.class);
+      Address address = gson.fromJson(jsonToString, Address.class);
+
+      return address;
     } catch (Exception exception) {
       throw new Exception("Erro: " + exception);
     }
+  }
+
+  public static String formatCep(String cep) {
+    if (!Pattern.matches("[0-9]{5}-[0-9]{3}", cep)) {
+      return addHifen(cep, '-', 5);
+    } else {
+      return cep;
+    }
+  }
+
+  public static String addHifen(String cep, char c, int pos) {
+    StringBuilder formattedCep = new StringBuilder(cep);
+    formattedCep.insert(pos, c);
+    return formattedCep.toString();
   }
 }

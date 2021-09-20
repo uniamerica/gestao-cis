@@ -12,6 +12,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/v1/addresses")
 public class AddressResource {
+
   private final AddressService service;
 
   public AddressResource(AddressService service) {
@@ -29,8 +30,8 @@ public class AddressResource {
   }
 
   @PostMapping
-  public ResponseEntity<Void> save(@RequestBody String cep) throws Exception {
-    service.save(cep);
+  public ResponseEntity<Void> save(@RequestBody Address address) throws Exception {
+    service.save(address);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 

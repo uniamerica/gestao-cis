@@ -1,16 +1,28 @@
-version: '3.1'
-
-services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: docker
-      POSTGRES_USER: root
-    volumes:
-      - database:/var/lib/postgresql
-    ports:
-      - "5432:5432"
-
-volumes:
-  database:
+#version: '3.1'
+#
+#services:
+#  db:
+#    container_name: postgres
+#    image: postgres
+#    restart: always
+#    environment:
+#      POSTGRES_PASSWORD: docker
+#      POSTGRES_USER: root
+#    volumes:
+#      - database:/var/lib/postgresql
+#    ports:
+#      - "5432:5432"
+#
+#  pgAdmin4:
+#    container_name: pgAdmin4-interface
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: cis@cis.com
+#      PGADMIN_DEFAULT_PASSWORD: gestaocis
+#    depends_on:
+#      - postgres
+#    ports:
+#      - "8080:80"
+#
+#volumes:
+#  database:

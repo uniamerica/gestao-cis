@@ -20,18 +20,18 @@ public class Address implements Serializable {
   private String cep;
 
   @Column(nullable = false)
-  @SerializedName(value = "logradouro", alternate = "logradouro")
+  @SerializedName(value = "logradouro")
   private String street;
 
   @Column(nullable = false)
-  @SerializedName(value = "localidade", alternate = "localidade")
+  @SerializedName(value = "localidade")
   private String city;
 
   @Column(nullable = false)
   private String uf;
 
   @Column(nullable = false)
-  @SerializedName(value = "bairro", alternate = "bairro")
+  @SerializedName(value = "bairro")
   private String neighborhood;
 
   @JsonIgnore
@@ -91,5 +91,19 @@ public class Address implements Serializable {
 
   public void setNeighborhood(String neighborhood) {
     this.neighborhood = neighborhood;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Address{");
+    sb.append("id=").append(id);
+    sb.append(", cep='").append(cep).append('\'');
+    sb.append(", street='").append(street).append('\'');
+    sb.append(", city='").append(city).append('\'');
+    sb.append(", uf='").append(uf).append('\'');
+    sb.append(", neighborhood='").append(neighborhood).append('\'');
+    sb.append(", users=").append(users);
+    sb.append('}');
+    return sb.toString();
   }
 }

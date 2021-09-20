@@ -11,15 +11,15 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByEmail(String email);
+  Optional<User> findByEmail(String email);
 
-    Optional<User> findByUuid(UUID uuid);
+  Optional<User> findByUuid(UUID uuid);
 
-    Optional<User> findByCpf(String cpf);
+  Optional<User> findByCpf(String cpf);
 
-    List<User> findByFullNameContainingIgnoreCase(String name);
+  List<User> findByFullNameContainingIgnoreCase(String name);
 
-    List<User> findByRole(RoleEntity role);
+  List<User> findByRole(RoleEntity role);
 
-    List<User> findBySpecialty(SpecialtyEntity specialty);
+  List<User> findBySpecialties(SpecialtyEntity specialty);
 }

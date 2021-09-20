@@ -161,7 +161,7 @@ class UserRepositoryTest {
     Optional<SpecialtyEntity> specialty =
         specialtyEntityRepository.findBySpecialtyNameIgnoreCase("FISIOTERAPIA");
 
-    List<User> usersFound = userRepository.findBySpecialty(specialty.get());
+    List<User> usersFound = userRepository.findBySpecialties(specialty.get());
 
     Assertions.assertThat(usersFound).isNotNull().isNotEmpty().contains(userSaved);
   }

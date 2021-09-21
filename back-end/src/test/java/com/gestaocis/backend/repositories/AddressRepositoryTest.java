@@ -31,6 +31,7 @@ public class AddressRepositoryTest {
     repository.saveAll(addresses);
   }
 
+  //  @Disabled
   @Test
   @DisplayName("Create Address record")
   void shouldCreateAddressRecord() throws Exception {
@@ -182,10 +183,20 @@ public class AddressRepositoryTest {
 
     org.junit.jupiter.api.Assertions.assertAll(
         "Test Address record's data",
-        () -> org.junit.jupiter.api.Assertions.assertEquals(cep, address.getCep()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[0], address.getStreet()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[1], address.getCity()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[2], address.getUf()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[3], address.getNeighborhood()));
+        () ->
+            org.junit.jupiter.api.Assertions.assertEquals(
+                cep, address.getCep(), "CEP did not match"),
+        () ->
+            org.junit.jupiter.api.Assertions.assertEquals(
+                data[0], address.getStreet(), "Street did not match"),
+        () ->
+            org.junit.jupiter.api.Assertions.assertEquals(
+                data[1], address.getCity(), "City did not match"),
+        () ->
+            org.junit.jupiter.api.Assertions.assertEquals(
+                data[2], address.getUf(), "UF did not match"),
+        () ->
+            org.junit.jupiter.api.Assertions.assertEquals(
+                data[3], address.getNeighborhood(), "Neighborhood did not match"));
   }
 }

@@ -1,5 +1,10 @@
 package com.gestaocis.backend.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class HealthInsurance implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -22,40 +31,4 @@ public class HealthInsurance implements Serializable {
 
   @OneToMany private List<User> users = new ArrayList<>();
 
-  public HealthInsurance() {}
-
-  public HealthInsurance(Long id, UUID uuid, String insuranceName, String registrationNumber) {
-    this.id = id;
-    this.uuid = uuid;
-    this.insuranceName = insuranceName;
-    this.registrationNumber = registrationNumber;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public UUID getUuid() {
-    return uuid;
-  }
-
-  public String getInsuranceName() {
-    return insuranceName;
-  }
-
-  public void setInsuranceName(String insuranceName) {
-    this.insuranceName = insuranceName;
-  }
-
-  public String getRegistrationNumber() {
-    return registrationNumber;
-  }
-
-  public void setRegistrationNumber(String registrationNumber) {
-    this.registrationNumber = registrationNumber;
-  }
-
-  public List<User> getUsers() {
-    return users;
-  }
 }

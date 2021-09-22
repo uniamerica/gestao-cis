@@ -3,6 +3,7 @@ package com.gestaocis.backend.repositories;
 import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.enums.SpecialtyEntity;
+import com.gestaocis.backend.models.HealthInsurance;
 import com.gestaocis.backend.models.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +26,12 @@ class UserRepositoryTest {
 
   @Autowired private SpecialtyEntityRepository specialtyEntityRepository;
 
+  @Autowired private HealthInsuranceRepository healthInsuranceRepository;
+
   private User createUser() {
     RoleEntity role =
-        roleEntityRepository.save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
+        roleEntityRepository
+                .save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
 
     SpecialtyEntity specialty =
         specialtyEntityRepository.save(
@@ -35,17 +40,35 @@ class UserRepositoryTest {
     List<SpecialtyEntity> specialtyEntities = new ArrayList<>();
     specialtyEntities.add(specialty);
 
+    HealthInsurance healthInsurance = healthInsuranceRepository.save(
+            HealthInsurance
+                    .builder()
+                    .insuranceName("ashuahdisuahdisuahd")
+                    .registrationNumber("lalalalalalalalalla")
+                    .build()
+    );
+
+
     return User.builder()
-        .role(role)
-        .specialties(specialtyEntities)
-        .professionalDocument("xxxxxxxx")
-        .phone("(45)99999999")
-        .email("teste@test.com")
-        .cpf("898989898989")
-        .rg("88889888898")
-        .fullName("Fulano de Tal")
-        .password("senha1234")
-        .build();
+            .role(role)
+            .cpf("898989898989")
+            .rg("88889888898")
+            .professionalDocument("xxxxxxxx")
+            .specialties(specialtyEntities)
+            .email("test@test.com")
+            .phone("(45)99999999")
+            .email("teste@test.com")
+            .fullName("Fulano de Tal")
+            .birthdate(Instant.now())
+            .mothersName("Mãe do Fulano")
+            .sex('M')
+            .placeOfBirth("Brazel")
+            .addressCountry("Brasil")
+            .addressLine2("Rua tal")
+            .password("senha1234")
+            .active(true)
+            .healthInsurance(healthInsurance)
+            .build();
   }
 
   @Test
@@ -151,20 +174,6 @@ class UserRepositoryTest {
     Assertions.assertThat(usersFound).isNotNull().isNotEmpty().contains(userSaved);
   }
 
-  @Test
-  @DisplayName("Find Users By Specialty When Successful")
-  void find_userBySpecialty_whenSuccessful() {
-    User userToBeSave = createUser();
-
-    User userSaved = userRepository.save(userToBeSave);
-
-    Optional<SpecialtyEntity> specialty =
-        specialtyEntityRepository.findBySpecialtyNameIgnoreCase("FISIOTERAPIA");
-
-    List<User> usersFound = userRepository.findBySpecialty(specialty.get());
-
-    Assertions.assertThat(usersFound).isNotNull().isNotEmpty().contains(userSaved);
-  }
 
   @Test
   @DisplayName("Find Users When Successful")

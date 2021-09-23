@@ -15,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +34,7 @@ public class AddressServiceTest {
     Mockito.when(repository.save(any(Address.class))).thenReturn(address);
 
     Address savedAddress = repository.save(address);
-    Assertions.assertThat(savedAddress.getStreet()).isNotNull();
+    assertThat(savedAddress.getStreet()).isNotNull();
   }
 
   @Test
@@ -46,13 +48,13 @@ public class AddressServiceTest {
     Mockito.when(repository.findAll()).thenReturn(addresses);
 
     List<Address> fetchedAddresses = service.listAll();
-    Assertions.assertThat(fetchedAddresses.size()).isGreaterThan(0);
+    assertThat(fetchedAddresses.size()).isGreaterThan(0);
   }
 
   @Test
   @DisplayName("Throw error due to inconsistent CEP submission")
   public void shouldThrowInconsistentDataException() {
-    org.junit.jupiter.api.Assertions.assertThrows(
+    assertThrows(
         InconsistentDataException.class,
         () -> {
           String cep = "abcdef";

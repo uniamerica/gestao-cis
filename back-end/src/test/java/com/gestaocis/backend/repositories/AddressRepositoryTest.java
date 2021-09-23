@@ -2,8 +2,6 @@ package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.CepService;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,191 +10,155 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
+@DisplayName("AddressRepository Tests")
 public class AddressRepositoryTest {
 
   @Autowired private AddressRepository repository;
 
-  @BeforeEach
-  void setUp() throws Exception {
+  Address createAddress(int option) throws Exception {
+    switch (option) {
+      case 1:
+        return CepService.convertCepToAddress("85857600");
 
+      case 2:
+        return CepService.convertCepToAddress("85851-010");
+
+      case 3:
+        return CepService.convertCepToAddress("85960000");
+
+      default:
+        return CepService.convertCepToAddress("85851000");
+    }
+  }
+
+  List<Address> createAddressList() throws Exception {
     String[] ceps = {"85851010", "85851-210", "85851000", "85852-000", "85851110"};
 
-    List<Address> addresses = new ArrayList<>();
+    List<Address> addressesToBeSaved = new ArrayList<>();
 
     for (String cep : ceps) {
-      addresses.add(CepService.convertCepToAddress(cep));
+      addressesToBeSaved.add(CepService.convertCepToAddress(cep));
     }
 
-    repository.saveAll(addresses);
+    return this.repository.saveAll(addressesToBeSaved);
   }
 
-  //  @Disabled
   @Test
   @DisplayName("Create Address record")
-  void shouldCreateAddressRecord() throws Exception {
+  void save_persistAddress_whenSuccessful() throws Exception {
 
-    String[] data = {
-      "85857600", "Rua Ipanema Conjunto Libra", "Foz do Iguaçu", "PR", "Campos do Iguaçu"
-    };
+    Address addressToBeSaved = createAddress(3);
 
-    Address address = CepService.convertCepToAddress(data[0]);
+    Address savedAddress = this.repository.save(addressToBeSaved);
 
-    Address address1 = repository.save(address);
+    System.out.println(savedAddress);
 
-    org.junit.jupiter.api.Assertions.assertAll(
+    assertAll(
         "Test Address record's data",
-        () -> org.junit.jupiter.api.Assertions.assertNotNull(address1),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                CepService.formatCep(data[0]), address1.getCep()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[1], address1.getStreet()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[2], address1.getCity()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[3], address1.getUf()),
-        () -> org.junit.jupiter.api.Assertions.assertEquals(data[4], address1.getNeighborhood()));
+        () -> assertNotNull(savedAddress),
+        () -> assertNotNull(savedAddress.getId()),
+        () -> assertEquals(CepService.formatCep(addressToBeSaved.getCep()), savedAddress.getCep()),
+        () -> assertEquals(addressToBeSaved.getStreet(), savedAddress.getStreet()),
+        () -> assertEquals(addressToBeSaved.getCity(), savedAddress.getCity()),
+        () -> assertEquals(addressToBeSaved.getUf(), savedAddress.getUf()),
+        () -> assertEquals(addressToBeSaved.getNeighborhood(), savedAddress.getNeighborhood()));
   }
 
   @Test
-  @DisplayName("List all Address records")
-  void shouldListAllAddressRecords() {
+  @DisplayName("Update Address record")
+  void save_updateAddress_whenSuccessful() throws Exception {
 
-    String[] addressesData = {"85851010", "Rua Almirante Barroso", "Foz do Iguaçu", "PR", "Centro"};
+    Address addressToBeSaved = createAddress(1);
 
-    String[] addressesData1 = {
-      "85851210", "Avenida Juscelino Kubitschek", "Foz do Iguaçu", "PR", "Centro"
-    };
-    String[] addressesData2 = {"85851000", "Avenida Brasil", "Foz do Iguaçu", "PR", "Centro"};
+    Address savedAddress = this.repository.save(addressToBeSaved);
 
-    String[] addressesData3 = {
-      "85852000",
-      "Avenida ParanáCentro/Vila Residencial A/Jardim das Laranjeiras",
-      "Foz do Iguaçu",
-      "PR",
-      "Centro"
-    };
+    savedAddress.setStreet("Rua Ipanema");
+    savedAddress.setCity("Toledo");
+    savedAddress.setNeighborhood("Conjunto Libra");
 
-    String[] addressesData4 = {
-      "85851110", "Avenida Jorge Schimmelpfeng", "Foz do Iguaçu", "PR", "Centro"
-    };
+    Address updatedAddress = this.repository.save(savedAddress);
 
-    List<Address> addresses = repository.findAll();
+    assertAll(
+        "Test Address record's data",
+        () -> assertNotNull(updatedAddress),
+        () -> assertNotNull(updatedAddress.getId()),
+        () -> assertEquals(CepService.formatCep("85857600"), updatedAddress.getCep()),
+        () -> assertEquals("Rua Ipanema", updatedAddress.getStreet()),
+        () -> assertEquals("Toledo", updatedAddress.getCity()),
+        () -> assertEquals("PR", updatedAddress.getUf()),
+        () -> assertEquals("Conjunto Libra", updatedAddress.getNeighborhood()));
+  }
 
-    System.out.println(addresses);
+  @Test
+  @DisplayName("Delete Address record")
+  void delete_removesAddress_whenSuccessful() throws Exception {
 
-    org.junit.jupiter.api.Assertions.assertAll(
-        "Test Addresses records' data",
-        () -> org.junit.jupiter.api.Assertions.assertFalse(addresses.isEmpty()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                CepService.formatCep(addressesData[0]), addresses.get(0).getCep()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData[1], addresses.get(0).getStreet()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData[2], addresses.get(0).getCity()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData[3], addresses.get(0).getUf()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData[4], addresses.get(0).getNeighborhood()),
-        () -> org.junit.jupiter.api.Assertions.assertFalse(addresses.isEmpty()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                CepService.formatCep(addressesData1[0]), addresses.get(1).getCep()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData1[1], addresses.get(1).getStreet()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData1[2], addresses.get(1).getCity()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData1[3], addresses.get(1).getUf()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData1[4], addresses.get(1).getNeighborhood()),
-        () -> org.junit.jupiter.api.Assertions.assertFalse(addresses.isEmpty()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                CepService.formatCep(addressesData2[0]), addresses.get(2).getCep()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData2[1], addresses.get(2).getStreet()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData2[2], addresses.get(2).getCity()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData2[3], addresses.get(2).getUf()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData2[4], addresses.get(2).getNeighborhood()),
-        () -> org.junit.jupiter.api.Assertions.assertFalse(addresses.isEmpty()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                CepService.formatCep(addressesData3[0]), addresses.get(3).getCep()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData3[1], addresses.get(3).getStreet()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData3[2], addresses.get(3).getCity()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData3[3], addresses.get(3).getUf()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData3[4], addresses.get(3).getNeighborhood()),
-        () -> org.junit.jupiter.api.Assertions.assertFalse(addresses.isEmpty()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                CepService.formatCep(addressesData4[0]), addresses.get(4).getCep()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData4[1], addresses.get(4).getStreet()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData4[2], addresses.get(4).getCity()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData4[3], addresses.get(4).getUf()),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                addressesData4[4], addresses.get(4).getNeighborhood()));
+    Address addressToBeSaved = createAddress(1);
+
+    Address savedAddress = this.repository.save(addressToBeSaved);
+
+    this.repository.delete(savedAddress);
+
+    Address deletedAddress =
+        this.repository.findByCep(CepService.formatCep(addressToBeSaved.getCep()));
+
+    assertThat(deletedAddress).isNull();
   }
 
   @Test
   @DisplayName("Find an Address record by CEP")
-  void shouldFindAddressByCep() {
+  void find_addressByCep_whenSuccessful() throws Exception {
 
-    String cep = CepService.formatCep("85851010");
+    Address addressToBeSaved = createAddress(2);
 
-    String[] data = {"Rua Almirante Barroso", "Foz do Iguaçu", "PR", "Centro"};
+    Address savedAddress = this.repository.save(addressToBeSaved);
 
-    Address address = repository.findByCep(cep);
+    Address retrievedAddress = this.repository.findByCep(savedAddress.getCep());
 
-    System.out.println(address);
-
-    Assertions.assertThat(cep).isEqualTo(address.getCep());
-
-    org.junit.jupiter.api.Assertions.assertAll(
+    assertAll(
         "Test Address record's data",
         () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                cep, address.getCep(), "CEP did not match"),
+            assertEquals(addressToBeSaved.getCep(), retrievedAddress.getCep(), "CEP did not match"),
         () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                data[0], address.getStreet(), "Street did not match"),
+            assertEquals(
+                addressToBeSaved.getStreet(), retrievedAddress.getStreet(), "Street did not match"),
         () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                data[1], address.getCity(), "City did not match"),
+            assertEquals(
+                addressToBeSaved.getCity(), retrievedAddress.getCity(), "City did not match"),
+        () -> assertEquals(addressToBeSaved.getUf(), retrievedAddress.getUf(), "UF did not match"),
         () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                data[2], address.getUf(), "UF did not match"),
-        () ->
-            org.junit.jupiter.api.Assertions.assertEquals(
-                data[3], address.getNeighborhood(), "Neighborhood did not match"));
+            assertEquals(
+                addressToBeSaved.getNeighborhood(),
+                retrievedAddress.getNeighborhood(),
+                "Neighborhood did not match"));
+  }
+
+  @Test
+  @DisplayName("Should find an empty Address")
+  void find_noAddressByCep_whenSuccessful() {
+
+    Address address = this.repository.findByCep(CepService.formatCep("85851010"));
+
+    assertThat(address).isNull();
+  }
+
+  @Test
+  @DisplayName("List all Address records")
+  void find_listAllAddresses_whenSuccessful() throws Exception {
+
+    List<Address> addressesToBeSaved = createAddressList();
+
+    this.repository.saveAll(addressesToBeSaved);
+
+    List<Address> returnedAddresses = this.repository.findAll();
+
+    assertAll(
+        "Test Addresses records' data",
+        () -> assertFalse(returnedAddresses.isEmpty()),
+        () -> assertThat(returnedAddresses).containsAll(addressesToBeSaved));
   }
 }

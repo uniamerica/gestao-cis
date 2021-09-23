@@ -2,12 +2,12 @@ package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.CepService;
+import com.gestaocis.backend.util.AddressCreator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,39 +19,11 @@ public class AddressRepositoryTest {
 
   @Autowired private AddressRepository repository;
 
-  Address createAddress(int option) throws Exception {
-    switch (option) {
-      case 1:
-        return CepService.convertCepToAddress("85857600");
-
-      case 2:
-        return CepService.convertCepToAddress("85851-010");
-
-      case 3:
-        return CepService.convertCepToAddress("85960000");
-
-      default:
-        return CepService.convertCepToAddress("85851000");
-    }
-  }
-
-  List<Address> createAddressList() throws Exception {
-    String[] ceps = {"85851010", "85851-210", "85851000", "85852-000", "85851110"};
-
-    List<Address> addressesToBeSaved = new ArrayList<>();
-
-    for (String cep : ceps) {
-      addressesToBeSaved.add(CepService.convertCepToAddress(cep));
-    }
-
-    return this.repository.saveAll(addressesToBeSaved);
-  }
-
   @Test
   @DisplayName("Create Address record")
   void save_persistAddress_whenSuccessful() throws Exception {
 
-    Address addressToBeSaved = createAddress(3);
+    Address addressToBeSaved = AddressCreator.createAddress(3);
 
     Address savedAddress = this.repository.save(addressToBeSaved);
 
@@ -72,7 +44,7 @@ public class AddressRepositoryTest {
   @DisplayName("Update Address record")
   void save_updateAddress_whenSuccessful() throws Exception {
 
-    Address addressToBeSaved = createAddress(1);
+    Address addressToBeSaved = AddressCreator.createAddress(1);
 
     Address savedAddress = this.repository.save(addressToBeSaved);
 
@@ -97,7 +69,7 @@ public class AddressRepositoryTest {
   @DisplayName("Delete Address record")
   void delete_removesAddress_whenSuccessful() throws Exception {
 
-    Address addressToBeSaved = createAddress(1);
+    Address addressToBeSaved = AddressCreator.createAddress(1);
 
     Address savedAddress = this.repository.save(addressToBeSaved);
 
@@ -113,7 +85,7 @@ public class AddressRepositoryTest {
   @DisplayName("Find an Address record by CEP")
   void find_addressByCep_whenSuccessful() throws Exception {
 
-    Address addressToBeSaved = createAddress(2);
+    Address addressToBeSaved = AddressCreator.createAddress(2);
 
     Address savedAddress = this.repository.save(addressToBeSaved);
 
@@ -150,7 +122,7 @@ public class AddressRepositoryTest {
   @DisplayName("List all Address records")
   void find_listAllAddresses_whenSuccessful() throws Exception {
 
-    List<Address> addressesToBeSaved = createAddressList();
+    List<Address> addressesToBeSaved = AddressCreator.createAddressList();
 
     this.repository.saveAll(addressesToBeSaved);
 

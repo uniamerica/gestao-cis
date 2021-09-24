@@ -3,7 +3,6 @@ package com.gestaocis.backend.services;
 import com.gestaocis.backend.exceptions.InconsistentDataException;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.repositories.AddressRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

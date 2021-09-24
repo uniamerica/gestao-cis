@@ -34,7 +34,6 @@ public class CepService {
           new BufferedReader(new InputStreamReader((connection.getInputStream())));
       String jsonToString = JsonToStringUtil.convertJsonToString(response);
 
-      //      Gson gson = new Gson();
       Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
 
       return gson.fromJson(jsonToString, Address.class);

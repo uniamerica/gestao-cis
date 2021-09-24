@@ -38,22 +38,22 @@ public class AddressService {
   }
 
   @Transactional
-  public void save(Address address) throws Exception {
+  public Address save(Address address) throws Exception {
     Address findAddress = repository.findByCep(address.getCep());
     if (findAddress != null) {
       throw new ResourceAlreadyExistsException("Endereço já existente.");
     } else {
       Address address1 = CepService.convertCepToAddress(CepService.formatCep(address.getCep()));
       if (!(Objects.equals(address.getCep(), address1.getCep())
-              & Objects.equals(address.getStreet(), address1.getStreet())
-              & Objects.equals(address.getCity(), address1.getCity())
-              & Objects.equals(address.getUf(), address1.getUf())
-              & Objects.equals(address.getNeighborhood(), address1.getNeighborhood()))) {
-                throw new InconsistentDataException(
-                    "Os dados de endereço não batem. Por favor, tente novamente.");
-              } else {
-            repository.save(address);
-          }
+          & Objects.equals(address.getStreet(), address1.getStreet())
+          & Objects.equals(address.getCity(), address1.getCity())
+          & Objects.equals(address.getUf(), address1.getUf())
+          & Objects.equals(address.getNeighborhood(), address1.getNeighborhood()))) {
+        throw new InconsistentDataException(
+            "Os dados de endereço não batem. Por favor, tente novamente.");
+      } else {
+        return repository.save(address);
+      }
     }
   }
 
@@ -61,12 +61,12 @@ public class AddressService {
     repository.delete(findByIdOrThrowResourceNotFoundException(id));
   }
 
-  public void replace(String cep) throws Exception {
-    Address findAddress = repository.findByCep(cep);
+  public void replace(Address address) throws Exception {
+    Address findAddress = repository.findByCep(address.getCep());
     if (findAddress == null) {
       throw new ResourceNotFoundException("Cep não encontrado, por favor tente novamente.");
     } else {
-      repository.save(CepService.convertCepToAddress(cep));
+      repository.save(address);
     }
   }
 }

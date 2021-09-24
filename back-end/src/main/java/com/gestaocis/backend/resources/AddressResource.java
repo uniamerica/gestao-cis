@@ -2,10 +2,12 @@ package com.gestaocis.backend.resources;
 
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.AddressService;
+import com.gestaocis.backend.services.CepService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,10 +31,14 @@ public class AddressResource {
     return ResponseEntity.ok(service.findByIdOrThrowResourceNotFoundException(id));
   }
 
+  @GetMapping(path = "/{cep}")
+  public ResponseEntity<Address> findByCep(@PathVariable("cep") String cep) {
+    return ResponseEntity.ok(service.findByCep(CepService.formatCep(cep)));
+  }
+
   @PostMapping
-  public ResponseEntity<Void> save(@RequestBody Address address) throws Exception {
-    service.save(address);
-    return new ResponseEntity<>(HttpStatus.CREATED);
+  public ResponseEntity<Address> save(@RequestBody @Valid Address address) throws Exception {
+    return new ResponseEntity<>(service.save(address), HttpStatus.CREATED);
   }
 
   @DeleteMapping(path = "/{id}")
@@ -42,8 +48,8 @@ public class AddressResource {
   }
 
   @PutMapping
-  public ResponseEntity<Void> replace(@RequestBody String cep) throws Exception {
-    service.replace(cep);
+  public ResponseEntity<Void> replace(@RequestBody @Valid Address address) throws Exception {
+    service.replace(address);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

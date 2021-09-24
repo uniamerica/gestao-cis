@@ -104,7 +104,6 @@ public class AddressResourceTest {
     assertThat(savedAddress).isNotNull().isEqualTo(AddressCreator.createAddress(1));
   }
 
-  // Ajustar método createUpdatedAddress()
   @Test
   @DisplayName("Replace Address record")
   void replace_updatesAddress_whenSuccessful() throws Exception {

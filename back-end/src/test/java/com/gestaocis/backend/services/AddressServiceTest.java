@@ -1,63 +1,131 @@
 package com.gestaocis.backend.services;
 
-import com.gestaocis.backend.exceptions.InconsistentDataException;
 import com.gestaocis.backend.models.Address;
-import com.gestaocis.backend.repositories.AddressRepository;
+import com.gestaocis.backend.resources.AddressResource;
+import com.gestaocis.backend.util.AddressCreator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 public class AddressServiceTest {
 
-  @Mock private AddressRepository repository;
+  @InjectMocks private AddressResource resource;
 
-  @InjectMocks private AddressService service;
+  @Mock private AddressService service;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    BDDMockito.when(service.listAll()).thenReturn(AddressCreator.createAddressList());
+
+    BDDMockito.when(service.findByIdOrThrowResourceNotFoundException(ArgumentMatchers.anyLong()))
+        .thenReturn(AddressCreator.createAddress(1));
+
+    BDDMockito.when(service.findByCep(ArgumentMatchers.anyString()))
+        .thenReturn(AddressCreator.createAddress(2));
+
+    BDDMockito.when(service.save(ArgumentMatchers.isA(Address.class)))
+        .thenReturn(AddressCreator.createAddress(1));
+
+    BDDMockito.doNothing().when(service).replace(ArgumentMatchers.isA(Address.class));
+
+    BDDMockito.doNothing().when(service).delete(ArgumentMatchers.anyLong());
+  }
+
+  @Test
+  @DisplayName("List all Address records")
+  void find_listAllAddresses_whenSuccessful() throws Exception {
+
+    String expectedStreet = AddressCreator.createAddressList().get(0).getStreet();
+    System.out.println(expectedStreet);
+
+    List<Address> addressList = resource.list().getBody();
+
+    assertThat(addressList).isNotNull().isNotEmpty().hasSize(5);
+    assertThat(addressList.get(0).getStreet()).isEqualTo(expectedStreet);
+  }
+
+  @Test
+  @DisplayName("Find Address by id")
+  void findById_returnsAddress_whenSuccessful() throws Exception {
+
+    Long id = AddressCreator.createAddress(1).getId();
+
+    Address fetchedAddress = resource.findById(1L).getBody();
+
+    assertThat(fetchedAddress).isNotNull();
+    assertThat(fetchedAddress.getId()).isNotNull().isEqualTo(id);
+  }
+
+  @Test
+  @DisplayName("Find Address by cep")
+  void findByCep_returnsAddress_whenSuccessful() throws Exception {
+
+    String cep = AddressCreator.createAddress(2).getCep();
+
+    Address fetchedAddress = resource.findByCep("85851-010").getBody();
+
+    assertThat(fetchedAddress).isNotNull();
+    assertThat(fetchedAddress.getCep()).isNotNull().isEqualTo(cep);
+  }
+
+  @Test
+  @DisplayName("Should find an empty Address")
+  void findByCep_noAddressByCep_whenSuccessful() throws Exception {
+
+    BDDMockito.when(service.findByCep(ArgumentMatchers.anyString())).thenReturn(null);
+
+    String cep = AddressCreator.createAddress(2).getCep();
+
+    Address fetchedAddress = resource.findByCep("85851-010").getBody();
+
+    assertThat(fetchedAddress).isNull();
+  }
 
   @Test
   @DisplayName("Create Address record")
-  void shouldCreateAddressRecord() throws Exception {
-    Address address = CepService.convertCepToAddress("85857600");
+  void save_persistsAddress_whenSuccessful() throws Exception {
 
-    Mockito.when(repository.save(any(Address.class))).thenReturn(address);
+    Address savedAddress = resource.save(AddressCreator.createAddress(1)).getBody();
 
-    Address savedAddress = repository.save(address);
-    assertThat(savedAddress.getStreet()).isNotNull();
+    assertThat(savedAddress).isNotNull().isEqualTo(AddressCreator.createAddress(1));
   }
 
   @Test
-  @DisplayName("Find Address record in database")
-  public void shouldFindAddressInDatabase() throws Exception {
-    Address address = CepService.convertCepToAddress("85857600");
+  @DisplayName("Replace Address record")
+  void replace_updatesAddress_whenSuccessful() throws Exception {
 
-    List<Address> addresses = new ArrayList<>();
-    addresses.add(address);
+    assertThatCode(() -> resource.replace(AddressCreator.createUpdatedAddress()))
+        .doesNotThrowAnyException();
 
-    Mockito.when(repository.findAll()).thenReturn(addresses);
+    ResponseEntity<Void> entity = resource.replace(AddressCreator.createUpdatedAddress());
 
-    List<Address> fetchedAddresses = service.listAll();
-    assertThat(fetchedAddresses.size()).isGreaterThan(0);
+    assertThat(entity).isNotNull();
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
   @Test
-  @DisplayName("Throw error due to inconsistent CEP submission")
-  public void shouldThrowInconsistentDataException() {
-    assertThrows(
-        InconsistentDataException.class,
-        () -> {
-          String cep = "abcdef";
-          service.findByCep(cep);
-        });
+  @DisplayName("Delete Address record")
+  void delete_removesAddress_whenSuccessful() throws Exception {
+
+    assertThatCode(() -> resource.delete(1L)).doesNotThrowAnyException();
+
+    ResponseEntity<Void> entity = resource.delete(1L);
+
+    assertThat(entity).isNotNull();
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 }

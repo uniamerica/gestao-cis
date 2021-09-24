@@ -1,9 +1,7 @@
 package com.gestaocis.backend.util;
 
 import com.gestaocis.backend.models.Address;
-import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.services.CepService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,15 +9,6 @@ import java.util.List;
 
 @Component
 public class AddressCreator {
-
-  private static AddressRepository repository;
-
-  @Autowired
-  private AddressCreator(AddressRepository repository) {
-    AddressCreator.repository = repository;
-  }
-
-  // **** Repository ****
 
   public static Address createAddress(int option) throws Exception {
     switch (option) {
@@ -62,14 +51,14 @@ public class AddressCreator {
   }
 
   public static Address createUpdatedAddress() throws Exception {
+    Address address = createAddressNoId(1);
+    address.setCity("Toledo");
+    address.setNeighborhood("Conjunto Libra");
+    address.setStreet("Rua Ipanema");
 
-    Address savedAddress = repository.save(AddressCreator.createAddressNoId(1));
+    System.out.println(address);
 
-    savedAddress.setStreet("Rua Ipanema");
-    savedAddress.setCity("Toledo");
-    savedAddress.setNeighborhood("Conjunto Libra");
-
-    return repository.save(savedAddress);
+    return address;
   }
 
   public static List<Address> createAddressList() throws Exception {

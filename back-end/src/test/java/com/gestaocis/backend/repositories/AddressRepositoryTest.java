@@ -28,8 +28,6 @@ public class AddressRepositoryTest {
 
     Address savedAddress = this.repository.save(addressToBeSaved);
 
-    System.out.println(savedAddress);
-
     assertAll(
         "Test Address record's data",
         () -> assertNotNull(savedAddress),
@@ -41,13 +39,19 @@ public class AddressRepositoryTest {
         () -> assertEquals(addressToBeSaved.getNeighborhood(), savedAddress.getNeighborhood()));
   }
 
-  // Ajustar
-  @Disabled
   @Test
   @DisplayName("Update Address record")
   void save_updateAddress_whenSuccessful() throws Exception {
 
-    Address updatedAddress = AddressCreator.createUpdatedAddress();
+    Address addressToBeSaved = AddressCreator.createAddressNoId(1);
+
+    Address savedAddress = repository.save(addressToBeSaved);
+
+    savedAddress.setStreet("Rua Ipanema");
+    savedAddress.setCity("Toledo");
+    savedAddress.setNeighborhood("Conjunto Libra");
+
+    Address updatedAddress = repository.save(savedAddress);
 
     assertAll(
         "Test Address record's data",

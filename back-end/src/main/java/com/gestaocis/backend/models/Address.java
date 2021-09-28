@@ -30,13 +30,11 @@ public class Address implements Serializable {
   @Column(nullable = false)
   private String neighborhood;
 
-  @JsonIgnore
   @OneToMany(mappedBy = "address") private List<User> users = new ArrayList<>();
 
   public Address() {}
 
-  public Address(Long id, String cep, String street, String city, String uf, String neighborhood) {
-    this.id = id;
+  public Address(String cep, String street, String city, String uf, String neighborhood) {
     this.cep = cep;
     this.street = street;
     this.city = city;

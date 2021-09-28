@@ -1,4 +1,4 @@
-package com.gestaocis.backend.resources;
+package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.AddressService;
@@ -13,11 +13,11 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/v1/addresses")
-public class AddressResource {
+public class AddressController {
 
   private final AddressService service;
 
-  public AddressResource(AddressService service) {
+  public AddressController(AddressService service) {
     this.service = service;
   }
 

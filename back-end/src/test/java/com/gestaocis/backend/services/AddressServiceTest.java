@@ -1,8 +1,10 @@
 package com.gestaocis.backend.services;
 
+import com.gestaocis.backend.exceptions.ResourceNotFoundException;
 import com.gestaocis.backend.models.Address;
-import com.gestaocis.backend.resources.AddressResource;
+import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.util.AddressCreator;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,11 +13,10 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -23,26 +24,24 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 @ExtendWith(SpringExtension.class)
 public class AddressServiceTest {
 
-  @InjectMocks private AddressResource resource;
+  @InjectMocks private AddressService service;
 
-  @Mock private AddressService service;
+  @Mock private AddressRepository repository;
 
   @BeforeEach
   void setUp() throws Exception {
-    BDDMockito.when(service.listAll()).thenReturn(AddressCreator.createAddressList());
+    BDDMockito.when(repository.findAll()).thenReturn(AddressCreator.createAddressList());
 
-    BDDMockito.when(service.findByIdOrThrowResourceNotFoundException(ArgumentMatchers.anyLong()))
-        .thenReturn(AddressCreator.createAddress(1));
+    BDDMockito.when(repository.findById(ArgumentMatchers.anyLong()))
+        .thenReturn(Optional.of(AddressCreator.createAddress(1)));
 
-    BDDMockito.when(service.findByCep(ArgumentMatchers.anyString()))
+    BDDMockito.when(repository.findByCep(ArgumentMatchers.anyString()))
         .thenReturn(AddressCreator.createAddress(2));
 
-    BDDMockito.when(service.save(ArgumentMatchers.isA(Address.class)))
-        .thenReturn(AddressCreator.createAddress(1));
+    BDDMockito.when(repository.save(ArgumentMatchers.isA(Address.class)))
+        .thenReturn(AddressCreator.createAddress(3));
 
-    BDDMockito.doNothing().when(service).replace(ArgumentMatchers.isA(Address.class));
-
-    BDDMockito.doNothing().when(service).delete(ArgumentMatchers.anyLong());
+    BDDMockito.doNothing().when(repository).delete(ArgumentMatchers.any(Address.class));
   }
 
   @Test
@@ -52,7 +51,7 @@ public class AddressServiceTest {
     String expectedStreet = AddressCreator.createAddressList().get(0).getStreet();
     System.out.println(expectedStreet);
 
-    List<Address> addressList = resource.list().getBody();
+    List<Address> addressList = service.listAll();
 
     assertThat(addressList).isNotNull().isNotEmpty().hasSize(5);
     assertThat(addressList.get(0).getStreet()).isEqualTo(expectedStreet);
@@ -64,10 +63,20 @@ public class AddressServiceTest {
 
     Long id = AddressCreator.createAddress(1).getId();
 
-    Address fetchedAddress = resource.findById(1L).getBody();
+    Address fetchedAddress = service.findByIdOrThrowResourceNotFoundException(1L);
 
     assertThat(fetchedAddress).isNotNull();
     assertThat(fetchedAddress.getId()).isNotNull().isEqualTo(id);
+  }
+
+  @Test
+  @DisplayName("Find Address by id - Throw ResourceNotFoundException")
+  void findById_throwsResourceNotFoundException_whenIdIsNonexistent() throws Exception {
+
+    BDDMockito.when(repository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.empty());
+
+    Assertions.assertThatExceptionOfType(ResourceNotFoundException.class)
+        .isThrownBy(() -> service.findByIdOrThrowResourceNotFoundException(1L));
   }
 
   @Test
@@ -76,7 +85,7 @@ public class AddressServiceTest {
 
     String cep = AddressCreator.createAddress(2).getCep();
 
-    Address fetchedAddress = resource.findByCep("85851-010").getBody();
+    Address fetchedAddress = service.findByCep("85851-010");
 
     assertThat(fetchedAddress).isNotNull();
     assertThat(fetchedAddress.getCep()).isNotNull().isEqualTo(cep);
@@ -86,46 +95,37 @@ public class AddressServiceTest {
   @DisplayName("Should find an empty Address")
   void findByCep_noAddressByCep_whenSuccessful() throws Exception {
 
-    BDDMockito.when(service.findByCep(ArgumentMatchers.anyString())).thenReturn(null);
+    BDDMockito.when(repository.findByCep(ArgumentMatchers.anyString())).thenReturn(null);
 
     String cep = AddressCreator.createAddress(2).getCep();
 
-    Address fetchedAddress = resource.findByCep("85851-010").getBody();
+    Address fetchedAddress = service.findByCep("85851-010");
 
     assertThat(fetchedAddress).isNull();
   }
 
+  // Ajustar
   @Test
   @DisplayName("Create Address record")
   void save_persistsAddress_whenSuccessful() throws Exception {
 
-    Address savedAddress = resource.save(AddressCreator.createAddress(1)).getBody();
+    Address savedAddress = service.save(AddressCreator.createAddress(3));
 
-    assertThat(savedAddress).isNotNull().isEqualTo(AddressCreator.createAddress(1));
+    assertThat(savedAddress).isNotNull().isEqualTo(AddressCreator.createAddress(3));
   }
 
   @Test
   @DisplayName("Replace Address record")
   void replace_updatesAddress_whenSuccessful() throws Exception {
 
-    assertThatCode(() -> resource.replace(AddressCreator.createUpdatedAddress()))
+    assertThatCode(() -> service.replace(AddressCreator.createUpdatedAddress()))
         .doesNotThrowAnyException();
-
-    ResponseEntity<Void> entity = resource.replace(AddressCreator.createUpdatedAddress());
-
-    assertThat(entity).isNotNull();
-    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
   @Test
   @DisplayName("Delete Address record")
   void delete_removesAddress_whenSuccessful() throws Exception {
 
-    assertThatCode(() -> resource.delete(1L)).doesNotThrowAnyException();
-
-    ResponseEntity<Void> entity = resource.delete(1L);
-
-    assertThat(entity).isNotNull();
-    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    assertThatCode(() -> service.delete(1L)).doesNotThrowAnyException();
   }
 }

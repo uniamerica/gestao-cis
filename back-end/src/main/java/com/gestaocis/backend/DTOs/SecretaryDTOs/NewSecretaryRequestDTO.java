@@ -27,9 +27,5 @@ public class NewSecretaryRequestDTO {
 
     // Address
     private String cep;
-    private String street;
-    private String city;
-    private String uf;
-    private String neighborhood;
 
 }

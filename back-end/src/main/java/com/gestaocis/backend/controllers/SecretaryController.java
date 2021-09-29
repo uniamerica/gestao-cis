@@ -18,7 +18,7 @@ public class SecretaryController {
     @Autowired private SecretaryService secretaryService;
 
     @PostMapping
-    public ResponseEntity<SecretaryResponseDTO> save(@RequestBody NewSecretaryRequestDTO responseBody){
+    public ResponseEntity<SecretaryResponseDTO> save(@RequestBody NewSecretaryRequestDTO responseBody) throws Exception {
         return new ResponseEntity<>(this.secretaryService.save(responseBody), HttpStatus.CREATED);
     }
 

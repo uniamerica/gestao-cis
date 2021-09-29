@@ -28,25 +28,23 @@ public class SecretaryService {
     @Autowired
     private RoleEntityRepository roleEntityRepository;
 
+    @Autowired
+    private AddressService addressService;
+
     @Autowired private AddressRepository addressRepository;
 
-    public SecretaryResponseDTO save(NewSecretaryRequestDTO secretary){
+    public SecretaryResponseDTO save(NewSecretaryRequestDTO secretary) throws Exception {
 
         RoleEntity role = roleEntityRepository
                 .findByRoleName(Role.ROLE_SECRETARY)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role not found"));
 
-        Address address = new Address(
-                secretary.getCep(),
-                secretary.getStreet(),
-                secretary.getCity(),
-                secretary.getUf(),
-                secretary.getNeighborhood()
-        );
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
+            Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(secretary.getCep())));
+
             User secretaryUser = User
                     .builder()
                     .cpf(secretary.getCpf())
@@ -81,21 +79,21 @@ public class SecretaryService {
         }
     }
 
-    public SecretaryResponseDTO update (UUID uuid, NewSecretaryRequestDTO secretary){
-        try{
-            Address address = new Address(
-                    secretary.getCep(),
-                    secretary.getStreet(),
-                    secretary.getCity(),
-                    secretary.getUf(),
-                    secretary.getNeighborhood()
-            );
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        }catch (Exception exception){
-
-        }
-    }
+//    public SecretaryResponseDTO update (UUID uuid, NewSecretaryRequestDTO secretary){
+//        try{
+//            Address address = new Address(
+//                    secretary.getCep(),
+//                    secretary.getStreet(),
+//                    secretary.getCity(),
+//                    secretary.getUf(),
+//                    secretary.getNeighborhood()
+//            );
+//
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        }catch (Exception exception){
+//
+//        }
+//    }
 
 }

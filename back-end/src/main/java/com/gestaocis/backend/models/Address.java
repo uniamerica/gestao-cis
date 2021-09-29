@@ -1,13 +1,24 @@
 package com.gestaocis.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.SerializedName;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Address implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -15,74 +26,40 @@ public class Address implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
+  @NotEmpty(message = "O CEP deve ser preenchido")
   private String cep;
 
-  @Column(nullable = false)
+  //  @Column(nullable = false)
+  @SerializedName(value = "logradouro")
   private String street;
 
-  @Column(nullable = false)
+  @NotEmpty(message = "A cidade deve ser preenchido")
+  @SerializedName(value = "localidade")
   private String city;
 
-  @Column(nullable = false)
+  //  @Column(nullable = false)
   private String uf;
 
-  @Column(nullable = false)
+  @NotEmpty(message = "O bairro deve ser preenchido")
+  @SerializedName(value = "bairro")
   private String neighborhood;
 
-  @OneToMany(mappedBy = "address") private List<User> users = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy = "address")
+  @ToString.Exclude
+  private List<User> users = new ArrayList<>();
 
-  public Address() {}
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+    Address address = (Address) o;
 
-  public Address(String cep, String street, String city, String uf, String neighborhood) {
-    this.cep = cep;
-    this.street = street;
-    this.city = city;
-    this.uf = uf;
-    this.neighborhood = neighborhood;
+    return Objects.equals(id, address.id);
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public String getCep() {
-    return cep;
-  }
-
-  public void setCep(String cep) {
-    this.cep = cep;
-  }
-
-  public String getStreet() {
-    return street;
-  }
-
-  public void setStreet(String street) {
-    this.street = street;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public String getUf() {
-    return uf;
-  }
-
-  public void setUf(String uf) {
-    this.uf = uf;
-  }
-
-  public String getNeighborhood() {
-    return neighborhood;
-  }
-
-  public void setNeighborhood(String neighborhood) {
-    this.neighborhood = neighborhood;
+  @Override
+  public int hashCode() {
+    return 1395783287;
   }
 }

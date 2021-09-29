@@ -34,6 +34,7 @@ public class SecretaryResponseDTO {
         this.phone = secretary.getPhone();
         this.fullName = secretary.getFullName();
         this.birthdate = secretary.getBirthdate();
+        this.sex= secretary.getSex();
         this.address = AddressDTO.builder()
                 .addressCountry(secretary.getAddressCountry())
                 .addressLine2(secretary.getAddressLine2())

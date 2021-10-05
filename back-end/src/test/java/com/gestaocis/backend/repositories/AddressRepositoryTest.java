@@ -3,7 +3,6 @@ package com.gestaocis.backend.repositories;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.CepService;
 import com.gestaocis.backend.util.AddressCreator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

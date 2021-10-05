@@ -4,6 +4,7 @@ import com.gestaocis.backend.exceptions.ResourceNotFoundException;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.util.AddressCreator;
+import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ExtendWith(SpringExtension.class)
+@Log4j2
 public class AddressServiceTest {
 
   @InjectMocks private AddressService service;

@@ -3,6 +3,7 @@ package com.gestaocis.backend.services;
 
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
+import com.gestaocis.backend.DTOs.SecretaryDTOs.SecretaryResponseDTO;
 import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.exceptions.BadRequestException;
@@ -19,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PatientService {
@@ -73,6 +75,23 @@ public class PatientService {
 
             User patientSaved = userRepository.save(patientUser);
             return new PatientResponseDTO(patientSaved);
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    public List<User> findAll() {
+        RoleEntity role = roleEntityRepository
+                .findByRoleName(Role.ROLE_PATIENT)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role not found"));
+        return userRepository.findByRole(role);
+    }
+
+    public PatientResponseDTO findByUUID(UUID uuid){
+        try{
+            User patient = this.userRepository.findByUuid(uuid)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
+            return new PatientResponseDTO(patient);
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());
         }

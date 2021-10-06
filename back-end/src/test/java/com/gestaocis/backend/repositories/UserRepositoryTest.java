@@ -54,7 +54,6 @@ class UserRepositoryTest {
         .specialties(specialtyEntities)
         .email("test@test.com")
         .phone("(45)99999999")
-        .email("teste@test.com")
         .fullName("Fulano de Tal")
         .birthdate(Instant.now())
         .mothersName("Mãe do Fulano")

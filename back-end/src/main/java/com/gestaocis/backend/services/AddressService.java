@@ -36,12 +36,21 @@ public class AddressService {
     return repository.findByCep(CepService.formatCep(cep));
   }
 
+  public Address findByStreet(String name) {
+    return repository.findByStreetIgnoreCase(name);
+  }
+
+  public Address findByCity(String name) {
+    return repository.findByCityIgnoreCase(name);
+  }
+
   // Adicionar user na lista do cep que já está salvo
 
   @Transactional
   public Address save(Address address) throws Exception {
     Address findAddress = repository.findByCep(address.getCep());
-    Address addressToBeSaved = CepService.convertCepToAddress(CepService.formatCep(address.getCep()));
+    Address addressToBeSaved =
+        CepService.convertCepToAddress(CepService.formatCep(address.getCep()));
     if (findAddress != null) {
       // setar ID
       findAddress.setStreet(addressToBeSaved.getStreet());
@@ -64,11 +73,10 @@ public class AddressService {
     return repository.save(address);
   }
 
-  // ** cep que só tenha cidade - abrir os campos para a pessoa preencher e salvar após o preenchimento **
+  // ** cep que só tenha cidade - abrir os campos para a pessoa preencher e salvar após o
+  // preenchimento **
 
   // autocomplete nos campos que o user for digitar, buscando dos registros já existentes no BD
-
-
 
   //  @Transactional
   //  public Address save(Address address) throws Exception {

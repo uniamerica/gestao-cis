@@ -35,6 +35,16 @@ public class AddressController {
     return ResponseEntity.ok(service.findByCep(cep));
   }
 
+  @GetMapping(path = "/searchByStreet")
+  public ResponseEntity<Address> findByStreet(@RequestParam String street) {
+    return ResponseEntity.ok(service.findByStreet(street));
+  }
+
+  @GetMapping(path = "/searchByCity")
+  public ResponseEntity<Address> findByCity(@RequestParam String city) {
+    return ResponseEntity.ok(service.findByCity(city));
+  }
+
   @PostMapping
   public ResponseEntity<Address> save(@RequestBody @Valid Address address) throws Exception {
     return new ResponseEntity<>(service.save(address), HttpStatus.CREATED);

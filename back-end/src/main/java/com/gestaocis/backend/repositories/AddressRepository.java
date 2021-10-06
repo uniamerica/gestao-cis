@@ -9,5 +9,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
   Address findByCep(String cep);
 
-  //  Address findByUuid(UUID uuid);
+  Address findByStreetIgnoreCase(String name);
+
+  Address findByCityIgnoreCase(String name);
 }

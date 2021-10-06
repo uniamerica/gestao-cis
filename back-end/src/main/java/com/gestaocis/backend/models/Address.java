@@ -29,7 +29,7 @@ public class Address implements Serializable {
   @NotEmpty(message = "O CEP deve ser preenchido")
   private String cep;
 
-  //  @Column(nullable = false)
+  @Column(unique = true)
   @SerializedName(value = "logradouro")
   private String street;
 

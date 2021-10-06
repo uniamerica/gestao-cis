@@ -3,7 +3,6 @@ package com.gestaocis.backend.services;
 
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
-import com.gestaocis.backend.DTOs.SecretaryDTOs.SecretaryResponseDTO;
 import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.exceptions.BadRequestException;
@@ -19,8 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PatientService {
@@ -80,11 +79,16 @@ public class PatientService {
         }
     }
 
-    public List<User> findAll() {
-        RoleEntity role = roleEntityRepository
-                .findByRoleName(Role.ROLE_PATIENT)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role not found"));
-        return userRepository.findByRole(role);
+    public List<PatientResponseDTO> findAll(){
+        try{
+            RoleEntity role = this.roleEntityRepository
+                    .findByRoleName(Role.ROLE_PATIENT)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role Not Found"));
+            List<User> patients = this.userRepository.findByRole(role);
+            return patients.stream().map(PatientResponseDTO::new).collect(Collectors.toList());
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
     }
 
     public PatientResponseDTO findByUUID(UUID uuid){
@@ -92,6 +96,41 @@ public class PatientService {
             User patient = this.userRepository.findByUuid(uuid)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
             return new PatientResponseDTO(patient);
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    public PatientResponseDTO update (UUID uuid, NewPatientRequestDTO patient){
+        try{
+            User patientFound = this.userRepository.findByUuid(uuid)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
+            Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(patient.getCep())));
+            patientFound.setFullName(patient.getFullName());
+            patientFound.setEmail(patient.getEmail());
+            patientFound.setPhone(patient.getPhone());
+            patientFound.setAddress(address);
+            patientFound.setAddressCountry(patient.getAddressCountry());
+            patientFound.setAddressLine2(patient.getAddressLine2());
+
+            return new PatientResponseDTO(this.userRepository.save(patientFound));
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    public boolean delete(UUID uuid){
+        try{
+            User patient = this.userRepository.findByUuid(uuid)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
+            this.userRepository.delete(patient);
+
+            if(userRepository.findByUuid(uuid).isEmpty()) {
+                return true;
+            }else{
+                return false;
+            }
+
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());
         }

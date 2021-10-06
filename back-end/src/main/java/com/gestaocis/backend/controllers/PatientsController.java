@@ -2,8 +2,7 @@ package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
-import com.gestaocis.backend.DTOs.SecretaryDTOs.NewSecretaryRequestDTO;
-import com.gestaocis.backend.DTOs.SecretaryDTOs.SecretaryResponseDTO;
+import com.gestaocis.backend.exceptions.BadRequestException;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +29,18 @@ public class PatientsController {
         return new ResponseEntity<>(this.service.save(responseBody), HttpStatus.CREATED);
     }
 
-//    @GetMapping
-//    public ResponseEntity<PatientResponseDTO> findAll() {
-//        return new ResponseEntity<>(this.service.findAll(), HttpStatus.OK);
-//    }
-
     @GetMapping(path ="/{uuid}")
     public ResponseEntity<PatientResponseDTO> findPatientByUUID(@RequestParam UUID uuid){
         return new ResponseEntity<>(this.service.findByUUID(uuid), HttpStatus.OK);
+    }
+
+    @PutMapping(path= "/{uuid}")
+    public final ResponseEntity<PatientResponseDTO> updatePatient(@RequestParam UUID uuid, @RequestBody NewPatientRequestDTO responseBody){
+        try{
+            return new ResponseEntity<>(this.service.update(uuid, responseBody), HttpStatus.OK);
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
     }
 
 //    @PutMapping("/{id}")
@@ -52,6 +55,15 @@ public class PatientsController {
 //            throw new Exception(e);
 //        }
 //    }
+
+    @DeleteMapping(path = "/{uuid}")
+    public final ResponseEntity<String> deletePatient(@RequestParam UUID uuid){
+        if(this.service.delete(uuid)){
+            return new ResponseEntity<>("Successfully deleted",HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Fail to delete",HttpStatus.BAD_REQUEST);
+        }
+    }
 
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<?> delete(@PathVariable Long id) throws Exception {

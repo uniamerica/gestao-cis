@@ -1,12 +1,14 @@
 package com.gestaocis.backend.DTOs.PatientDTOs;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class NewPatientRequestDTO {
     // User
     private String cpf;
@@ -26,4 +28,8 @@ public class NewPatientRequestDTO {
 
     // Address
     private String cep;
+    private String street;
+    private String city;
+    private String uf;
+    private String neighborhood;
 }

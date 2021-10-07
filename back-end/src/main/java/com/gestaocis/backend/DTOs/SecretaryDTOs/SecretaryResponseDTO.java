@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -14,8 +15,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SecretaryResponseDTO {
+public class SecretaryResponseDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     // User
     private UUID uuid;
     private String cpf;

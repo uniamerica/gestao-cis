@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/RoomController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/RoomControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/RoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +38,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.RoomRepositoryTest.save_room_whenSuccessful">
     <configuration name="RoomRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
@@ -54,8 +54,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RoomRepositoryTest.save_room_whenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gestaocis.backend.repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.repositories" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.repositories.RoomRepositoryTest" />
+      <option name="METHOD_NAME" value="save_room_whenSuccessful" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RoomRepositoryTest.save_room_whenSuccessful" />
         <item itemvalue="JUnit.RoomRepositoryTest" />
       </list>
     </recent_temporary>
@@ -81,5 +98,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

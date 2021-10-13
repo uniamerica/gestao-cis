@@ -59,7 +59,7 @@ public class PatientControllerTest {
 
     @Test
     @DisplayName("update Returns Patient DTO when successful")
-    public void update_returnPatientDTO_WhenSuccessful(){
+    public void update_returnPatientDTO_WhenSuccessful() throws Exception {
         String cpf = PatientCreator.createValidPatientResponseDTOSaved().getCpf();
 
         PatientResponseDTO response = patientController.updatePatient(UUID.randomUUID(), PatientCreator.createValidPatientRequestDtoToBeSaved()).getBody();

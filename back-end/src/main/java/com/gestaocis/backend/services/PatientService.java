@@ -16,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,6 +40,7 @@ public class PatientService {
     @Autowired
     private HealthInsuranceRepository healthInsuranceRepository;
 
+    // SAVES NEW PATIENT
     public PatientResponseDTO save(NewPatientRequestDTO patient) throws Exception {
 
         RoleEntity role = roleEntityRepository
@@ -46,14 +49,16 @@ public class PatientService {
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date parsedDate = sdf.parse(patient.getBirthdate());
+//        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
         try {
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(patient.getCep())));
-
             HealthInsurance healthInsurance = healthInsuranceRepository.findByInsuranceName(patient.getInsuranceName()).orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Deu ruim"));
 
             User patientUser = User
                     .builder()
+                    .uuid(new UUID(1L, 2L))
                     .cpf(patient.getCpf())
                     .rg(patient.getRg())
                     .email(patient.getEmail())
@@ -79,6 +84,7 @@ public class PatientService {
         }
     }
 
+    // FINDS ALL BY ROLE (supposedly)
     public List<PatientResponseDTO> findAll(){
         try{
             RoleEntity role = this.roleEntityRepository
@@ -91,6 +97,7 @@ public class PatientService {
         }
     }
 
+    // FINDS BY UUID
     public PatientResponseDTO findByUUID(UUID uuid){
         try{
             User patient = this.userRepository.findByUuid(uuid)
@@ -101,6 +108,7 @@ public class PatientService {
         }
     }
 
+    // UPDATES (finding by UUID)
     public PatientResponseDTO update (UUID uuid, NewPatientRequestDTO patient){
         try{
             User patientFound = this.userRepository.findByUuid(uuid)
@@ -119,6 +127,7 @@ public class PatientService {
         }
     }
 
+    //DELETE (finding by UUID)
     public boolean delete(UUID uuid){
         try{
             User patient = this.userRepository.findByUuid(uuid)

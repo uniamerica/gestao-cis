@@ -2,6 +2,7 @@ package com.gestaocis.backend.integration;
 
 import com.gestaocis.backend.BackEndApplication;
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
+import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.util.AddressCreator;
@@ -28,16 +29,11 @@ public class PatientControllerIntegrationTest {
     @Autowired
     private AddressRepository repository;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        repository.saveAll(AddressCreator.createAddressList());
-    }
-
     @Test
     public void shouldSavePatient() {
         NewPatientRequestDTO patient = PatientCreator.createValidPatientRequestDtoToBeSaved();
-        ResponseEntity<String> responseEntity = this.restTemplate
-                .postForEntity("http://localhost:"+ port +"/api/pacientes", patient, String.class);
+        ResponseEntity<PatientResponseDTO> responseEntity = this.restTemplate
+                .postForEntity("http://localhost:"+ port +"/api/pacientes", patient, PatientResponseDTO.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
 }

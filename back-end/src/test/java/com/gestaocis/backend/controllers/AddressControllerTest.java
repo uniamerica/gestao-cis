@@ -37,6 +37,9 @@ public class AddressControllerTest {
     BDDMockito.when(service.findByCep(ArgumentMatchers.anyString()))
         .thenReturn(AddressCreator.createAddress(2));
 
+    BDDMockito.when(service.findByStreet(ArgumentMatchers.anyString()))
+        .thenReturn(AddressCreator.createAddress(2));
+
     BDDMockito.when(service.save(ArgumentMatchers.isA(Address.class)))
         .thenReturn(AddressCreator.createAddress(1));
 
@@ -80,6 +83,17 @@ public class AddressControllerTest {
 
     assertThat(fetchedAddress).isNotNull();
     assertThat(fetchedAddress.getCep()).isNotNull().isEqualTo(cep);
+  }
+
+  @Test
+  @DisplayName("Find Address by street")
+  void findByStreet_returnsAddress_whenSuccessful() throws Exception {
+
+    String street = "rua almirante barroso";
+
+    Address fetchedAddress = controller.findByStreet(street).getBody();
+
+    assertThat(fetchedAddress).isNotNull().isEqualTo(AddressCreator.createAddress(2));
   }
 
   @Test

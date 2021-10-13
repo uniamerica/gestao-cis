@@ -30,8 +30,7 @@ class UserRepositoryTest {
 
   private User createUser() {
     RoleEntity role =
-        roleEntityRepository
-                .save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
+        roleEntityRepository.save(RoleEntity.builder().roleName(Role.ROLE_PROFESSIONAL).build());
 
     SpecialtyEntity specialty =
         specialtyEntityRepository.save(
@@ -40,35 +39,32 @@ class UserRepositoryTest {
     List<SpecialtyEntity> specialtyEntities = new ArrayList<>();
     specialtyEntities.add(specialty);
 
-    HealthInsurance healthInsurance = healthInsuranceRepository.save(
-            HealthInsurance
-                    .builder()
-                    .insuranceName("ashuahdisuahdisuahd")
-                    .registrationNumber("lalalalalalalalalla")
-                    .build()
-    );
-
+    HealthInsurance healthInsurance =
+        healthInsuranceRepository.save(
+            HealthInsurance.builder()
+                .insuranceName("ashuahdisuahdisuahd")
+                .registrationNumber("lalalalalalalalalla")
+                .build());
 
     return User.builder()
-            .role(role)
-            .cpf("898989898989")
-            .rg("88889888898")
-            .professionalDocument("xxxxxxxx")
-            .specialties(specialtyEntities)
-            .email("test@test.com")
-            .phone("(45)99999999")
-            .email("teste@test.com")
-            .fullName("Fulano de Tal")
-            .birthdate(Instant.now())
-            .mothersName("Mãe do Fulano")
-            .sex('M')
-            .placeOfBirth("Brazel")
-            .addressCountry("Brasil")
-            .addressLine2("Rua tal")
-            .password("senha1234")
-            .active(true)
-            .healthInsurance(healthInsurance)
-            .build();
+        .role(role)
+        .cpf("898989898989")
+        .rg("88889888898")
+        .professionalDocument("xxxxxxxx")
+        .specialties(specialtyEntities)
+        .email("test@test.com")
+        .phone("(45)99999999")
+        .fullName("Fulano de Tal")
+        .birthdate(Instant.now())
+        .mothersName("Mãe do Fulano")
+        .sex('M')
+        .placeOfBirth("Brazel")
+        .addressCountry("Brasil")
+        .addressLine2("Rua tal")
+        .password("senha1234")
+        .active(true)
+        .healthInsurance(healthInsurance)
+        .build();
   }
 
   @Test
@@ -173,7 +169,6 @@ class UserRepositoryTest {
 
     Assertions.assertThat(usersFound).isNotNull().isNotEmpty().contains(userSaved);
   }
-
 
   @Test
   @DisplayName("Find Users When Successful")

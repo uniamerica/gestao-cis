@@ -3,6 +3,7 @@ package com.gestaocis.backend.controllers;
 import com.gestaocis.backend.config.jwt.AuthenticationRequest;
 import com.gestaocis.backend.config.jwt.AuthenticationResponse;
 import com.gestaocis.backend.config.jwt.JwtUtil;
+import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +47,6 @@ public class LoginController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
 
     }
+
 
 }

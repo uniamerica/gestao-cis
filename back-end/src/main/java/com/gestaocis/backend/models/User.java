@@ -81,11 +81,10 @@ public class User implements Serializable, UserDetails {
   private RoleEntity role;
 
   @JoinColumn(name = "addressId")
-  @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Address address;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private HealthInsurance healthInsurance;
 
   @OneToMany(mappedBy = "patient")

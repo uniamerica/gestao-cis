@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NewSecretaryRequestDTO {
+public class NewSecretaryRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     // User
     private String cpf;

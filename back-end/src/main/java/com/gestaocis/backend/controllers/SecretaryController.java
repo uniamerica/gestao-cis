@@ -4,11 +4,9 @@ import com.gestaocis.backend.DTOs.SecretaryDTOs.NewSecretaryRequestDTO;
 import com.gestaocis.backend.DTOs.SecretaryDTOs.SecretaryResponseDTO;
 import com.gestaocis.backend.exceptions.BadRequestException;
 import com.gestaocis.backend.services.SecretaryService;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public final class SecretaryController {
     }
 
     @GetMapping(path ="/id/{uuid}")
-    public final ResponseEntity<SecretaryResponseDTO> findSecretaryByUUID(@RequestParam UUID uuid){
+    public final ResponseEntity<SecretaryResponseDTO> findSecretaryByUUID(@PathVariable UUID uuid){
         try{
             return new ResponseEntity<>(this.secretaryService.findByUUID(uuid), HttpStatus.OK);
         }catch (Exception exception){
@@ -40,7 +38,7 @@ public final class SecretaryController {
     }
 
     @GetMapping(path = "/email/{email}")
-    public final ResponseEntity<SecretaryResponseDTO> findSecretaryByEmail(@RequestParam String email){
+    public final ResponseEntity<SecretaryResponseDTO> findSecretaryByEmail(@PathVariable String email){
         try{
             return new ResponseEntity<>(this.secretaryService.findByEmail(email), HttpStatus.OK);
         }catch (Exception exception){
@@ -48,8 +46,8 @@ public final class SecretaryController {
         }
     }
 
-    @GetMapping(path="/name")
-    public final ResponseEntity<List<SecretaryResponseDTO>> findListOfSecretariesByFullName(@RequestBody String name){
+    @GetMapping(path="/name/{name}")
+    public final ResponseEntity<List<SecretaryResponseDTO>> findListOfSecretariesByFullName(@PathVariable String name){
         try{
             return new ResponseEntity<>(this.secretaryService.findByFullName(name), HttpStatus.OK);
         }catch (Exception exception){
@@ -67,7 +65,7 @@ public final class SecretaryController {
     }
 
     @GetMapping(path = "/cpf/{cpf}")
-    public final ResponseEntity<SecretaryResponseDTO> findSecretaryByCpf(@RequestParam String cpf){
+    public final ResponseEntity<SecretaryResponseDTO> findSecretaryByCpf(@PathVariable String cpf){
         try{
             return new ResponseEntity<>(this.secretaryService.findByCpf(cpf), HttpStatus.OK);
         }catch (Exception exception){
@@ -76,7 +74,7 @@ public final class SecretaryController {
     }
 
     @PutMapping(path= "/{uuid}")
-    public final ResponseEntity<SecretaryResponseDTO> updateSecretary(@RequestParam UUID uuid, @RequestBody NewSecretaryRequestDTO responseBody){
+    public final ResponseEntity<SecretaryResponseDTO> updateSecretary(@PathVariable UUID uuid, @RequestBody NewSecretaryRequestDTO responseBody){
         try{
             return new ResponseEntity<>(this.secretaryService.update(uuid, responseBody), HttpStatus.OK);
         }catch (Exception exception){
@@ -85,7 +83,7 @@ public final class SecretaryController {
     }
 
     @DeleteMapping(path = "/{uuid}")
-    public final ResponseEntity<String> deleteSecretary(@RequestParam UUID uuid){
+    public final ResponseEntity<String> deleteSecretary(@PathVariable UUID uuid){
        if(this.secretaryService.delete(uuid)){
            return new ResponseEntity<>("Delete With Success",HttpStatus.OK);
        }else{

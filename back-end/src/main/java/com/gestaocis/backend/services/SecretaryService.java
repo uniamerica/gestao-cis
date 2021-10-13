@@ -10,6 +10,7 @@ import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.repositories.RoleEntityRepository;
 import com.gestaocis.backend.repositories.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class SecretaryService {
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(secretary.getCep())));
             User secretaryUser = User
                     .builder()
-                    .uuid(new UUID(1L, 2L))
+                    .uuid(UUID.randomUUID())
                     .cpf(secretary.getCpf())
                     .rg(secretary.getRg())
                     .email(secretary.getEmail())

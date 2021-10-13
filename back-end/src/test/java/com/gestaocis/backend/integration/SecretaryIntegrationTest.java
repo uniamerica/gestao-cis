@@ -48,7 +48,7 @@ public class SecretaryIntegrationTest {
     @Autowired
     private AddressRepository addressRepository;
 
-    UUID uuid;
+    private UUID uuid;
 
     @BeforeEach
     void setUp() throws Exception {

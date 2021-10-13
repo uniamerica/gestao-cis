@@ -52,9 +52,7 @@ class AddressControllerIntegrationTest {
   void shouldFindAddressById() {
     List<Address> addresses = repository.findAll();
 
-    Address lastAddress = addresses.get(addresses.size() - 1);
-
-    int id = lastAddress.getId().intValue();
+    int id = addresses.get(addresses.size() - 1).getId().intValue();
 
     ResponseEntity<Address> responseEntity =
         this.restTemplate.getForEntity(
@@ -63,6 +61,25 @@ class AddressControllerIntegrationTest {
     Address address = responseEntity.getBody();
 
     assertAll(() -> assertNotNull(address), () -> assertEquals(id, address.getId()));
+  }
+
+  @Test
+  void shouldFindAddressByStreetName() {
+    List<Address> addresses = repository.findAll();
+
+    String street = "rua almirante barroso";
+
+    ResponseEntity<Address> responseEntity =
+        this.restTemplate.getForEntity(
+            "http://localhost:"
+                + port
+                + "/api/v1/addresses/searchByStreetContaining/?street="
+                + street,
+            Address.class);
+
+    Address address = responseEntity.getBody();
+
+    assertNotNull(address);
   }
 
   @Test

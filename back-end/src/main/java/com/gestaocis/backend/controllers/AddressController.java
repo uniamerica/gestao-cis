@@ -40,9 +40,9 @@ public class AddressController {
     return ResponseEntity.ok(service.findByStreet(street));
   }
 
-  @GetMapping(path = "/searchByCity")
-  public ResponseEntity<Address> findByCity(@RequestParam String city) {
-    return ResponseEntity.ok(service.findByCity(city));
+  @GetMapping(path = "/searchByStreetContaining")
+  public ResponseEntity<Address> findByStreetContaining(@RequestParam String pattern) {
+    return ResponseEntity.ok(service.findByStreetContaining(pattern));
   }
 
   @PostMapping

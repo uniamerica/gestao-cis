@@ -117,30 +117,7 @@ public class AddressRepositoryTest {
     Address retrievedAddress = this.repository.findByStreetIgnoreCase(addressToBeSaved.getStreet());
 
     assertAll(
-        () -> assertNotNull(retrievedAddress),
-        () -> assertEquals(savedAddress.getNeighborhood(), retrievedAddress.getNeighborhood()),
-        () -> assertEquals(savedAddress.getStreet(), retrievedAddress.getStreet()),
-        () -> assertEquals(savedAddress.getCity(), retrievedAddress.getCity()),
-        () -> assertEquals(savedAddress.getUf(), retrievedAddress.getUf()),
-        () -> assertEquals(savedAddress.getCep(), retrievedAddress.getCep()));
-  }
-
-  @Test
-  @DisplayName("Find an Address record by City name")
-  void find_addressByCity() throws Exception {
-    Address addressToBeSaved = AddressCreator.createAddress(1);
-
-    Address savedAddress = this.repository.save(addressToBeSaved);
-
-    Address retrievedAddress = this.repository.findByCityIgnoreCase(addressToBeSaved.getCity());
-
-    assertAll(
-        () -> assertNotNull(retrievedAddress),
-        () -> assertEquals(savedAddress.getNeighborhood(), retrievedAddress.getNeighborhood()),
-        () -> assertEquals(savedAddress.getStreet(), retrievedAddress.getStreet()),
-        () -> assertEquals(savedAddress.getCity(), retrievedAddress.getCity()),
-        () -> assertEquals(savedAddress.getUf(), retrievedAddress.getUf()),
-        () -> assertEquals(savedAddress.getCep(), retrievedAddress.getCep()));
+        () -> assertNotNull(retrievedAddress), () -> assertEquals(savedAddress, retrievedAddress));
   }
 
   @Test

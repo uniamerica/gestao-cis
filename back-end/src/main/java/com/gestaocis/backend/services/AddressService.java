@@ -36,15 +36,15 @@ public class AddressService {
     return repository.findByCep(CepService.formatCep(cep));
   }
 
-  public Address findByStreet(String name) {
-    return repository.findByStreetIgnoreCase(name);
+  public Address findByStreet(String street) {
+    return repository.findByStreetIgnoreCase(street);
   }
 
-  public Address findByCity(String name) {
-    return repository.findByCityIgnoreCase(name);
+  public Address findByStreetContaining(String streetPattern) {
+    return repository.findByStreetContaining(streetPattern);
   }
 
-  // Adicionar user na lista do cep que já está salvo
+  // Adicionar user na userList do cep que já está salvo
 
   @Transactional
   public Address save(Address address) throws Exception {

@@ -11,6 +11,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
   Address findByCep(String cep);
 
+
   Address findByStreetIgnoreCase(String street);
 
   Address findByStreetContaining(String streetPattern);

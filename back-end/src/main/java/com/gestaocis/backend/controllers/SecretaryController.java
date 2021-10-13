@@ -21,7 +21,6 @@ public final class SecretaryController {
     @PostMapping
     public final ResponseEntity<SecretaryResponseDTO> save(@RequestBody NewSecretaryRequestDTO responseBody) throws Exception {
         try{
-
             return new ResponseEntity<>(this.secretaryService.save(responseBody), HttpStatus.CREATED);
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());

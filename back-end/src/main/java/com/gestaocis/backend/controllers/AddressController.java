@@ -2,7 +2,6 @@ package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.AddressService;
-import com.gestaocis.backend.services.CepService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +25,24 @@ public class AddressController {
     return ResponseEntity.ok(service.listAll());
   }
 
-  @GetMapping(path = "/{id}")
+  @GetMapping(path = "/id/{id}")
   public ResponseEntity<Address> findById(@PathVariable("id") Long id) {
     return ResponseEntity.ok(service.findByIdOrThrowResourceNotFoundException(id));
   }
 
-  @GetMapping(path = "/{cep}")
+  @GetMapping(path = "/cep/{cep}")
   public ResponseEntity<Address> findByCep(@PathVariable("cep") String cep) {
-    return ResponseEntity.ok(service.findByCep(CepService.formatCep(cep)));
+    return ResponseEntity.ok(service.findByCep(cep));
+  }
+
+  @GetMapping(path = "/searchByStreet")
+  public ResponseEntity<Address> findByStreet(@RequestParam String street) {
+    return ResponseEntity.ok(service.findByStreet(street));
+  }
+
+  @GetMapping(path = "/searchByStreetContaining")
+  public ResponseEntity<Address> findByStreetContaining(@RequestParam String pattern) {
+    return ResponseEntity.ok(service.findByStreetContaining(pattern));
   }
 
   @PostMapping

@@ -4,6 +4,7 @@ import com.gestaocis.backend.exceptions.ResourceNotFoundException;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.util.AddressCreator;
+import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +21,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @ExtendWith(SpringExtension.class)
+@Log4j2
 public class AddressServiceTest {
 
   @InjectMocks private AddressService service;
@@ -36,6 +39,9 @@ public class AddressServiceTest {
         .thenReturn(Optional.of(AddressCreator.createAddress(1)));
 
     BDDMockito.when(repository.findByCep(ArgumentMatchers.anyString()))
+        .thenReturn(AddressCreator.createAddress(2));
+
+    BDDMockito.when(repository.findByStreetIgnoreCase(ArgumentMatchers.anyString()))
         .thenReturn(AddressCreator.createAddress(2));
 
     BDDMockito.when(repository.save(ArgumentMatchers.isA(Address.class)))
@@ -83,12 +89,27 @@ public class AddressServiceTest {
   @DisplayName("Find Address by cep")
   void findByCep_returnsAddress_whenSuccessful() throws Exception {
 
-    String cep = AddressCreator.createAddress(2).getCep();
+    String cep = CepService.formatCep("85851010");
 
-    Address fetchedAddress = service.findByCep("85851-010");
+    Address fetchedAddress = service.findByCep("85851010");
 
     assertThat(fetchedAddress).isNotNull();
     assertThat(fetchedAddress.getCep()).isNotNull().isEqualTo(cep);
+  }
+
+  @Test
+  @DisplayName("Find Address by street name")
+  void findByStreet_returnsAddress_whenSuccessful() throws Exception {
+
+    Address address = AddressCreator.createAddress(2);
+
+    String street = "rua almirante barroso";
+
+    Address fetchedAddress = service.findByStreet(street);
+
+    assertAll(
+        () -> assertThat(fetchedAddress).isNotNull(),
+        () -> assertThat(address).isEqualTo(fetchedAddress));
   }
 
   @Test
@@ -104,7 +125,6 @@ public class AddressServiceTest {
     assertThat(fetchedAddress).isNull();
   }
 
-  // Ajustar
   @Test
   @DisplayName("Create Address record")
   void save_persistsAddress_whenSuccessful() throws Exception {

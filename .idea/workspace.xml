@@ -5,8 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/ProfessionalControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/ProfessionalControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/AddressControllerIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/SecretaryServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/NewSecretaryRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/NewSecretaryRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/SecretaryResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/SecretaryResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/SecretaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/SecretaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/AddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/AddressRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/AddressService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/SecretaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/SecretaryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/AddressControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/AddressControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/SecretaryControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/SecretaryControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/AddressControllerIT.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/SecretaryIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/SecretaryIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/AddressRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/AddressRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/AddressServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/AddressServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/SecretaryCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/SecretaryCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

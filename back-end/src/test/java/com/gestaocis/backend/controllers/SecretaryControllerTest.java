@@ -1,10 +1,8 @@
 package com.gestaocis.backend.controllers;
 
-import com.gestaocis.backend.DTOs.SecretaryDTOs.NewSecretaryRequestDTO;
 import com.gestaocis.backend.DTOs.SecretaryDTOs.SecretaryResponseDTO;
 import com.gestaocis.backend.services.SecretaryService;
 import com.gestaocis.backend.util.SecretaryCreator;
-import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,13 +12,10 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 class SecretaryControllerTest {
@@ -99,7 +94,7 @@ class SecretaryControllerTest {
     public void findByFullName_returnListOfSecretaryDTO_WhenSuccessful(){
         String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-         List<SecretaryResponseDTO> response = secretaryController.findListOfSecretariesByFullName("sazhan@carai").getBody();
+         List<SecretaryResponseDTO> response = secretaryController.findListOfSecretariesByFullName("jiasdh8sahgdosiahjdp9ashdasoiud").getBody();
 
         Assertions.assertThat(response)
                 .isNotNull()
@@ -109,8 +104,8 @@ class SecretaryControllerTest {
     }
 
     @Test
-    @DisplayName("findByUUID Returns List of Secretary DTO when successful")
-    public void findByUUID_returnListOfSecretaryDTO_WhenSuccessful(){
+    @DisplayName("findByRole Returns List of Secretary DTO when successful")
+    public void findByRole_returnListOfSecretaryDTO_WhenSuccessful(){
         String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
         List<SecretaryResponseDTO> response = secretaryController.findAllByRole().getBody();
@@ -153,23 +148,3 @@ class SecretaryControllerTest {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

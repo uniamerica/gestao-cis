@@ -2,7 +2,9 @@ package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
 import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
+import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
 import com.gestaocis.backend.services.ProfessionalService;
+import com.gestaocis.backend.util.ProfessionalCreator;
 import com.gestaocis.backend.util.ProfessionalCreator;
 import com.gestaocis.backend.util.ProfessionalCreator;
 import com.gestaocis.backend.util.ProfessionalCreator;
@@ -56,6 +58,20 @@ public class ProfessionalControllerTest {
 
         Assertions.assertThat(response).isNotNull();
         Assertions.assertThat(response.getEmail()).isEqualTo(email);
+
+    }
+
+    @Test
+    @DisplayName("findByUUID Returns Professional DTO when successful")
+    public void findByUUID_returnProfessionalDTO_WhenSuccessful(){
+        String email = ProfessionalCreator.createValidProfessionalResponseDTOSaved().getEmail();
+
+        ProfessionalResponseDTO response = professionalController.findProfessionalByUUID(UUID.randomUUID()).getBody();
+
+        Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.getEmail()).isEqualTo(email);
+
+        // return "Professional founded by UUID!";
     }
 
     @Test

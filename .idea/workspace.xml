@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/ProfessionalDTOs/NewProfessionalRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/ProfessionalDTOs/ProfessionalResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/ProfessionalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/PatientDTOs/PatientResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/PatientDTOs/PatientResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/PatientsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/ProfessionalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/ProfessionalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/PatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/ProfessionalControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/ProfessionalControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +63,37 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
-  <component name="RunManager" selected="JUnit.ProfessionalControllerTest">
+  <component name="RunManager" selected="JUnit.ProfessionalControllerIntegrationTest">
+    <configuration name="PatientControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gestaocis.backend.integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.PatientControllerIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProfessionalControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gestaocis.backend.integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.ProfessionalControllerIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProfessionalControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
@@ -103,7 +125,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProfessionalControllerTest.delete_returnSuccessOrErrorMessage_WhenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProfessionalControllerTest.findByUUID_returnProfessionalDTO_WhenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
         <pattern>
@@ -113,23 +135,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.gestaocis.backend.controllers" />
       <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.controllers.ProfessionalControllerTest" />
-      <option name="METHOD_NAME" value="delete_returnSuccessOrErrorMessage_WhenSuccessful" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProfessionalControllerTest.update_returnProfessionalDTO_WhenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="back-end" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.gestaocis.backend.controllers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.gestaocis.backend.controllers" />
-      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.controllers.ProfessionalControllerTest" />
-      <option name="METHOD_NAME" value="update_returnProfessionalDTO_WhenSuccessful" />
+      <option name="METHOD_NAME" value="findByUUID_returnProfessionalDTO_WhenSuccessful" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -137,10 +143,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProfessionalControllerTest" />
-        <item itemvalue="JUnit.ProfessionalControllerTest.delete_returnSuccessOrErrorMessage_WhenSuccessful" />
-        <item itemvalue="JUnit.ProfessionalControllerTest.update_returnProfessionalDTO_WhenSuccessful" />
+        <item itemvalue="JUnit.ProfessionalControllerIntegrationTest" />
+        <item itemvalue="JUnit.PatientControllerIntegrationTest" />
         <item itemvalue="JUnit.ProfessionalControllerTest.create_returnCreatedProfessionalDTO_WhenSuccessful" />
+        <item itemvalue="JUnit.ProfessionalControllerTest" />
+        <item itemvalue="JUnit.ProfessionalControllerTest.findByUUID_returnProfessionalDTO_WhenSuccessful" />
       </list>
     </recent_temporary>
   </component>

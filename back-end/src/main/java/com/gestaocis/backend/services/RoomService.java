@@ -1,8 +1,11 @@
 package com.gestaocis.backend.services;
 
+import com.gestaocis.backend.DTOs.RoomDTOs.NewRoomRequestDTO;
+import com.gestaocis.backend.DTOs.RoomDTOs.RoomResponseDTO;
 import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.exceptions.BadRequestException;
+import com.gestaocis.backend.models.Room;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.HealthInsuranceRepository;
 import com.gestaocis.backend.repositories.RoleEntityRepository;
@@ -25,13 +28,8 @@ public class RoomService {
     private RoleEntityRepository roleEntityRepository;
 
     @Autowired
-    private AddressService addressService;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
     private HealthInsuranceRepository healthInsuranceRepository;
+    private Room UUID;
 
     // SAVES NEW ROOM
     public RoomResponseDTO save(NewRoomRequestDTO room) throws Exception {
@@ -43,11 +41,11 @@ public class RoomService {
      // LIST (supposedly kkk)
         public List<RoomResponseDTO> findAll(){
             try{
-                RoleEntity role = this.roleEntityRepository
+                role = this.roleEntityRepository
                         .findByRoleName(Role.ROLE_ROOM)
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role Not Found"));
-                List<User> room = this.userRepository.findByRole(role);
-                return room.stream().map(RoomResponseDTO::new).collect(Collectors.toList());
+                List<User> Room = this.userRepository.findByRole(role);
+                return Room.stream().map(RoomResponseDTO::new).collect(Collectors.toList());
             }catch (Exception exception){
                 throw new BadRequestException(exception.getMessage());
             }
@@ -56,13 +54,22 @@ public class RoomService {
         // achados por UUID
         public RoomResponseDTO findByUUID(UUID uuid){
             try{
-                User room = this.userRepository.findByUuid(uuid)
+                User Room = this.userRepository.findByUuid(uuid)
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room not Found, please check again"));
                 return new RoomResponseDTO(room);
             }catch (Exception exception){
                 throw new BadRequestException(exception.getMessage());
+
+                try {
+                    User secretaryUser = User
+                            .builder()
+                            .uuid(new UUID(1L, 2L))
+
+                    return new RoomResponseDTO(RoomRepository.save(secretaryUser));
+                }catch (Exception exception){
+                    throw new BadRequestException(exception.getMessage());
+                }
             }
-        }
 
         //DELETE (finding by UUID)
         public boolean delete(UUID uuid){

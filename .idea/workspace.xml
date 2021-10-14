@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/RoomDTOs/NewRoomRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/RoomDTOs/RoomResponseDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/Role.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/RoomRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" afterDir="false" />
     </list>

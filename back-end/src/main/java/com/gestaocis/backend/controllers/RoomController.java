@@ -1,25 +1,29 @@
 package com.gestaocis.backend.controllers;
 
+import com.gestaocis.backend.DTOs.RoomDTOs.NewRoomRequestDTO;
+import com.gestaocis.backend.DTOs.RoomDTOs.RoomResponseDTO;
 import com.gestaocis.backend.exceptions.BadRequestException;
+import com.gestaocis.backend.repositories.RoleEntityRepository;
+import com.gestaocis.backend.repositories.UserRepository;
 import com.gestaocis.backend.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/salas")
+@Service
 public class RoomController {
 
     @Autowired
-    private RoomController
+    private UserRepository userRepository;
 
     @Autowired
-    public RoomController(RoomService service) {
-        this.service = service;
-    }
+    private RoleEntityRepository roleEntityRepository;
+    private RoomService service;
+
 
     @PostMapping //nova sala
     public ResponseEntity<RoomResponseDTO> save(@RequestBody NewRoomRequestDTO responseBody) throws Exception {

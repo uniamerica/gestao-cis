@@ -26,7 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -52,8 +54,6 @@ public class SecretaryIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        roleEntityRepository.save(RoleEntity.builder().roleName(Role.ROLE_SECRETARY).build());
-
         Address address = addressRepository.save(Address.builder()
                 .cep("85858150")
                 .street("rua tal")

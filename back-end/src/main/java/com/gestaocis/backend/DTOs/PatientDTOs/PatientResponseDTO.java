@@ -28,9 +28,9 @@ public class PatientResponseDTO {
     private Character sex;
     private String placeOfBirth;
     private String password;
+
     // Convênio
     private HealthInsuranceDTO healthInsurance;
-
     private AddressDTO address;
 
     public PatientResponseDTO(User patient) {

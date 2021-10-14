@@ -2,16 +2,13 @@ package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
-import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.exceptions.BadRequestException;
-import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

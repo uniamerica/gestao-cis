@@ -1,6 +1,5 @@
 package com.gestaocis.backend.services;
 
-
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
 import com.gestaocis.backend.enums.Role;
@@ -9,16 +8,17 @@ import com.gestaocis.backend.exceptions.BadRequestException;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.models.HealthInsurance;
 import com.gestaocis.backend.models.User;
-import com.gestaocis.backend.repositories.*;
+import com.gestaocis.backend.repositories.AddressRepository;
+import com.gestaocis.backend.repositories.HealthInsuranceRepository;
+import com.gestaocis.backend.repositories.RoleEntityRepository;
+import com.gestaocis.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,17 +40,16 @@ public class PatientService {
     @Autowired
     private HealthInsuranceRepository healthInsuranceRepository;
 
+    public PatientService() {
+    }
+
     // SAVES NEW PATIENT
     public PatientResponseDTO save(NewPatientRequestDTO patient) throws Exception {
 
         RoleEntity role = roleEntityRepository
                 .findByRoleName(Role.ROLE_PATIENT)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role not found"));
-
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date parsedDate = sdf.parse(patient.getBirthdate());
-//        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
         try {
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(patient.getCep())));

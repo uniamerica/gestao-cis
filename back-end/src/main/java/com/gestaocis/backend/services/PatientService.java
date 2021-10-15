@@ -120,6 +120,7 @@ public class PatientService {
             patientFound.setAddress(address);
             patientFound.setAddressCountry(patient.getAddressCountry());
             patientFound.setAddressLine2(patient.getAddressLine2());
+            //HealthInsurance healthInsurance = healthInsuranceRepository.save
 
             return new PatientResponseDTO(this.userRepository.save(patientFound));
         }catch (Exception exception){

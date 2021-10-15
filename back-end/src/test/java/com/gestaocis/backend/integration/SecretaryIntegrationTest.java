@@ -46,7 +46,7 @@ public class SecretaryIntegrationTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        roleEntityRepository.save(RoleEntity.builder().roleName(Role.ROLE_SECRETARY).build());
+        // roleEntityRepository.save(RoleEntity.builder().roleName(Role.ROLE_SECRETARY).build());
 
         Address address = addressRepository.save(Address.builder()
                 .cep("85858150")

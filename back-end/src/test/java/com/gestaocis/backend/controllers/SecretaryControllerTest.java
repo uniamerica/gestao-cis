@@ -94,7 +94,7 @@ class SecretaryControllerTest {
     public void findByFullName_returnListOfSecretaryDTO_WhenSuccessful(){
         String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-         List<SecretaryResponseDTO> response = secretaryController.findListOfSecretariesByFullName("sazhan@carai").getBody();
+         List<SecretaryResponseDTO> response = secretaryController.findListOfSecretariesByFullName("jiasdh8sahgdosiahjdp9ashdasoiud").getBody();
 
         Assertions.assertThat(response)
                 .isNotNull()

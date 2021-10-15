@@ -50,6 +50,7 @@ public class SecretaryService {
 
         try {
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(secretary.getCep())));
+
             User secretaryUser = User
                     .builder()
                     .uuid(UUID.randomUUID())
@@ -136,6 +137,7 @@ public class SecretaryService {
         try{
             User secretaryFound = this.userRepository.findByUuid(uuid)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Secretary not Found, please check your uuid again"));
+
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(secretary.getCep())));
             secretaryFound.setFullName(secretary.getFullName());
             secretaryFound.setEmail(secretary.getEmail());

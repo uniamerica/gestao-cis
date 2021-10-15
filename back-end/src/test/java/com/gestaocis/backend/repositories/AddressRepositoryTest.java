@@ -3,7 +3,6 @@ package com.gestaocis.backend.repositories;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.services.CepService;
 import com.gestaocis.backend.util.AddressCreator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +105,19 @@ public class AddressRepositoryTest {
                 addressToBeSaved.getNeighborhood(),
                 retrievedAddress.getNeighborhood(),
                 "Neighborhood did not match"));
+  }
+
+  @Test
+  @DisplayName("Find an Address record by Street name")
+  void find_addressByStreet() throws Exception {
+    Address addressToBeSaved = AddressCreator.createAddress(1);
+
+    Address savedAddress = this.repository.save(addressToBeSaved);
+
+    Address retrievedAddress = this.repository.findByStreetIgnoreCase(addressToBeSaved.getStreet());
+
+    assertAll(
+        () -> assertNotNull(retrievedAddress), () -> assertEquals(savedAddress, retrievedAddress));
   }
 
   @Test

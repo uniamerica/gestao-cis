@@ -3,6 +3,10 @@ package com.gestaocis.backend.util;
 import com.gestaocis.backend.DTOs.AddressDTO.AddressDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
+import com.gestaocis.backend.enums.Role;
+import com.gestaocis.backend.enums.RoleEntity;
+import com.gestaocis.backend.models.Address;
+import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.RoleEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,9 +68,9 @@ public class PatientCreator {
                 .rg("88888888888")
                 .email("test@test.com")
                 .phone("(45)9995595959")
-                .fullName("João Teste da Silva")
+                .fullName("Paciente Dodói da Silva")
                 .birthdate(Instant.now())
-                .sex('M')
+                .sex('F')
                 .address(AddressDTO.builder()
                         .addressCountry("Brazel")
                         .addressLine2("Rua da minha casa")
@@ -76,6 +80,58 @@ public class PatientCreator {
                         .uf("PR")
                         .neighborhood("Bairro da minha casa")
                         .build())
+                .build();
+    }
+
+    public static User createValidUserPatient(){
+        RoleEntity role = RoleEntity.builder()
+                .roleName(Role.ROLE_PATIENT)
+                .build();
+
+        Address address = Address.builder()
+                .id(1L)
+                .cep("85858150")
+                .city("Foz do Iguaçu")
+                .uf("PR")
+                .neighborhood("Bairro de testes")
+                .street("Rua de Testes")
+                .build();
+
+        return User.builder()
+                .id(1L)
+                .uuid(UUID.randomUUID())
+                .role(role)
+                .address(address)
+                .active(true)
+                .password("senha123")
+                .sex('F')
+                .addressCountry("Brazel")
+                .addressLine2("Aquele endereço la")
+                .birthdate(Instant.now())
+                .placeOfBirth("Argélia")
+                .mothersName("Mamai dodói")
+                .rg("9999999")
+                .cpf("99999999999")
+                .phone("(45)98989898")
+                .fullName("Paciente Dodói da Silva")
+                .email("test@test.com")
+                .build();
+    }
+
+    public static User createPatientToBeSaved(){
+        return User.builder()
+                .uuid(UUID.randomUUID())
+                .active(true)
+                .password("senha123")
+                .sex('M')
+                .addressCountry("Brazel")
+                .addressLine2("Aquele endereço la")
+                .birthdate(Instant.now())
+                .rg("9999999")
+                .cpf("99999999999")
+                .phone("(45)98989898")
+                .fullName("João Teste da Silva")
+                .email("test@test.com")
                 .build();
     }
 }

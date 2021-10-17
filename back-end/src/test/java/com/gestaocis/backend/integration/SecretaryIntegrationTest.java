@@ -57,6 +57,7 @@ public class SecretaryIntegrationTest {
         Address address = addressRepository.save(Address.builder()
                 .cep("85858150")
                 .street("rua tal")
+
                 .city("cidade tal")
                 .uf("parana")
                 .neighborhood("bairro tal")
@@ -72,6 +73,8 @@ public class SecretaryIntegrationTest {
     @Test
     @DisplayName("save Returns Saved Secretary DTO when successful")
     public void save_returnsSavedSecretaryDto_whenSuccessful(){
+        // Optional<RoleEntity> role = roleEntityRepository.findByRoleName(Role.ROLE_SECRETARY);
+        // log.info(role.toString());
 
         NewSecretaryRequestDTO secretaryToBeCreatedDTO = NewSecretaryRequestDTO.builder()
                 .cpf("99999999991")

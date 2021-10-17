@@ -25,6 +25,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 public class SecretaryService {
 
     @Autowired
@@ -44,7 +45,6 @@ public class SecretaryService {
         RoleEntity role = roleEntityRepository
                 .findByRoleName(Role.ROLE_SECRETARY)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role not found"));
-
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 

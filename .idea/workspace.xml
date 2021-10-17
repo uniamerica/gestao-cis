@@ -5,27 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/AddressControllerIntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/SecretaryServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/NewSecretaryRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/NewSecretaryRequestDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/SecretaryResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/SecretaryResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/AddressController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/SecretaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/SecretaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Appointment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/AddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/AddressRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/AddressService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/ProfessionalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/ProfessionalRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/SecretaryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/SecretaryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/AddressControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/AddressControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/SecretaryControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/SecretaryControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/AddressControllerIT.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/ProfessionalControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/ProfessionalControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/ProfessionalControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/ProfessionalControllerIntegrationTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/SecretaryIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/SecretaryIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/AddressRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/AddressRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/AddressServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/AddressServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/SecretaryCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/SecretaryCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/ProfessionalCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/ProfessionalCreator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,9 +53,6 @@
       </map>
     </option>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
-  </component>
   <component name="ProjectId" id="1wsGOg6i7rT6VTOOxWJ0XOBgWkf" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -80,24 +66,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
-  <component name="RunManager" selected="JUnit.ProfessionalControllerIntegrationTest">
-    <configuration name="PatientControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="back-end" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.gestaocis.backend.integration.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
-      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.PatientControllerIntegrationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ProfessionalControllerTest">
     <configuration name="ProfessionalControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
@@ -109,6 +83,22 @@
       <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
       <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.ProfessionalControllerIntegrationTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProfessionalControllerIntegrationTest.shouldSaveProfessional" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gestaocis.backend.integration.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.ProfessionalControllerIntegrationTest" />
+      <option name="METHOD_NAME" value="shouldSaveProfessional" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -128,33 +118,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProfessionalControllerTest.create_returnCreatedProfessionalDTO_WhenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SecretaryIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.gestaocis.backend.controllers.*" />
+          <option name="PATTERN" value="com.gestaocis.backend.integration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.gestaocis.backend.controllers" />
-      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.controllers.ProfessionalControllerTest" />
-      <option name="METHOD_NAME" value="create_returnCreatedProfessionalDTO_WhenSuccessful" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.SecretaryIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProfessionalControllerTest.findByUUID_returnProfessionalDTO_WhenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SecretaryIntegrationTest.save_returnsSavedSecretaryDto_whenSuccessful" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.gestaocis.backend.controllers.*" />
+          <option name="PATTERN" value="com.gestaocis.backend.integration.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.gestaocis.backend.controllers" />
-      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.controllers.ProfessionalControllerTest" />
-      <option name="METHOD_NAME" value="findByUUID_returnProfessionalDTO_WhenSuccessful" />
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.integration" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.integration.SecretaryIntegrationTest" />
+      <option name="METHOD_NAME" value="save_returnsSavedSecretaryDto_whenSuccessful" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -162,11 +151,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProfessionalControllerIntegrationTest" />
-        <item itemvalue="JUnit.PatientControllerIntegrationTest" />
-        <item itemvalue="JUnit.ProfessionalControllerTest.create_returnCreatedProfessionalDTO_WhenSuccessful" />
         <item itemvalue="JUnit.ProfessionalControllerTest" />
-        <item itemvalue="JUnit.ProfessionalControllerTest.findByUUID_returnProfessionalDTO_WhenSuccessful" />
+        <item itemvalue="JUnit.ProfessionalControllerIntegrationTest.shouldSaveProfessional" />
+        <item itemvalue="JUnit.ProfessionalControllerIntegrationTest" />
+        <item itemvalue="JUnit.SecretaryIntegrationTest" />
+        <item itemvalue="JUnit.SecretaryIntegrationTest.save_returnsSavedSecretaryDto_whenSuccessful" />
       </list>
     </recent_temporary>
   </component>

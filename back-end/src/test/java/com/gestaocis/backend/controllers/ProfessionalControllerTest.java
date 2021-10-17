@@ -1,12 +1,7 @@
 package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
-import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
-import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
 import com.gestaocis.backend.services.ProfessionalService;
-import com.gestaocis.backend.util.ProfessionalCreator;
-import com.gestaocis.backend.util.ProfessionalCreator;
-import com.gestaocis.backend.util.ProfessionalCreator;
 import com.gestaocis.backend.util.ProfessionalCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

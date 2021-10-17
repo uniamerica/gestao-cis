@@ -4,6 +4,7 @@ import com.gestaocis.backend.DTOs.AddressDTO.AddressDTO;
 import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
 import com.gestaocis.backend.DTOs.ProfessionalDTOs.ProfessionalResponseDTO;
 import com.gestaocis.backend.DTOs.ProfessionalDTOs.NewProfessionalRequestDTO;
+import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.RoleEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,8 +12,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class ProfessionalCreator {
-    @Autowired
-    private RoleEntityRepository roleEntityRepository;
     
     public static NewProfessionalRequestDTO createValidProfessionalRequestDtoToBeSaved() {
         return NewProfessionalRequestDTO.builder()
@@ -76,5 +75,25 @@ public class ProfessionalCreator {
                         .neighborhood("Bairro da casa do meu vizinho")
                         .build())
                 .build();
+    }
+
+    public static User createProfessionalToBeSaved(){
+        return User.builder()
+                .uuid(UUID.randomUUID())
+                .active(true)
+                .password("senha123")
+                .sex('M')
+                .addressCountry("Brazel")
+                .addressLine2("Aquele endereço la")
+                .birthdate(Instant.now())
+                .rg("9999999")
+                .cpf("99999999999")
+                .phone("(45)98989898")
+                .fullName("João Teste da Silva")
+                .email("test@test.com")
+                .professionalDocument("0000000")
+                .build();
+
+
     }
 }

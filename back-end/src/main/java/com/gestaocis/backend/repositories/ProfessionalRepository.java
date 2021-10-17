@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface ProfessionalRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-    Optional<User> findByUudi(UUID uuid);
+    Optional<User> findByUuid(UUID uuid);
     Optional<User> findByCpf(String cpf);
     List<User> findByFullNameContainingIgnoreCase(String name);
 

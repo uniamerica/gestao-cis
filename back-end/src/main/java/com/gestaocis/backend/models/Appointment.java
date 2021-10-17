@@ -51,7 +51,7 @@ public class Appointment implements Serializable {
   @Column(columnDefinition = "TEXT", nullable = false)
   private String treatment;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "creatorId", nullable = false)
   private User createdBy;
 
@@ -77,15 +77,15 @@ public class Appointment implements Serializable {
   @Column(name = "paid", nullable = false, insertable = false)
   private boolean paid;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "patientId", nullable = false)
   private User patient;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "professionalId", nullable = false)
   private User professional;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "roomId", nullable = false)
   private Room room;
 

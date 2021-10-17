@@ -10,9 +10,7 @@ import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.repositories.RoleEntityRepository;
 import com.gestaocis.backend.repositories.UserRepository;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

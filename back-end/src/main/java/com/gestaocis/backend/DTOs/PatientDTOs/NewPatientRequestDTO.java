@@ -5,11 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NewPatientRequestDTO {
+public class NewPatientRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     // User
     private String cpf;
     private String rg;
@@ -23,7 +28,7 @@ public class NewPatientRequestDTO {
     private String addressCountry;
     private String addressLine2;
     private String password;
-    private String insuranceName;
+//    private String insuranceName;
     private String registrationNumber;
 
     // Address

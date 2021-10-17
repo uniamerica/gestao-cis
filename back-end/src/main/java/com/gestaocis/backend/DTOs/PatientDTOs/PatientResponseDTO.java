@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PatientResponseDTO {
+public class PatientResponseDTO implements Serializable {
     // User
     private UUID uuid;
     private String cpf;
@@ -29,7 +30,7 @@ public class PatientResponseDTO {
     private String placeOfBirth;
     private String password;
     // Convênio
-    private HealthInsuranceDTO healthInsurance;
+//    private HealthInsuranceDTO healthInsurance;
 
     private AddressDTO address;
 
@@ -53,10 +54,10 @@ public class PatientResponseDTO {
                 .uf(patient.getAddress().getUf())
                 .street(patient.getAddress().getStreet())
                 .build();
-        this.healthInsurance = HealthInsuranceDTO.builder()
+        /*this.healthInsurance = HealthInsuranceDTO.builder()
                 .insuranceName(patient.getHealthInsurance().getInsuranceName())
                 .registrationNumber(patient.getHealthInsurance().getRegistrationNumber())
-                .build();
+                .build();*/
         }
 
 }

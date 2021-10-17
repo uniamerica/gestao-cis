@@ -1,6 +1,5 @@
 package com.gestaocis.backend.services;
 
-
 import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
 import com.gestaocis.backend.enums.Role;
@@ -35,9 +34,6 @@ public class PatientService {
     private AddressService addressService;
 
     @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
     private HealthInsuranceRepository healthInsuranceRepository;
 
     // SAVES NEW PATIENT
@@ -54,7 +50,7 @@ public class PatientService {
 
         try {
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(patient.getCep())));
-            HealthInsurance healthInsurance = healthInsuranceRepository.findByInsuranceName(patient.getInsuranceName()).orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Deu ruim"));
+            //HealthInsurance healthInsurance = healthInsuranceRepository.findByInsuranceName(patient.getInsuranceName()).orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Infelizmente o plano não cobre, sr."));
 
             User patientUser = User
                     .builder()
@@ -70,7 +66,7 @@ public class PatientService {
                     .placeOfBirth(patient.getPlaceOfBirth())
                     .addressCountry(patient.getAddressCountry())
                     .addressLine2(patient.getAddressLine2())
-                    .healthInsurance(healthInsurance)
+                    //.healthInsurance(healthInsurance)
                     .password(new BCryptPasswordEncoder().encode(patient.getPassword()))
                     .role(role)
                     .address(address)
@@ -101,7 +97,39 @@ public class PatientService {
     public PatientResponseDTO findByUUID(UUID uuid){
         try{
             User patient = this.userRepository.findByUuid(uuid)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
+            return new PatientResponseDTO(patient);
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    // FINDS BY EMAIL
+    public PatientResponseDTO findByEmail(String email){
+        try{
+            User patient = this.userRepository.findByEmail(email)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
+            return new PatientResponseDTO(patient);
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    // FINDS ALL BY FULL NAME
+    public List<PatientResponseDTO> findByFullName(String name){
+        try{
+            List<User> patientsFound = this.userRepository.findByFullNameContainingIgnoreCase(name);
+            return patientsFound.stream().map(PatientResponseDTO::new).collect(Collectors.toList());
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    // FINDS BY CPF
+    public PatientResponseDTO findByCpf(String cpf){
+        try{
+            User patient = this.userRepository.findByCpf(cpf)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
             return new PatientResponseDTO(patient);
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());
@@ -112,7 +140,7 @@ public class PatientService {
     public PatientResponseDTO update (UUID uuid, NewPatientRequestDTO patient){
         try{
             User patientFound = this.userRepository.findByUuid(uuid)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(patient.getCep())));
             patientFound.setFullName(patient.getFullName());
             patientFound.setEmail(patient.getEmail());
@@ -132,7 +160,7 @@ public class PatientService {
     public boolean delete(UUID uuid){
         try{
             User patient = this.userRepository.findByUuid(uuid)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found, please check your uuid again"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
             this.userRepository.delete(patient);
 
             if(userRepository.findByUuid(uuid).isEmpty()) {

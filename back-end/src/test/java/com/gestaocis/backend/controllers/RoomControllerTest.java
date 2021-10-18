@@ -1,6 +1,7 @@
 package com.gestaocis.backend.controllers;
 
 import com.gestaocis.backend.DTOs.RoomDTOs.RoomResponseDTO;
+import com.gestaocis.backend.models.Room;
 import com.gestaocis.backend.services.RoomService;
 import com.gestaocis.backend.util.RoomCreator;
 import org.assertj.core.api.Assertions;
@@ -27,10 +28,11 @@ public class RoomControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
+
         BDDMockito.when(roomServiceMock.save(ArgumentMatchers.any()))
                 .thenReturn(RoomCreator.createValidRoomResponseDTOSaved());
 
-        BDDMockito.when(roomServiceMock.findByUUID(ArgumentMatchers.any()))
+        BDDMockito.when(roomServiceMock.findById(ArgumentMatchers.any()))
                 .thenReturn(RoomCreator.createValidRoomResponseDTOSaved());
 
         BDDMockito.when(roomServiceMock.findAll())
@@ -48,7 +50,7 @@ public class RoomControllerTest {
     public void create_returnCreatedRoomDTO_WhenSuccessful() throws Exception {
         String email = RoomCreator.createValidRoomResponseDTOSaved().getEmail();
 
-        RoomResponseDTO response = roomController.save(RoomCreator.createValidRoomRequestDtoToBeSaved()).getBody();
+        RoomResponseDTO response = roomController.save(RoomCreator.createValidRoomResponseDTOSaved()).getBody();
 
 
         Assertions.assertThat(response).isNotNull();
@@ -70,17 +72,6 @@ public class RoomControllerTest {
     }
 
     @Test
-    @DisplayName("update Returns Room DTO when successful")
-    public void update_returnRoomDTO_WhenSuccessful() throws Exception {
-        String cpf = RoomCreator.createValidRoomResponseDTOSaved().getCpf();
-
-        RoomResponseDTO response = roomController.updateRoom(UUID.randomUUID(), RoomCreator.createValidRoomRequestDtoToBeSaved()).getBody();
-
-        Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response.getCpf()).isEqualTo(cpf);
-    }
-
-    @Test
     @DisplayName("delete Returns Success or Error Message when successful")
     public void delete_returnSuccessOrErrorMessage_WhenSuccessful(){
         int value = roomController.deleteRoom(UUID.randomUUID()).getStatusCode().value();
@@ -89,4 +80,4 @@ public class RoomControllerTest {
 
     }
 }
-}
+

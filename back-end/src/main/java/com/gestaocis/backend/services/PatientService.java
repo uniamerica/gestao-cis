@@ -15,15 +15,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class PatientService {
+    @Autowired
+    private PatientRepository patientRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -45,8 +46,6 @@ public class PatientService {
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date parsedDate = sdf.parse(patient.getBirthdate());
-//        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
         try {
             Address address = addressService.save(CepService.convertCepToAddress(CepService.formatCep(patient.getCep())));
@@ -54,7 +53,7 @@ public class PatientService {
 
             User patientUser = User
                     .builder()
-                    .uuid(new UUID(1L, 2L))
+                    .uuid(UUID.randomUUID())
                     .cpf(patient.getCpf())
                     .rg(patient.getRg())
                     .email(patient.getEmail())
@@ -73,14 +72,15 @@ public class PatientService {
                     .active(true)
                     .build();
 
-            User patientSaved = userRepository.save(patientUser);
-            return new PatientResponseDTO(patientSaved);
+            /*User patientSaved = patientRepository.save(patientUser);
+            return new PatientResponseDTO(patientSaved);*/
+            return new PatientResponseDTO(userRepository.save(patientUser));
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());
         }
     }
 
-    // FINDS ALL BY ROLE (supposedly)
+    // FINDS ALL BY ROLE
     public List<PatientResponseDTO> findAll(){
         try{
             RoleEntity role = this.roleEntityRepository
@@ -97,7 +97,7 @@ public class PatientService {
     public PatientResponseDTO findByUUID(UUID uuid){
         try{
             User patient = this.userRepository.findByUuid(uuid)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found"));
             return new PatientResponseDTO(patient);
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());
@@ -108,7 +108,7 @@ public class PatientService {
     public PatientResponseDTO findByEmail(String email){
         try{
             User patient = this.userRepository.findByEmail(email)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Secretary not Found, please check your uuid again"));
             return new PatientResponseDTO(patient);
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());
@@ -129,7 +129,7 @@ public class PatientService {
     public PatientResponseDTO findByCpf(String cpf){
         try{
             User patient = this.userRepository.findByCpf(cpf)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not Found. Please check your UUID again"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Secretary not Found, please check your uuid again"));
             return new PatientResponseDTO(patient);
         }catch (Exception exception){
             throw new BadRequestException(exception.getMessage());

@@ -58,6 +58,20 @@ public class PatientControllerTest {
     }
 
     @Test
+    @DisplayName("findAll Returns List of Patient DTO when successful")
+    public void findAll_returnListOfPatientDTO_WhenSuccessful(){
+        String email = PatientCreator.createValidPatientResponseDTOSaved().getEmail();
+
+        List<PatientResponseDTO> response = patientController.findAll().getBody();
+
+        Assertions.assertThat(response)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(1);
+        Assertions.assertThat(response.get(0).getEmail()).isEqualTo(email);
+    }
+
+    @Test
     @DisplayName("update Returns Patient DTO when successful")
     public void update_returnPatientDTO_WhenSuccessful() throws Exception {
         String cpf = PatientCreator.createValidPatientResponseDTOSaved().getCpf();
@@ -76,4 +90,52 @@ public class PatientControllerTest {
         Assertions.assertThat(value).isNotNull().isEqualTo(200);
 
     }
+
+    @Test
+    @DisplayName("findByUUID Returns Patient DTO when successful")
+    public void findByUUID_returnPatientDTO_WhenSuccessful(){
+        String email = PatientCreator.createValidPatientResponseDTOSaved().getEmail();
+
+        PatientResponseDTO response = patientController.findPatientByUUID(UUID.randomUUID()).getBody();
+
+        Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    @DisplayName("findByEmail Returns Patient DTO when successful")
+    public void findByEmail_returnPatientDTO_WhenSuccessful(){
+        String email = PatientCreator.createValidPatientResponseDTOSaved().getEmail();
+
+        PatientResponseDTO response = patientController.findPatientByEmail("agora@vai.com.certeza").getBody();
+
+        Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    @DisplayName("findByFullName Returns List of Patient DTO when successful")
+    public void findByFullName_returnListOfPatientDTO_WhenSuccessful(){
+        String email = PatientCreator.createValidPatientResponseDTOSaved().getEmail();
+
+        List<PatientResponseDTO> response = patientController.findListOfPatientsByFullName("Nominho Bonitinho").getBody();
+
+        Assertions.assertThat(response)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(1);
+        Assertions.assertThat(response.get(0).getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    @DisplayName("findByCpf Returns Patient DTO when successful")
+    public void findByCpf_returnPatientDTO_WhenSuccessful(){
+        String cpf = PatientCreator.createValidPatientResponseDTOSaved().getCpf();
+
+        PatientResponseDTO response = patientController.findPatientByCpf("99966699900").getBody();
+
+        Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.getCpf()).isEqualTo(cpf);
+    }
+
 }

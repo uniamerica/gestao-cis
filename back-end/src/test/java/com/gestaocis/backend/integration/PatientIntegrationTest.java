@@ -111,7 +111,7 @@ public class PatientIntegrationTest {
         String email = PatientCreator.createValidPatientResponseDTOSaved().getEmail();
 
         ResponseEntity<PatientResponseDTO> response = testRestTemplate
-                .getForEntity("/api/pacientes/email" + email, PatientResponseDTO.class);
+                .getForEntity("/api/pacientes/email/" + email, PatientResponseDTO.class);
 
         Assertions.assertThat(response).isNotNull();
 

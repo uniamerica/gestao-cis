@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +30,12 @@ public class Room implements Serializable {
   @Column(unique = true, nullable = false)
   private Integer roomNumber;
 
-  @ManyToMany private Set<SpecialtyEntity> specialties = new HashSet<>();
+  @ManyToMany
+  @JoinTable(
+          name = "room_has_specialties",
+          joinColumns = @JoinColumn(name = "room_id"),
+          inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+  private List<SpecialtyEntity> specialties = new ArrayList<>();
 
-  @OneToMany private List<Appointment> appointments;
+  @OneToMany private List<Appointment> appointments = new ArrayList<>(); //compromisso
 }

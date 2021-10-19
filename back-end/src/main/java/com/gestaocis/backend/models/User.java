@@ -1,6 +1,5 @@
 package com.gestaocis.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.enums.SpecialtyEntity;

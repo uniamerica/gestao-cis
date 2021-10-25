@@ -4,6 +4,8 @@ import Roboto from '../../assets/fonts/Roboto-Regular.ttf'
 export const HeaderStyle = styled.header`
     height: 80px;
     background-color: #fff;
+    position: fixed;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     border: 1px solid #DDDDDD;

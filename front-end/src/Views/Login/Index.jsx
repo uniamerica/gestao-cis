@@ -3,11 +3,20 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonIcon from '@material-ui/icons/Person';
+import Header from '../../Components/Header/Header';
+import { useState } from 'react'
 
 export default function Login() {
+    const [user, setUser] = useState(null);
+    const [password, setPassword] = useState(null);
+    const loginInfo = {
+        user: user,
+        password: password
+    }
     return (
         <>
             <div className='loginContainer'>
+                <Header name="Visitante" />
                 <div className='loginCard'>
                     <div className='loginHeader'>
                         <section className='cisText'>
@@ -25,11 +34,18 @@ export default function Login() {
                         </section>
                     </div>
                     <div className='loginBody'>
-                        <form noValidate autoComplete="off">
+                        <form
+                            // noValidate 
+                            autoComplete="off" 
+                        >
 
                             <div className='userInput input'>
                                 <PersonIcon className='icon' />
-                                <TextField id="emailCpf" label="Email ou CPF" />
+                                <TextField
+                                    id="emailCpf"
+                                    label="Email ou CPF"
+                                    onChange={value => setUser(value)}
+                                />
                             </div>
                             
                             <div className='passwordInput input'>
@@ -39,11 +55,16 @@ export default function Login() {
                                     label="Senha"
                                     type="password"
                                     autoComplete="current-password"
+                                    onChange={value => setPassword(value)}
                                 />
                             </div>
                         </form>
-                        <Button variant="contained" color="primary">
-                            <LockIcon className='icon' />
+                        <Button
+                            variant="contained" 
+                            style={{backgroundColor: '#1d2366', color: '#FFF'}}
+                            type='submit'
+                        >
+                            {/* <LockIcon className='icon' /> */}
                             Entrar
                         </Button>
                     </div>

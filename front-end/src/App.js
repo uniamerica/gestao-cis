@@ -6,9 +6,8 @@ import Login from './Views/Login/Index';
 function App() {
   return (
     <>
-    <Header name='Meu Anjo' />
     <div className='appContent'>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Login />
     </div>
     </>

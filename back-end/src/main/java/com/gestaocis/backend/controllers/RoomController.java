@@ -63,7 +63,7 @@ public class RoomController {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
-  @PutMapping
+  @PutMapping  //update
   public ResponseEntity<Void> replace(@RequestBody @Valid Room room) throws Exception {
     service.update(room);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -7,11 +7,15 @@ import Header from '../../Components/Header/Header';
 import { useState } from 'react'
 
 export default function Login() {
-    const [user, setUser] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [user, setUser] = useState("");
+    const [password, setPassword] = useState("");
     const loginInfo = {
         user: user,
         password: password
+    }
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(loginInfo);
     }
     return (
         <>
@@ -36,7 +40,8 @@ export default function Login() {
                     <div className='loginBody'>
                         <form
                             // noValidate 
-                            autoComplete="off" 
+                            autoComplete="off"
+                            onSubmit={(e) => handleSubmit(e)}
                         >
 
                             <div className='userInput input'>
@@ -44,7 +49,8 @@ export default function Login() {
                                 <TextField
                                     id="emailCpf"
                                     label="Email ou CPF"
-                                    onChange={value => setUser(value)}
+                                    onChange={value => setUser(value.target.value)}
+                                    value={user}
                                 />
                             </div>
                             
@@ -55,18 +61,20 @@ export default function Login() {
                                     label="Senha"
                                     type="password"
                                     autoComplete="current-password"
-                                    onChange={value => setPassword(value)}
+                                    onChange={value => setPassword(value.target.value)}
+                                    value={password}
                                 />
                             </div>
+                            <Button
+                                variant="contained"
+                                id="button" 
+                                // style={{backgroundColor: '#1d2366', color: '#FFF', width:'150px', margin: 'auto'}}
+                                type='submit'
+                            >
+                                {/* <LockIcon className='icon' /> */}
+                                Entrar
+                            </Button>
                         </form>
-                        <Button
-                            variant="contained" 
-                            style={{backgroundColor: '#1d2366', color: '#FFF'}}
-                            type='submit'
-                        >
-                            {/* <LockIcon className='icon' /> */}
-                            Entrar
-                        </Button>
                     </div>
                     <div className='loginFooter'>
                         <div className='text-center'>

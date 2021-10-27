@@ -2,6 +2,7 @@ package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.Room;
 import com.gestaocis.backend.util.RoomCreator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +18,7 @@ public class RoomRepositoryTest {
   @Autowired private RoomRepository repository;
 
   @Test
+  @DisplayName("Salvar um registro de sala")
   void saveRoom() {
     Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
@@ -29,6 +31,7 @@ public class RoomRepositoryTest {
   }
 
   @Test
+  @DisplayName("Update registro de sala")
   void updateRoom() {
     Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
@@ -42,6 +45,7 @@ public class RoomRepositoryTest {
   }
 
   @Test
+  @DisplayName("Delete de registro de sala")
   void deleteRoom() {
     Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
@@ -55,6 +59,7 @@ public class RoomRepositoryTest {
   }
 
   @Test
+  @DisplayName("Achar uma sala por numero")
   void findRoomByNumber() {
     Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
@@ -68,6 +73,7 @@ public class RoomRepositoryTest {
   }
 
   @Test
+  @DisplayName("Lista de salas")
   void listRooms() {
     List<Room> salasParaSalvar = RoomCreator.createRoomList(); // criando para salvar
 
@@ -81,6 +87,7 @@ public class RoomRepositoryTest {
   }
 
   @Test
+  @DisplayName("Achar sala por ID")
   void findById() {
     Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 

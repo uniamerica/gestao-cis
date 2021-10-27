@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +69,26 @@ public class RoomRepositoryTest {
 
   @Test
   void listRooms() {
+    List<Room> salasParaSalvar = RoomCreator.createRoomList(); // criando para salvar
 
+    this.repository.saveAll(salasParaSalvar); // salvando
+
+    List<Room> salasListadas = this.repository.findAll(); // buscando todos registros de salas
+
+    assertNotNull(salasListadas);
+    assertEquals(salasParaSalvar, salasListadas);
+    assertEquals(3, salasListadas.size()); // comparando quantidade de registros no banco de dados
+  }
+
+  @Test
+  void findById() {
+    Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
+
+    Room salaSalva = this.repository.save(salaParaSalvar); // salvando a sala
+
+    Optional<Room> salaBuscaId = this.repository.findById(salaSalva.getId());
+
+    assertTrue(salaBuscaId.isPresent());
+    assertEquals(salaSalva.getId(), salaBuscaId.get().getId());
   }
 }

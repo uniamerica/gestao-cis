@@ -6,17 +6,31 @@ import PersonIcon from '@material-ui/icons/Person';
 import Header from '../../Components/Header/Header';
 import { useState } from 'react'
 
+import api from '../../services/api'
+
 export default function Login() {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const loginInfo = {
-        user: user,
+        username: user,
         password: password
     }
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        console.log(loginInfo);
+        // console.log(loginInfo);
+        await logar(loginInfo);
     }
+
+    async function logar(loginInfo) {
+        console.log(loginInfo);
+        const response = await api.post(
+            '/admin/authenticate',
+            loginInfo
+        )
+        const data = response.data
+        console.log(data)
+    }
+
     return (
         <>
             <div className='loginContainer'>

@@ -1,124 +1,73 @@
 package com.gestaocis.backend.repositories;
 
 import com.gestaocis.backend.models.Room;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tags;
+import com.gestaocis.backend.util.RoomCreator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class RoomRepositoryTest {
+public class RoomRepositoryTest {
 
-    @Autowired
-    private RoomRepository roomRepository;
+  @Autowired private RoomRepository repository;
 
-    private Room createRoom(){
-        return Room
-                .builder()
-                .roomNumber(113)
-                .build();
-    }
+  @Test
+  void saveRoom() {
+    Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
-    @Test
-    @DisplayName("Save Room When Successful")
-    void save_room_whenSuccessful(){
-        Room room = createRoom();
+    Room salaSalva = this.repository.save(salaParaSalvar); // salvando a sala
 
-        Room roomSaved = roomRepository.save(room);
+    assertNotNull(salaSalva); // verificando se não é nulo
+    assertNotNull(salaSalva.getId()); // id nao é nulo
+    assertEquals( // verificar se 2 dados são iguais
+        salaParaSalvar.getRoomNumber(), salaSalva.getRoomNumber()); // os numeros sao equivalentes
+  }
 
-        Assertions
-                .assertThat(roomSaved).isNotNull();
-    }
+  @Test
+  void updateRoom() {
+    Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
-    @Test
-    @DisplayName("Find Room By Id When Successful")
-    void find_roomById_whenSuccessful(){
-        Room room = createRoom();
+    Room salaSalva = this.repository.save(salaParaSalvar); // salvando a sala
 
-        Room roomSaved = roomRepository.save(room);
+    salaSalva.setRoomNumber(06); // atualizando registro
 
-        Long id = roomSaved.getId();
+    Room salaAtualizada = this.repository.save(salaSalva); // salvar o registro atualizado
 
-        Optional<Room> roomFound = roomRepository.findById(id);
+    assertEquals(06, salaAtualizada.getRoomNumber());
+  }
 
-        Assertions.assertThat(roomFound).isNotNull();
-        Assertions.assertThat(roomFound.get().getRoomNumber()).isEqualTo(roomSaved.getRoomNumber());
+  @Test
+  void deleteRoom() {
+    Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
+    Room salaSalva = this.repository.save(salaParaSalvar); // salvando a sala
 
-    }
+    this.repository.delete(salaSalva);
 
-    @Test
-    @DisplayName("Find Room By Room Number When Successful")
-    void find_roomByRoomNumber_whenSuccessful(){
-        Room room = createRoom();
+    Optional<Room> salaDeletada = this.repository.findByRoomNumber(02);
 
-        Room roomSaved = roomRepository.save(room);
+    assertEquals(Optional.empty(), salaDeletada);
+  }
 
-        Integer number = roomSaved.getRoomNumber();
+  @Test
+  void findRoomByNumber() {
+    Room salaParaSalvar = RoomCreator.createRoomToBeSaved(); // criando o obj sala
 
-        Optional<Room> roomFound = roomRepository.findByRoomNumber(number);
+    Room salaSalva = this.repository.save(salaParaSalvar); // salvando a sala
 
-        Assertions.assertThat(roomFound).isNotNull();
-        Assertions.assertThat(roomFound.get()).isEqualTo(roomSaved);
-    }
+    Optional<Room> salaBusca = this.repository.findByRoomNumber(salaSalva.getRoomNumber());
 
-    @Test
-    @DisplayName("Update Room When Successful")
-    void update_room_whenSuccessful(){
-        Room room = createRoom();
-        Room roomToCompare = createRoom();
+    assertTrue(salaBusca.isPresent()); // para verificar q o salaBusca existe
+    assertEquals(salaParaSalvar.getRoomNumber(), salaBusca.get().getRoomNumber());
+    assertEquals(salaSalva.getId(), salaBusca.get().getId());
+  }
 
-        Room roomSaved = roomRepository.save(room);
+  @Test
+  void listRooms() {
 
-        roomSaved.setRoomNumber(99);
-
-        Room roomUpdated = roomRepository.save(roomSaved);
-
-        Assertions.assertThat(roomUpdated.getRoomNumber()).isNotEqualTo(roomToCompare.getRoomNumber());
-
-    }
-
-    @Test
-    @DisplayName("Find List of Room When Successful")
-    void find_Rooms_whenSuccessful(){
-        Room room = createRoom();
-
-        Room roomSaved = roomRepository.save(room);
-
-        List<Room> roomList = roomRepository.findAll();
-
-        Assertions
-                .assertThat(roomList)
-                .isNotNull()
-                .isNotEmpty()
-                .contains(roomSaved);
-
-
-    }
-
-    @Test
-    @DisplayName("Delete Room When Successful")
-    void delete_room_whenSuccessful(){
-        Room room = createRoom();
-
-        Room roomSaved = roomRepository.save(room);
-
-        roomRepository.delete(roomSaved);
-
-        List<Room> roomList = roomRepository.findAll();
-
-        Assertions
-                .assertThat(roomList)
-                .isNotNull()
-                .doesNotContain(roomSaved);
-    }
-
-
+  }
 }

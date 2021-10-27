@@ -41,4 +41,38 @@ public class RoomCreator {
         .appointments(appointments)
         .build();
   }
+
+  public static List<Room> createRoomList() {
+    Room room1 =
+        Room.builder()
+            .uuid(UUID.randomUUID())
+            .roomNumber(01)
+            .specialties(specialtyEntityList)
+            .appointments(appointments)
+            .build();
+
+    Room room2 =
+        Room.builder()
+            .uuid(UUID.randomUUID())
+            .roomNumber(02)
+            .specialties(specialtyEntityList)
+            .appointments(appointments)
+            .build();
+
+    Room room3 =
+        Room.builder()
+            .uuid(UUID.randomUUID())
+            .roomNumber(03)
+            .specialties(specialtyEntityList)
+            .appointments(appointments)
+            .build();
+
+    List<Room> roomList = new ArrayList<>();
+
+    roomList.add(room1);
+    roomList.add(room2);
+    roomList.add(room3);
+
+    return roomList;
+  }
 }

@@ -7,6 +7,7 @@ import Header from '../../Components/Header/Header';
 import { useState } from 'react'
 
 import api from '../../services/api'
+import cookies from 'js-cookie'
 
 export default function Login() {
     const [user, setUser] = useState("");
@@ -27,8 +28,13 @@ export default function Login() {
             '/admin/authenticate',
             loginInfo
         )
-        const data = response.data
-        console.log(data)
+        if (response.status === 200) {
+            const {jwt} = response.data;
+            cookies.set('CIS.TOKEN', jwt, {
+                expires: 0.5
+            });
+        }
+        
     }
 
     return (

@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/RoomRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/RoomRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/RoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/RoomControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/RoomControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/RoomCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/RoomCreator.java" afterDir="false" />
     </list>
     <list id="61551aa2-630a-4e6e-a648-e0eb4c632435" name="Changes by fabio" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +43,23 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
-  <component name="RunManager" selected="JUnit.RoomRepositoryTest">
+  <component name="RunManager" selected="JUnit.RoomControllerTest.listRooms">
+    <configuration name="RoomControllerTest.listRooms" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gestaocis.backend.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gestaocis.backend.controllers" />
+      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.controllers.RoomControllerTest" />
+      <option name="METHOD_NAME" value="listRooms" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RoomRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="back-end" />
       <extension name="coverage">
@@ -53,22 +71,6 @@
       <option name="PACKAGE_NAME" value="com.gestaocis.backend.repositories" />
       <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.repositories.RoomRepositoryTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RoomRepositoryTest.deleteRoom" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="back-end" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.gestaocis.backend.repositories.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.gestaocis.backend.repositories" />
-      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.repositories.RoomRepositoryTest" />
-      <option name="METHOD_NAME" value="deleteRoom" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -123,11 +125,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RoomControllerTest.listRooms" />
         <item itemvalue="JUnit.RoomRepositoryTest" />
         <item itemvalue="JUnit.RoomRepositoryTest.findById" />
         <item itemvalue="JUnit.RoomRepositoryTest.listRooms" />
         <item itemvalue="JUnit.RoomRepositoryTest.findRoomByNumber" />
-        <item itemvalue="JUnit.RoomRepositoryTest.deleteRoom" />
       </list>
     </recent_temporary>
   </component>

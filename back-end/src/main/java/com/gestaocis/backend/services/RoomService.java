@@ -22,6 +22,10 @@ public class RoomService {
     return repository.findById(id);
   }
 
+  public Optional<Room> findByRoomNumber(Integer roomNumber) {
+    return repository.findByRoomNumber(roomNumber);
+  }
+
   public Room save(Room room) {
     Optional<Room> salaProcurada = repository.findByRoomNumber(room.getRoomNumber());
 

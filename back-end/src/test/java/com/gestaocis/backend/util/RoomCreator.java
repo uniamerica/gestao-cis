@@ -8,6 +8,7 @@ import com.gestaocis.backend.models.Room;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class RoomCreator {
@@ -40,6 +41,16 @@ public class RoomCreator {
         .specialties(specialtyEntityList)
         .appointments(appointments)
         .build();
+  }
+
+  public static Optional<Room> createOptionalRoomToBeSaved() {
+    Room room = Room.builder()
+            .uuid(UUID.randomUUID())
+            .roomNumber(02)
+            .specialties(specialtyEntityList)
+            .appointments(appointments)
+            .build();
+    return Optional.of(room);
   }
 
   public static List<Room> createRoomList() {

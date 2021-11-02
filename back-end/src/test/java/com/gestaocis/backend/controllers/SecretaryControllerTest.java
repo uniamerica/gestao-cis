@@ -20,131 +20,132 @@ import java.util.UUID;
 @ExtendWith(SpringExtension.class)
 class SecretaryControllerTest {
 
-    @InjectMocks
-    private SecretaryController secretaryController;
+  @InjectMocks private SecretaryController secretaryController;
 
-    @Mock
-    private SecretaryService secretaryServiceMock;
+  @Mock private SecretaryService secretaryServiceMock;
 
+  @BeforeEach
+  void setUp() throws Exception {
 
-    @BeforeEach
-    void setUp() throws Exception {
+    BDDMockito.when(secretaryServiceMock.save(ArgumentMatchers.any()))
+        .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
 
-        BDDMockito.when(secretaryServiceMock.save(ArgumentMatchers.any()))
-                .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
+    BDDMockito.when(secretaryServiceMock.findByUUID(ArgumentMatchers.any()))
+        .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
 
-        BDDMockito.when(secretaryServiceMock.findByUUID(ArgumentMatchers.any()))
-                .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
+    BDDMockito.when(secretaryServiceMock.findByEmail(ArgumentMatchers.anyString()))
+        .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
 
-        BDDMockito.when(secretaryServiceMock.findByEmail(ArgumentMatchers.anyString()))
-                .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
+    BDDMockito.when(secretaryServiceMock.findByFullName(ArgumentMatchers.anyString()))
+        .thenReturn(List.of(SecretaryCreator.createValidSecretaryResponseDTOSaved()));
 
-        BDDMockito.when(secretaryServiceMock.findByFullName(ArgumentMatchers.anyString()))
-                .thenReturn(List.of(SecretaryCreator.createValidSecretaryResponseDTOSaved()));
+    BDDMockito.when(secretaryServiceMock.findByRole())
+        .thenReturn(List.of(SecretaryCreator.createValidSecretaryResponseDTOSaved()));
 
-        BDDMockito.when(secretaryServiceMock.findByRole())
-                .thenReturn(List.of(SecretaryCreator.createValidSecretaryResponseDTOSaved()));
+    BDDMockito.when(secretaryServiceMock.findByCpf(ArgumentMatchers.anyString()))
+        .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
 
-        BDDMockito.when(secretaryServiceMock.findByCpf(ArgumentMatchers.anyString()))
-                .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOSaved());
+    BDDMockito.when(secretaryServiceMock.update(ArgumentMatchers.any(), ArgumentMatchers.any()))
+        .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOUpdated());
 
-        BDDMockito.when(secretaryServiceMock.update(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(SecretaryCreator.createValidSecretaryResponseDTOUpdated());
+    BDDMockito.when(secretaryServiceMock.delete(ArgumentMatchers.any())).thenReturn(true);
+  }
 
-        BDDMockito.when(secretaryServiceMock.delete(ArgumentMatchers.any()))
-                .thenReturn(true);
-    }
+  @Test
+  @DisplayName("Save Returns Saved Secretary DTO when successful")
+  public void save_returnSavedSecretaryDTO_WhenSuccessful() throws Exception {
+    String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-    @Test
-    @DisplayName("Save Returns Saved Secretary DTO when successful")
-    public void save_returnSavedSecretaryDTO_WhenSuccessful() throws Exception {
-        String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
+    SecretaryResponseDTO response =
+        secretaryController
+            .save(SecretaryCreator.createValidSecretaryRequestDtoToBeSaved())
+            .getBody();
 
-        SecretaryResponseDTO response = secretaryController.save(SecretaryCreator.createValidSecretaryRequestDtoToBeSaved()).getBody();
+    Assertions.assertThat(response).isNotNull();
+    Assertions.assertThat(response.getEmail()).isEqualTo(email);
+  }
 
+  @Test
+  @DisplayName("findByUUID Returns Secretary DTO when successful")
+  public void findByUUID_returnSecretaryDTO_WhenSuccessful() {
+    String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-        Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response.getEmail()).isEqualTo(email);
-    }
+    SecretaryResponseDTO response =
+        secretaryController.findSecretaryByUUID(UUID.randomUUID()).getBody();
 
-    @Test
-    @DisplayName("findByUUID Returns Secretary DTO when successful")
-    public void findByUUID_returnSecretaryDTO_WhenSuccessful(){
-        String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
+    Assertions.assertThat(response).isNotNull();
+    Assertions.assertThat(response.getEmail()).isEqualTo(email);
+  }
 
-        SecretaryResponseDTO response = secretaryController.findSecretaryByUUID(UUID.randomUUID()).getBody();
+  @Test
+  @DisplayName("findByEmail Returns Secretary DTO when successful")
+  public void findByEmail_returnSecretaryDTO_WhenSuccessful() {
+    String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-        Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response.getEmail()).isEqualTo(email);
-    }
+    SecretaryResponseDTO response =
+        secretaryController.findSecretaryByEmail("sazhan@carai").getBody();
 
-    @Test
-    @DisplayName("findByEmail Returns Secretary DTO when successful")
-    public void findByEmail_returnSecretaryDTO_WhenSuccessful(){
-        String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
+    Assertions.assertThat(response).isNotNull();
+    Assertions.assertThat(response.getEmail()).isEqualTo(email);
+  }
 
-        SecretaryResponseDTO response = secretaryController.findSecretaryByEmail("sazhan@carai").getBody();
+  @Test
+  @DisplayName("findByFullName Returns List of Secretary DTO when successful")
+  public void findByFullName_returnListOfSecretaryDTO_WhenSuccessful() {
+    String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-        Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response.getEmail()).isEqualTo(email);
-    }
+    List<SecretaryResponseDTO> response =
+        secretaryController
+            .findListOfSecretariesByFullName("jiasdh8sahgdosiahjdp9ashdasoiud")
+            .getBody();
 
-    @Test
-    @DisplayName("findByFullName Returns List of Secretary DTO when successful")
-    public void findByFullName_returnListOfSecretaryDTO_WhenSuccessful(){
-        String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
+    Assertions.assertThat(response).isNotNull().isNotEmpty().hasSize(1);
+    Assertions.assertThat(response.get(0).getEmail()).isEqualTo(email);
+  }
 
-         List<SecretaryResponseDTO> response = secretaryController.findListOfSecretariesByFullName("jiasdh8sahgdosiahjdp9ashdasoiud").getBody();
+  @Test
+  @DisplayName("findByRole Returns List of Secretary DTO when successful")
+  public void findByRole_returnListOfSecretaryDTO_WhenSuccessful() {
+    String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
 
-        Assertions.assertThat(response)
-                .isNotNull()
-                .isNotEmpty()
-                .hasSize(1);
-        Assertions.assertThat(response.get(0).getEmail()).isEqualTo(email);
-    }
+    List<SecretaryResponseDTO> response = secretaryController.findAllByRole().getBody();
 
-    @Test
-    @DisplayName("findByRole Returns List of Secretary DTO when successful")
-    public void findByRole_returnListOfSecretaryDTO_WhenSuccessful(){
-        String email = SecretaryCreator.createValidSecretaryResponseDTOSaved().getEmail();
+    Assertions.assertThat(response).isNotNull().isNotEmpty().hasSize(1);
+    Assertions.assertThat(response.get(0).getEmail()).isEqualTo(email);
+  }
 
-        List<SecretaryResponseDTO> response = secretaryController.findAllByRole().getBody();
+  @Test
+  @DisplayName("findByCpf Returns Secretary DTO when successful")
+  public void findByCpf_returnSecretaryDTO_WhenSuccessful() {
+    String cpf = SecretaryCreator.createValidSecretaryResponseDTOSaved().getCpf();
 
-        Assertions.assertThat(response)
-                .isNotNull()
-                .isNotEmpty()
-                .hasSize(1);
-        Assertions.assertThat(response.get(0).getEmail()).isEqualTo(email);
-    }
+    SecretaryResponseDTO response =
+        secretaryController.findSecretaryByCpf("sazhan@carai").getBody();
 
-    @Test
-    @DisplayName("findByCpf Returns Secretary DTO when successful")
-    public void findByCpf_returnSecretaryDTO_WhenSuccessful(){
-        String cpf = SecretaryCreator.createValidSecretaryResponseDTOSaved().getCpf();
+    Assertions.assertThat(response).isNotNull();
+    Assertions.assertThat(response.getCpf()).isEqualTo(cpf);
+  }
 
-        SecretaryResponseDTO response = secretaryController.findSecretaryByCpf("sazhan@carai").getBody();
+  @Test
+  @DisplayName("update Returns Secretary DTO when successful")
+  public void update_returnSecretaryDTO_WhenSuccessful() {
+    String cpf = SecretaryCreator.createValidSecretaryResponseDTOSaved().getCpf();
 
-        Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response.getCpf()).isEqualTo(cpf);
-    }
+    SecretaryResponseDTO response =
+        secretaryController
+            .updateSecretary(
+                UUID.randomUUID(), SecretaryCreator.createValidSecretaryRequestDtoToBeSaved())
+            .getBody();
 
-    @Test
-    @DisplayName("update Returns Secretary DTO when successful")
-    public void update_returnSecretaryDTO_WhenSuccessful(){
-        String cpf = SecretaryCreator.createValidSecretaryResponseDTOSaved().getCpf();
+    Assertions.assertThat(response).isNotNull();
+    Assertions.assertThat(response.getCpf()).isEqualTo(cpf);
+  }
 
-        SecretaryResponseDTO response = secretaryController.updateSecretary(UUID.randomUUID(), SecretaryCreator.createValidSecretaryRequestDtoToBeSaved()).getBody();
+  @Test
+  @DisplayName("delete Returns Success or Error Message when successful")
+  public void delete_returnSuccessOrErrorMessage_WhenSuccessful() {
+    int value = secretaryController.deleteSecretary(UUID.randomUUID()).getStatusCode().value();
 
-        Assertions.assertThat(response).isNotNull();
-        Assertions.assertThat(response.getCpf()).isEqualTo(cpf);
-    }
-
-    @Test
-    @DisplayName("delete Returns Success or Error Message when successful")
-    public void delete_returnSuccessOrErrorMessage_WhenSuccessful(){
-        int value = secretaryController.deleteSecretary(UUID.randomUUID()).getStatusCode().value();
-
-        Assertions.assertThat(value).isNotNull().isEqualTo(200);
-
-    }
+    Assertions.assertThat(value).isNotNull().isEqualTo(200);
+  }
 }

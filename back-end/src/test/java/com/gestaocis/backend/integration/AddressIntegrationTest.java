@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
     classes = BackEndApplication.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Log4j2
-class AddressControllerIntegrationTest {
+class AddressIntegrationTest {
 
   @LocalServerPort private int port;
 

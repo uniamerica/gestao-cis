@@ -1,5 +1,6 @@
 package com.gestaocis.backend.controllers;
 
+import com.gestaocis.backend.DTOs.PatientDTOs.NewPatientRequestDTO;
 import com.gestaocis.backend.DTOs.PatientDTOs.PatientResponseDTO;
 import com.gestaocis.backend.services.PatientService;
 import com.gestaocis.backend.util.PatientCreator;
@@ -27,16 +28,27 @@ public class PatientControllerTest {
   @BeforeEach
   void setUp() throws Exception {
 
-    BDDMockito.when(patientServiceMock.save(ArgumentMatchers.any()))
+    BDDMockito.when(patientServiceMock.save(ArgumentMatchers.isA(NewPatientRequestDTO.class)))
         .thenReturn(PatientCreator.createValidPatientResponseDTOSaved());
 
-    BDDMockito.when(patientServiceMock.findByUUID(ArgumentMatchers.any()))
+    BDDMockito.when(patientServiceMock.findByUUID(ArgumentMatchers.isA(UUID.class)))
         .thenReturn(PatientCreator.createValidPatientResponseDTOSaved());
 
     BDDMockito.when(patientServiceMock.findAll())
         .thenReturn(List.of(PatientCreator.createValidPatientResponseDTOSaved()));
 
-    BDDMockito.when(patientServiceMock.update(ArgumentMatchers.any(), ArgumentMatchers.any()))
+    BDDMockito.when(patientServiceMock.findByEmail(ArgumentMatchers.anyString()))
+        .thenReturn(PatientCreator.createValidPatientResponseDTOSaved());
+
+    BDDMockito.when(patientServiceMock.findByFullName(ArgumentMatchers.anyString()))
+        .thenReturn(List.of(PatientCreator.createValidPatientResponseDTOSaved()));
+
+    BDDMockito.when(patientServiceMock.findByCpf(ArgumentMatchers.anyString()))
+        .thenReturn(PatientCreator.createValidPatientResponseDTOSaved());
+
+    BDDMockito.when(
+            patientServiceMock.update(
+                ArgumentMatchers.isA(UUID.class), ArgumentMatchers.isA(NewPatientRequestDTO.class)))
         .thenReturn(PatientCreator.createValidPatientResponseDTOUpdated());
 
     BDDMockito.when(patientServiceMock.delete(ArgumentMatchers.any())).thenReturn(true);
@@ -113,15 +125,14 @@ public class PatientControllerTest {
 
   @Test
   @DisplayName("findByFullName Returns List of Patient DTO when successful")
-  public void findByFullName_returnListOfPatientDTO_WhenSuccessful() {
-    String fullName = PatientCreator.createValidPatientResponseDTOSaved().getFullName();
+  public void findByFullName_returnListOfPatientDTO_WhenSuccessful() throws Exception {
+    String email = PatientCreator.createValidPatientResponseDTOSaved().getEmail();
 
     List<PatientResponseDTO> response =
         patientController.findListOfPatientsByFullName("teste de paciente dodoi").getBody();
-    System.out.println(response);
 
     assertThat(response).isNotNull().isNotEmpty().hasSize(1);
-    //    assertThat(response.get(0).getEmail()).isEqualTo(email);
+    assertThat(response.get(0).getEmail()).isEqualTo(email);
   }
 
   @Test

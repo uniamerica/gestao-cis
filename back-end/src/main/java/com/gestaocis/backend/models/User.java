@@ -1,6 +1,5 @@
 package com.gestaocis.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gestaocis.backend.enums.RoleEntity;
 import com.gestaocis.backend.enums.SpecialtyEntity;
@@ -15,7 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Builder

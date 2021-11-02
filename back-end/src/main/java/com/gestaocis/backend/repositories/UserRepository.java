@@ -16,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   Optional<User> findByCpf(String cpf);
 
+  Optional<User> findByCpfAndRole(String cpf, RoleEntity role);
+
   List<User> findByFullNameContainingIgnoreCase(String name);
 
   List<User> findByRole(RoleEntity role);

@@ -95,7 +95,7 @@ public class PatientIntegrationTest {
     @DisplayName("findByUuid returns PatientDTO when successful")
     public void findByUuid_returnsPatientDTO_whenSuccessful(){
         ResponseEntity<PatientResponseDTO> response = testRestTemplate
-                .exchange("/pacientes/id/{uuid}",
+                .exchange("/api/pacientes/id/{uuid}",
                 HttpMethod.GET, null, PatientResponseDTO.class, uuid);
 
         Assertions.assertThat(response).isNotNull();

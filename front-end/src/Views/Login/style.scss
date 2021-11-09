@@ -1,0 +1,99 @@
+.loginContainer {
+  background-image: url("../../assets/images/undraw_medicine.svg");
+  background-color: #1ca78b2a;
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  .loginCard {
+    background-color: #FFF;
+    opacity: 90%;
+    width: 500px;
+    margin: auto;
+    margin-top: 10%;
+    // margin: 7% 0 0 33%;
+    padding: 3% 0;
+
+    .loginHeader {
+      justify-content: center;
+      display: flex;
+      text-transform: uppercase;
+
+      .cisText {
+        border-right: 1px solid #c3c3c3;
+        text-align: right;
+        padding: 5%;
+
+        p {
+          margin-top: -20%;
+        }
+      }
+
+      .loginText {
+        text-align: left;
+        padding: 5%;
+        align-self: center;
+      }
+    }
+
+    .loginBody {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 0 2.5%;
+
+      form {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+      }
+
+      .userInput,
+      .passwordInput {
+        align-self: center;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .input {
+        margin-bottom: 25px;
+      }
+
+      .icon {
+        margin-right: 10px;
+      }
+
+      #standard-password-input,
+      #emailCpf {
+          width: 300px;
+      }
+      
+      #button{
+        background-color: #1d2366;
+        color: #FFF;
+        width: 150px;
+        margin: auto;
+        margin-top: 2%;
+      }
+    }
+
+    .loginFooter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 8%;
+
+      .text-center {
+        display: flex;
+        text-align: center;
+        align-items: center;
+      }
+
+      .text-center p {
+          margin-right: 12px;
+      }
+    }
+  }
+}

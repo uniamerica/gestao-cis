@@ -1,0 +1,25 @@
+const Joi = require("joi");
+
+const diagnosesSchema = Joi.object({
+  appointment: {
+    date: Joi.string().required(),
+    observation: Joi.string().required(),
+    time: Joi.string().required(),
+  },
+  healthProfessional: {
+    name: Joi.string().required(),
+    professionalDocument: Joi.string().required(),
+  },
+  patient: {
+    biologicalSex: Joi.string().max(1).required(),
+    birthdate: Joi.string().required(),
+    name: Joi.string().required(),
+    weight: Joi.number().required(),
+  },
+  observation: Joi.string().required(),
+  recipe: Joi.string().required(),
+});
+
+module.exports = {
+  diagnosesSchema,
+};

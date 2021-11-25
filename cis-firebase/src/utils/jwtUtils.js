@@ -1,13 +1,19 @@
 const jwt = require("jsonwebtoken");
-const { addOneDay, isDateBefore } = require("./dateUtils");
+const { isDateBefore } = require("./dateUtils");
 require("dotenv").config();
 
-const secret = process.env.JWT_SECRET;
+const secret = `${process.env.SECRET}`;
 
 const signJWT = (obj) => {
-  let expDate = addOneDay(Date.now());
+  let expDate = Math.floor(Date.now() / 1000) + 60 * 60 * 24; //86400s = 1 day;
 
-  const token = jwt.sign({ exp: expDate, data: obj }, secret);
+  const token = jwt.sign(
+    {
+      exp: expDate,
+      data: obj,
+    },
+    secret
+  );
 
   return token;
 };
@@ -15,9 +21,9 @@ const signJWT = (obj) => {
 const verifyJWT = (token) => {
   try {
     const decoded = jwt.verify(token, secret);
-    const createdAt = new Date(decoded.exp);
+    const expiredDate = new Date(decoded.exp);
 
-    const verifyDate = isDateBefore(createdAt, Date.now());
+    const verifyDate = isDateBefore(expiredDate, Date.now());
 
     if (verifyDate) {
       return decoded;
@@ -25,7 +31,7 @@ const verifyJWT = (token) => {
       return false;
     }
   } catch (error) {
-    return false;
+    throw new Error(error);
   }
 };
 

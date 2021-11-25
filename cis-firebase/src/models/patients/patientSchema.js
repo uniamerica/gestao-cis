@@ -1,6 +1,9 @@
 const Joi = require("joi");
 
 const patientSchema = Joi.object({
+  id: Joi.string()
+    .guid({ version: ["uuidv4"] })
+    .required(),
   cpf: Joi.string().required(),
   rg: Joi.string().required(),
   name: Joi.string().required(),

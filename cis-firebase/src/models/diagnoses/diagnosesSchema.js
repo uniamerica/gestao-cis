@@ -1,6 +1,9 @@
 const Joi = require("joi");
 
 const diagnosesSchema = Joi.object({
+  id: Joi.string()
+    .guid({ version: ["uuidv4"] })
+    .required(),
   appointment: {
     date: Joi.string().required(),
     observation: Joi.string().required(),

@@ -89,7 +89,7 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
-  //SIGN IN
+  // SIGN IN
   signIn: async (req, res) => {
     try {
       const { username, password } = req.body;
@@ -103,6 +103,7 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
+  // UPDATE
   update: async (req, res) => {
     try {
       const { id } = req.params;
@@ -116,10 +117,12 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
+  // DELETE
   delete: async (req, res) => {
     try {
       const { id } = req.params;
       const data = await adminService.delete(id);
+      console.log(data);
       if (!!data.error) {
         throw new Error(data.error);
       }

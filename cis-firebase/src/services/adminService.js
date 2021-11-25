@@ -2,8 +2,9 @@ const { db } = require("../firebase");
 const uuid = require("uuid");
 const { adminSchema } = require("../models/admins/adminSchema");
 const { encryptPassword, comparePassword } = require("../utils/hashUtils");
-const { signJWT } = require("../utils/jwtUtils");
+
 const adminDTO = require("../models/admins/adminDTO");
+const jwtUtils = require("../utils/jwtUtils");
 
 const adminCollection = db.collection("admins");
 
@@ -107,7 +108,8 @@ module.exports = {
         };
       }
 
-      const token = signJWT(adminDTO(admin));
+      const token = jwtUtils.signJWT(adminDTO(admin), "admin");
+
       return token;
     } catch (error) {
       throw new Error(error.message);
@@ -148,6 +150,7 @@ module.exports = {
 
       const result = await docRef.set({
         id: id,
+        role: "admin",
         name: obj.name,
         email: obj.email,
         password: passwordHash,
@@ -165,7 +168,7 @@ module.exports = {
   update: async function (id, admin) {
     try {
       const founded = await this.findByid(id);
-      if (!founded.error) return founded;
+      if (!!founded.error) return founded;
 
       const updated = {
         name: !!admin.name ? admin.name : founded.name,
@@ -187,7 +190,7 @@ module.exports = {
   delete: async function (id) {
     try {
       const founded = await this.findByid(id);
-      if (!founded.error) return founded;
+      if (!!founded.error) return founded;
 
       const result = await adminCollection.doc(id).delete();
 

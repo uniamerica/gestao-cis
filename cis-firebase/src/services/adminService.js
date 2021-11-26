@@ -160,7 +160,7 @@ module.exports = {
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 
@@ -182,21 +182,21 @@ module.exports = {
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 
   // DELETE
   delete: async function (id) {
     try {
-      const founded = await this.findByid(id);
+      const founded = await this.findById(id);
       if (!!founded.error) return founded;
 
       const result = await adminCollection.doc(id).delete();
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 };

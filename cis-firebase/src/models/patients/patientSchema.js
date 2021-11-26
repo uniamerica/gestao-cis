@@ -13,6 +13,7 @@ const patientSchema = Joi.object({
   weight: Joi.number().required(),
   birthdate: Joi.string().required(),
   biologicalSex: Joi.string().max(1).required(),
+  password: Joi.string().min(8).required(),
   address: {
     cep: Joi.string().required(),
     city: Joi.string().required(),

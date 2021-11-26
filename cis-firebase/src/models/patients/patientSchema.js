@@ -8,6 +8,7 @@ const patientSchema = Joi.object({
   rg: Joi.string().required(),
   name: Joi.string().required(),
   email: Joi.string().email().required(),
+  username: Joi.string().required(),
   mothername: Joi.string().required(),
   phone: Joi.string().required(),
   weight: Joi.number().required(),

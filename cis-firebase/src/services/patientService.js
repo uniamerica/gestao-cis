@@ -169,6 +169,7 @@ module.exports = {
         rg: obj.rg,
         name: obj.name,
         email: obj.email,
+        username: obj.username,
         phone: obj.phone,
         weight: obj.weight,
         birthdate: obj.birthdate,

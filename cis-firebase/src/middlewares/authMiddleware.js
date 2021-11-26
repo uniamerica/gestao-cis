@@ -40,7 +40,7 @@ module.exports = {
 
       const token = auth.replace("Bearer ", "");
 
-      const verify = jwtUtils.verifyJWT(token, "pacient");
+      const verify = jwtUtils.verifyJWT(token, "patient");
 
       if (!verify) {
         res.status(401).json({ error: "Invalid Token" });

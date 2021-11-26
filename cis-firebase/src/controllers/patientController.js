@@ -64,7 +64,7 @@ module.exports = {
   },
 
   // FIND BY ID
-  findById: async (res, res) => {
+  findById: async (req, res) => {
     try {
       const { id } = req.params;
       const data = await patientService.findById(id);
@@ -112,8 +112,7 @@ module.exports = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const data = await patientService.delete(id);
-      console.log(data);
+      const data = await patientService.update(id, req.body);
       if (!!data.error) {
         throw new Error(data.error);
       }

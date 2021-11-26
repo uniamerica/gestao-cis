@@ -2,8 +2,9 @@ const { db } = require("../firebase");
 const uuid = require("uuid");
 const { patientSchema } = require("../models/patients/patientSchema");
 const { encryptPassword, comparePassword } = require("../utils/hashUtils");
-const { signJWT } = require("../utils/jwtUtils");
+
 const patientDTO = require("../models/patients/patientDTO");
+const jwtUtils = require("../utils/jwtUtils");
 
 const patientCollection = db.collection("patients");
 
@@ -123,7 +124,7 @@ module.exports = {
         };
       }
 
-      const token = signJWT(patientDTO(patient), "patient");
+      const token = jwtUtils.signJWT(patientDTO(patient), "patient");
 
       return token;
     } catch (error) {
@@ -170,6 +171,7 @@ module.exports = {
         name: obj.name,
         email: obj.email,
         username: obj.username,
+        motherName: obj.motherName,
         phone: obj.phone,
         weight: obj.weight,
         birthdate: obj.birthdate,
@@ -188,17 +190,30 @@ module.exports = {
   update: async function (id, patient) {
     try {
       const found = await this.findById(id);
-      if (!found.error) return found;
+      if (!!found.error) return found;
+
+      if (patient.password) {
+        const passwordHash = await encryptPassword(patient.password);
+      }
 
       const updated = {
+        id: !!patient.id ? patient.id : found.id,
+        cpf: !!patient.cpf ? patient.cpf : found.cpf,
+        rg: !!patient.rg ? patient.rg : found.rg,
         name: !!patient.name ? patient.name : found.name,
         email: !!patient.email ? patient.email : found.email,
+        username: !!patient.username ? patient.username : found.username,
+        motherName: !!patient.motherName
+          ? patient.motherName
+          : found.motherName,
         phone: !!patient.phone ? patient.phone : found.phone,
         weight: !!patient.weight ? patient.weight : found.weight,
+        birthdate: !!patient.birthdate ? patient.birthdate : found.birthdate,
         biologicalSex: !!patient.biologicalSex
           ? patient.biologicalSex
           : found.biologicalSex,
-        password: !!patient.password ? patient.password : found.password,
+        // check: is password being encrypted during update process?
+        password: !!patient.password ? passwordHash : found.password,
         address: !!patient.address ? patient.address : found.address,
       };
 
@@ -214,7 +229,7 @@ module.exports = {
   delete: async function (id) {
     try {
       const found = await this.findById(id);
-      if (!found.error) return found;
+      if (!!found.error) return found;
 
       const result = await patientCollection.doc(id).delete();
 

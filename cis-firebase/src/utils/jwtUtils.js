@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const ADMIN_SECRET = `${process.env.ADMIN_SECRET}`;
 const HEALTH_PROFESSIONAL_SECRET = `${process.env.JWT_HEALTH_PROFESSIONAL_SECRET}`;
-const PACIENT_SECRET = `${process.env.JWT_PACIENT_SECRET}`;
+const PATIENT_SECRET = `${process.env.JWT_PATIENT_SECRET}`;
 
 module.exports = {
   signJWT: function (obj, role) {
@@ -18,8 +18,8 @@ module.exports = {
       case "health_professional":
         secret = HEALTH_PROFESSIONAL_SECRET;
         break;
-      case "pacient":
-        secret = PACIENT_SECRET;
+      case "patient":
+        secret = PATIENT_SECRET;
         break;
       default:
         break;
@@ -46,8 +46,8 @@ module.exports = {
         case "health_professional":
           secret = HEALTH_PROFESSIONAL_SECRET;
           break;
-        case "pacient":
-          secret = PACIENT_SECRET;
+        case "patient":
+          secret = PATIENT_SECRET;
           break;
         default:
           break;

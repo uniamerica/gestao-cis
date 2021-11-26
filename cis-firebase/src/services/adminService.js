@@ -170,12 +170,16 @@ module.exports = {
       const founded = await this.findByid(id);
       if (!!founded.error) return founded;
 
+      if (admin.password) {
+        const passwordHash = await encryptPassword(admin.password);
+      }
+
       const updated = {
         name: !!admin.name ? admin.name : founded.name,
         email: !!admin.email ? admin.email : founded.email,
         password: founded.password,
         phone: !!admin.phone ? admin.phone : founded.phone,
-        username: !!admin.username ? admin.username : founded.username,
+        username: !!admin.username ? passwordHash : founded.username,
       };
 
       const result = await adminCollection.doc(id).set(updated);
@@ -189,7 +193,7 @@ module.exports = {
   // DELETE
   delete: async function (id) {
     try {
-      const founded = await this.findById(id);
+      const founded = await this.findByid(id);
       if (!!founded.error) return founded;
 
       const result = await adminCollection.doc(id).delete();

@@ -1,4 +1,4 @@
-// firebase sdk - software develpoment kit
+// firebase sdk - software development kit
 const {
   initializeApp,
   applicationDefault,

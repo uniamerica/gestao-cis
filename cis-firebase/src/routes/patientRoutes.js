@@ -4,29 +4,17 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 const patientRoutes = Router();
 
-patientRoutes.get("/patients", authMiddleware.patient, patientController.index);
+patientRoutes.get("/", authMiddleware.patient, patientController.index);
 patientRoutes.get(
-  "/patients/find",
+  "/find",
   authMiddleware.patient,
   patientController.findByEmailOrUsername
 );
-patientRoutes.get(
-  "/patients/:id",
-  authMiddleware.patient,
-  patientController.findById
-);
-patientRoutes.post("/patients", patientController.create);
-patientRoutes.post("/patients/signin", patientController.signIn);
-patientRoutes.put(
-  "/patients/:id",
-  authMiddleware.patient,
-  patientController.update
-);
-patientRoutes.delete(
-  "/patients/:id",
-  authMiddleware.patient,
-  patientController.delete
-);
+patientRoutes.get("/:id", authMiddleware.patient, patientController.findById);
+patientRoutes.post("/", patientController.create);
+patientRoutes.post("/signin", patientController.signIn);
+patientRoutes.put("/:id", authMiddleware.patient, patientController.update);
+patientRoutes.delete("/:id", authMiddleware.patient, patientController.delete);
 
 module.exports = {
   patientRoutes,

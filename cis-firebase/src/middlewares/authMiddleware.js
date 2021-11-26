@@ -28,7 +28,8 @@ module.exports = {
       throw new Error(error);
     }
   },
-  pacient: async function (req, res, next) {
+
+  patient: async function (req, res, next) {
     try {
       const auth = req.headers.authorization;
 
@@ -52,6 +53,7 @@ module.exports = {
       throw new Error(error);
     }
   },
+
   healthProfessional: async function (req, res, next) {
     try {
       const auth = req.headers.authorization;

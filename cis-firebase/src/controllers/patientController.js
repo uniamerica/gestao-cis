@@ -108,6 +108,7 @@ module.exports = {
     }
   },
 
+  // UPDATE
   update: async (req, res) => {
     try {
       const { id } = req.params;
@@ -117,7 +118,23 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "Deleted with success" }).status(200);
+      res.json({ success: "Record successfully updated!" }).status(200);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // DELETE
+  delete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await patientService.delete(id);
+      console.log(data);
+      if (!!data.error) {
+        throw new Error(data.error);
+      }
+
+      res.json({ success: "Successfully deleted!" }).status(200);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

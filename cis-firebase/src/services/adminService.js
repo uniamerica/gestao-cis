@@ -167,19 +167,19 @@ module.exports = {
   // UPDATE
   update: async function (id, admin) {
     try {
-      const founded = await this.findByid(id);
-      if (!!founded.error) return founded;
+      const found = await this.findByid(id);
+      if (!!found.error) return found;
 
       if (admin.password) {
         const passwordHash = await encryptPassword(admin.password);
       }
 
       const updated = {
-        name: !!admin.name ? admin.name : founded.name,
-        email: !!admin.email ? admin.email : founded.email,
-        password: founded.password,
-        phone: !!admin.phone ? admin.phone : founded.phone,
-        username: !!admin.username ? passwordHash : founded.username,
+        name: !!admin.name ? admin.name : found.name,
+        email: !!admin.email ? admin.email : found.email,
+        password: found.password,
+        phone: !!admin.phone ? admin.phone : found.phone,
+        username: !!admin.username ? passwordHash : found.username,
       };
 
       const result = await adminCollection.doc(id).set(updated);
@@ -193,8 +193,8 @@ module.exports = {
   // DELETE
   delete: async function (id) {
     try {
-      const founded = await this.findByid(id);
-      if (!!founded.error) return founded;
+      const found = await this.findByid(id);
+      if (!!found.error) return found;
 
       const result = await adminCollection.doc(id).delete();
 

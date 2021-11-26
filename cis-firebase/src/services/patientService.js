@@ -212,7 +212,6 @@ module.exports = {
         biologicalSex: !!patient.biologicalSex
           ? patient.biologicalSex
           : found.biologicalSex,
-        // check: is password being encrypted during update process?
         password: !!patient.password ? passwordHash : found.password,
         address: !!patient.address ? patient.address : found.address,
       };

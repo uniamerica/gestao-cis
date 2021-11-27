@@ -7,12 +7,6 @@ import Home from "./Views/Home";
 import { NameForm } from './Views/Testes'
 
 function App() {
-  const logged = {value: false}
-
-  const handleLogged = (loggedValue) => {
-    this.setState({logged: loggedValue})
-  }
-
   return (
     <Fragment>
       <BrowserRouter>

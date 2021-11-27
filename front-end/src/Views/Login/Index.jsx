@@ -16,7 +16,9 @@ import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 // PAINEIS START -----------------
 function TabPanel(props) {
@@ -30,11 +32,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -64,8 +62,15 @@ export default function Login() {
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
   const onSubmit = handleSubmit((data) => {
-    console.log(data)
-  })
+    axios
+      .post('http://localhost:8081/admin/signin', data)
+      .then(function (response) {
+        window.location.href="/home"
+      })
+      .catch(function (error) {
+        alert('Outro erro');
+      });
+  });
 
   return (
     <Fragment>
@@ -149,11 +154,11 @@ export default function Login() {
                 </Typography>
                 <TextField
                   required
-                  type="email"
+                  type="text"
                   id="outlined-required"
-                  label="Email"
+                  label="Email ou Username"
                   sx={{ marginTop: "1.5rem" }}
-                  {...register('email')}
+                  {...register("username")}
                 />
                 <TextField
                   required
@@ -161,7 +166,7 @@ export default function Login() {
                   label="Senha"
                   sx={{ marginTop: "1.5rem" }}
                   type="password"
-                  {...register('password')}
+                  {...register("password")}
                 />
                 <Button
                   type="submit"

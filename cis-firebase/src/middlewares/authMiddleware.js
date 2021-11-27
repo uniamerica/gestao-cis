@@ -28,7 +28,8 @@ module.exports = {
       throw new Error(error);
     }
   },
-  pacient: async function (req, res, next) {
+
+  patient: async function (req, res, next) {
     try {
       const auth = req.headers.authorization;
 
@@ -39,7 +40,7 @@ module.exports = {
 
       const token = auth.replace("Bearer ", "");
 
-      const verify = jwtUtils.verifyJWT(token, "pacient");
+      const verify = jwtUtils.verifyJWT(token, "patient");
 
       if (!verify) {
         res.status(401).json({ error: "Invalid Token" });
@@ -52,6 +53,7 @@ module.exports = {
       throw new Error(error);
     }
   },
+
   healthProfessional: async function (req, res, next) {
     try {
       const auth = req.headers.authorization;

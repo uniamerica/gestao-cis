@@ -1,4 +1,4 @@
-// firebase sdk - software develpoment kit
+// firebase sdk - software development kit
 const {
   initializeApp,
   applicationDefault,
@@ -11,7 +11,7 @@ const {
 } = require("firebase-admin/firestore");
 
 // chaves privadas da sdk do app --> pegar em "configurações do projeto"
-const serviceAccount = require("../cis-firebase-32478-firebase-adminsdk-2exww-422849d847.json");
+const serviceAccount = require("../cis-firebase-32478-firebase-adminsdk-2exww-2c307a6eb2.json");
 
 initializeApp({
   credential: cert(serviceAccount),

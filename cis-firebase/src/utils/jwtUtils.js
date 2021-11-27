@@ -2,38 +2,42 @@ const jwt = require("jsonwebtoken");
 const { isDateBefore } = require("./dateUtils");
 require("dotenv").config();
 
-const ADMIN_SECRET = `${process.env.ADMIN_SECRET}`;
+const ADMIN_SECRET = `${process.env.JWT_ADMIN_SECRET}`;
 const HEALTH_PROFESSIONAL_SECRET = `${process.env.JWT_HEALTH_PROFESSIONAL_SECRET}`;
 const PATIENT_SECRET = `${process.env.JWT_PATIENT_SECRET}`;
 
 module.exports = {
   signJWT: function (obj, role) {
-    let expDate = Math.floor(Date.now() / 1000) + 60 * 60 * 24; //86400s = 1 day;
-    var secret;
+    try {
+      let expDate = Math.floor(Date.now() / 1000) + 60 * 60 * 24; //86400s = 1 day;
+      var secret;
 
-    switch (role) {
-      case "admin":
-        secret = ADMIN_SECRET;
-        break;
-      case "health_professional":
-        secret = HEALTH_PROFESSIONAL_SECRET;
-        break;
-      case "patient":
-        secret = PATIENT_SECRET;
-        break;
-      default:
-        break;
+      switch (role) {
+        case "admin":
+          secret = ADMIN_SECRET;
+          break;
+        case "health_professional":
+          secret = HEALTH_PROFESSIONAL_SECRET;
+          break;
+        case "patient":
+          secret = PATIENT_SECRET;
+          break;
+        default:
+          break;
+      }
+
+      const token = jwt.sign(
+        {
+          exp: expDate,
+          data: obj,
+        },
+        secret
+      );
+
+      return token;
+    } catch (error) {
+      throw new Error(error.message);
     }
-
-    const token = jwt.sign(
-      {
-        exp: expDate,
-        data: obj,
-      },
-      secret
-    );
-
-    return token;
   },
   verifyJWT: function (token, role) {
     try {

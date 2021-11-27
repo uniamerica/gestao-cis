@@ -33,7 +33,7 @@ module.exports = {
         if (!data) {
           throw new Error("Professional not found");
         }
-        res.json(data).status(200);
+        res.json(healthProfessionalDTO(data)).status(200);
         return;
       }
 
@@ -42,7 +42,7 @@ module.exports = {
         if (!data) {
           throw new Error("Professional not found");
         }
-        res.json(data).status(200);
+        res.json(healthProfessionalDTO(data)).status(200);
         return;
       }
 
@@ -104,12 +104,15 @@ module.exports = {
   signIn: async (req, res) => {
     try {
       const { username, password } = req.body;
+      console.log(req.body);
       const data = await healthProfessionalService.signIn(username, password);
+      console.log(data);
       if (!!data.error) {
         throw new Error(data.error);
       }
 
-      res.json({ token: data }).status(201);
+      res.status(201).json({ token: data });
+      return;
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

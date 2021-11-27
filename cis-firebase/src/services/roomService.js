@@ -101,7 +101,7 @@ module.exports = {
       if (!!found.error) return found;
 
       const updated = {
-        id: !!room.id ? room.id : found.id,
+        id: id,
         name: !!room.name ? room.name : found.name,
         specialties: !!room.specialties ? room.specialties : found.specialties,
       };

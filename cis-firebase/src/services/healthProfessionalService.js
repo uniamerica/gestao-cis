@@ -146,11 +146,11 @@ module.exports = {
         };
       }
 
-      const healthProfessioanlExistsByUsername = await this.findByUsername(
+      const healthProfessionalExistsByUsername = await this.findByUsername(
         obj.username
       );
 
-      if (!!healthProfessioanlExistsByUsername) {
+      if (!!healthProfessionalExistsByUsername) {
         return {
           error: "Username already registered",
         };
@@ -184,12 +184,13 @@ module.exports = {
       const found = await this.findById(id);
       if (!!found.error) return found;
 
+      var passwordHash;
       if (healthProfessional.password) {
-        const passwordHash = await encryptPassword(healthProfessional.password);
+        passwordHash = await encryptPassword(healthProfessional.password);
       }
 
       const updated = {
-        id: !!healthProfessional.id ? healthProfessional.id : found.id,
+        id: id,
         email: !!healthProfessional.email
           ? healthProfessional.email
           : found.email,
@@ -202,7 +203,7 @@ module.exports = {
           ? healthProfessional.phone
           : found.phone,
         specialty: !!healthProfessional.specialty
-          ? healthProfessional.address
+          ? healthProfessional.specialty
           : found.specialty,
       };
 

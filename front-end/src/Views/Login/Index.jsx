@@ -67,7 +67,9 @@ export default function Login() {
             <Container maxWidth="lg"
                 sx={{
                     display: 'flex',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    paddingBottom: '3rem',
+                    boxShadown: 'cccccc8f 8px 6px 4px'
                 }}>
                 <Box name="BackgroundImage"
                     sx={{

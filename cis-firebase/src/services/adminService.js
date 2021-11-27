@@ -177,9 +177,9 @@ module.exports = {
       const updated = {
         name: !!admin.name ? admin.name : found.name,
         email: !!admin.email ? admin.email : found.email,
-        password: found.password,
+        password: !!admin.password ? passwordHash : found.password,
         phone: !!admin.phone ? admin.phone : found.phone,
-        username: !!admin.username ? passwordHash : found.username,
+        username: !!admin.username ? admin.username : found.username,
       };
 
       const result = await adminCollection.doc(id).set(updated);

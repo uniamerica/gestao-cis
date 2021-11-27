@@ -197,7 +197,7 @@ module.exports = {
       }
 
       const updated = {
-        id: !!patient.id ? patient.id : found.id,
+        id: id,
         cpf: !!patient.cpf ? patient.cpf : found.cpf,
         rg: !!patient.rg ? patient.rg : found.rg,
         name: !!patient.name ? patient.name : found.name,

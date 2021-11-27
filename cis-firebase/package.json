@@ -15,6 +15,7 @@
     "firebase-admin": "^10.0.0",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
+    "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

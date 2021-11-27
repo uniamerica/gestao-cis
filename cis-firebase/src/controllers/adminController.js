@@ -84,7 +84,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "create with success" }).status(201);
+      res.status(201).json({ success: "create with success" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

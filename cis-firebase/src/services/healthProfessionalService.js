@@ -35,7 +35,7 @@ module.exports = {
   },
 
   // FIND BY EMAIL
-  findByEmai: async function (email) {
+  findByEmail: async function (email) {
     try {
       const snapshot = await healthProfessionalCollection
         .where("email", "==", email)

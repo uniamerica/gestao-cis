@@ -1,6 +1,6 @@
 const { format, isBefore, addDays } = require("date-fns");
 
-const formatDate = (date) => format(date, "dd-MM-yyy");
+const formatDate = (date) => format(date, "dd-MM-yyyy");
 
 const isDateBefore = (date, dateToCompare) => isBefore(date, dateToCompare);
 

@@ -180,31 +180,51 @@ module.exports = {
 
   // UPDATE
   update: async function (id, healthProfessional) {
-   try {
-    const found = await this.findById(id)
-    if(!!found.error) return found;
+    try {
+      const found = await this.findById(id);
+      if (!!found.error) return found;
 
-    if(healthProfessional.password) {
-     const passwordHash = await encryptPassword(healthProfessional.password)
-    }
+      if (healthProfessional.password) {
+        const passwordHash = await encryptPassword(healthProfessional.password);
+      }
 
-    const updated = {
-     id: !!patient.id ? patient.id : found.id,
-     name: !!patient.name ? patient.name : found.name,
-     email: !!patient.email ? patient.email : found.email,
-     username: !!patient.username ? patient.username : found.username,
-     motherName: !!patient.motherName
-          ? patient.motherName
-          : found.motherName,
-     phone: !!patient.phone ? patient.phone : found.phone,
-     weight: !!patient.weight ? patient.weight : found.weight,
-     birthdate: !!patient.birthdate ? patient.birthdate : found.birthdate,
-     biologicalSex: !!patient.biologicalSex
-          ? patient.biologicalSex
-          : found.biologicalSex,
-     password: !!patient.password ? passwordHash : found.password,
-     address: !!patient.address ? patient.address : found.address,
+      const updated = {
+        id: !!healthProfessional.id ? healthProfessional.id : found.id,
+        email: !!healthProfessional.email
+          ? healthProfessional.email
+          : found.email,
+        name: !!healthProfessional.name ? healthProfessional.name : found.name,
+        username: !!healthProfessional.username
+          ? healthProfessional.username
+          : found.username,
+        password: !!healthProfessional.password ? passwordHash : found.password,
+        phone: !!healthProfessional.phone
+          ? healthProfessional.phone
+          : found.phone,
+        specialty: !!healthProfessional.specialty
+          ? healthProfessional.address
+          : found.specialty,
+      };
+
+      const result = await healthProfessionalCollection.doc(id).set(updated);
+
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
     }
-   }
-  }
+  },
+
+  // DELETE
+  delete: async function (id) {
+    try {
+      const found = await this.findById(id);
+      if (!!found.error) return found;
+
+      const result = await healthProfessionalCollection.doc(id).delete();
+
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };

@@ -1,37 +1,37 @@
 const { Router } = require("express");
-const professionalController = require("../controllers/professionalController");
+const healthProfessionalController = require("../controllers/healthProfessionalController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-const professionalRoutes = Router();
+const healthProfessionalRoutes = Router();
 
-professionalRoutes.get(
+healthProfessionalRoutes.get(
   "/",
   authMiddleware.healthProfessional,
-  professionalController.index
+  healthProfessionalController.index
 );
-professionalRoutes.get(
+healthProfessionalRoutes.get(
   "/find",
   authMiddleware.healthProfessional,
-  professionalController.findByEmailOrUsername
+  healthProfessionalController.findByEmailOrUsername
 );
-professionalRoutes.get(
+healthProfessionalRoutes.get(
   "/:id",
   authMiddleware.healthProfessional,
-  professionalController.findById
+  healthProfessionalController.findById
 );
-professionalRoutes.post("/", professionalController.create);
-professionalRoutes.post("/signin", professionalController.signIn);
-professionalRoutes.put(
+healthProfessionalRoutes.post("/", healthProfessionalController.create);
+healthProfessionalRoutes.post("/signin", healthProfessionalController.signIn);
+healthProfessionalRoutes.put(
   "/:id",
   authMiddleware.healthProfessional,
-  professionalController.update
+  healthProfessionalController.update
 );
-professionalRoutes.delete(
+healthProfessionalRoutes.delete(
   "/:id",
   authMiddleware.healthProfessional,
-  professionalController.delete
+  healthProfessionalController.delete
 );
 
 module.exports = {
-  professionalRoutes,
+  healthProfessionalRoutes,
 };

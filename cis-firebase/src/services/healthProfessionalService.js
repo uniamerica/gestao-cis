@@ -118,7 +118,7 @@ module.exports = {
 
       const token = jwtUtils.signJWT(
         healthProfessionalDTO(healthProfessional),
-        "healthProfessioanl"
+        "health_professional"
       );
 
       return token;

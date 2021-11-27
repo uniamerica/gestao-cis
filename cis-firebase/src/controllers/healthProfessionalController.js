@@ -1,4 +1,3 @@
-const { de } = require("date-fns/locale");
 const healthProfessionalDTO = require("../models/healhProfessionals/healthProfessionalDTO");
 const healthProfessionalService = require("../services/healthProfessionalService");
 

@@ -12,13 +12,15 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import axios from "axios";
+import { AuthContext } from "../../Contexts/authContext";
+import { useNavigate } from "react-router";
+import Cookies from 'js-cookie';
 
 // PAINEIS START -----------------
 function TabPanel(props) {
@@ -52,6 +54,17 @@ function a11yProps(index) {
 
 // PAINEIS END ---------------------------------------------
 export default function Login() {
+
+  const navigate = useNavigate();
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+
+  useEffect(() => {
+    console.log(isAuth)
+    if (isAuth) {
+      return navigate('/home')
+    }
+  }, []);
+
   // PAINEIS -----------------------------------------------
   const [value, setValue] = React.useState(0);
 
@@ -61,15 +74,24 @@ export default function Login() {
   // PAINEIS END ---------------------------------------------
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
-  const onSubmit = handleSubmit((data) => {
-    axios
-      .post('http://localhost:8081/admin/signin', data)
-      .then(function (response) {
-        window.location.href="/home"
-      })
-      .catch(function (error) {
-        alert('Outro erro');
+  const onSubmit = handleSubmit( async (data) => {
+    const response = await axios.post("http://localhost:8081/admin/signin", data);
+    if (response.status == 200) {
+      const {token} = response.data;
+      console.log(token)
+      Cookies.set('cis.validator', token, {
+        expires: 1, //Expira em 1 dia
       });
+
+      // Cookies.remove('cis.validator')
+
+      setIsAuth(true);
+      navigate('/home')
+    } else {
+      alert('Credenciais Inválidas')
+    }
+
+    
   });
 
   return (

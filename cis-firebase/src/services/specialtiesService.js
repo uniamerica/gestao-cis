@@ -1,6 +1,6 @@
 const { db } = require("../firebase");
 const uuid = require("uuid");
-const { specialtySchema } = require("../models/specialty/specialtieSchema");
+const { specialtySchema } = require("../models/specialties/specialtiesSchema");
 
 const specialtyCollection = db.collection("specialty");
 

@@ -66,4 +66,34 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
+
+  // UPDATE
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await specialtiesService.update(id, req.body);
+      if (!!data.error) {
+        throw new Error(error.message);
+      }
+
+      res.status(200).json({ success: "Record successfully updated!" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // DELETE
+  delete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await specialtiesService.delete(id);
+      if (!!data.error) {
+        throw new Error(error.message);
+      }
+
+      res.status(200).json({ success: "Successfully deleted!" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
 };

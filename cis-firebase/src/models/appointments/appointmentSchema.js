@@ -1,15 +1,15 @@
 const Joi = require("joi");
 
 const appointmentSchema = Joi.object({
-  id: Joi.string()
-    .guid({ version: ["uuidv4"] })
-    .required(),
+  id: Joi.string().guid({ version: ["uuidv4"] }),
+  // date: Joi.date().greater("now"),
   date: Joi.string().required(),
+  // date: Joi.date().timestamp("javascript"),
   time: Joi.string().required(),
   room: Joi.string().required(),
   observation: Joi.string().required(),
   patient: {
-    bithdate: Joi.string().required(),
+    dateOfBirth: Joi.string().required(),
     id: Joi.string().required(),
     name: Joi.string().required(),
     biologicalSex: Joi.string().max(1).required(),

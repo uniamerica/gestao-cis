@@ -11,6 +11,7 @@ initializeApp({
 
 // banco de dados nosql do firebase
 const db = getFirestore();
+// db.settings({ ignoreUndefinedProperties: true });
 
 module.exports = {
   db,

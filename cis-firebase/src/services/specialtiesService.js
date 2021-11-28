@@ -1,8 +1,10 @@
 const { db } = require("../firebase");
 const uuid = require("uuid");
-const { specialtySchema } = require("../models/specialties/specialtiesSchema");
+const {
+  specialtiesSchema,
+} = require("../models/specialties/specialtiesSchema");
 
-const specialtyCollection = db.collection("specialty");
+const specialtyCollection = db.collection("specialties");
 
 module.exports = {
   // LIST ALL
@@ -11,16 +13,18 @@ module.exports = {
       const { docs } = await specialtyCollection
         .orderBy(`${order}`, !desc ? "asc" : "desc")
         .startAfter(!startAfter ? "" : startAfter)
-        .limit(limit)
+        .limit(limit * 1)
         .get();
 
-      return {
+      const paginatedData = {
         count: docs.length,
-        limit: limit,
+        limit: limit * 1,
         order: order,
-        nextPage: docs.length >= limit,
+        nextPage: docs.length >= limit * 1,
         items: docs.map((d) => d.data()),
       };
+
+      return paginatedData;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -61,9 +65,9 @@ module.exports = {
   },
 
   // CREATE
-  create: async function (specialty) {
+  create: async function (obj) {
     try {
-      const validData = specialtySchema.validate(specialty);
+      const validData = specialtiesSchema.validate(obj);
 
       if (validData.error) {
         return {
@@ -71,7 +75,7 @@ module.exports = {
         };
       }
 
-      const specialtyExistsByTitle = await this.findByTitle(specialty.title);
+      const specialtyExistsByTitle = await this.findByTitle(obj.title);
 
       if (!!specialtyExistsByTitle) {
         return {
@@ -84,8 +88,8 @@ module.exports = {
 
       const result = await docRef.set({
         id: id,
-        title: specialty.title,
-        description: specialty.description,
+        title: obj.title,
+        description: obj.description,
       });
 
       return result;

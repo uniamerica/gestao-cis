@@ -25,12 +25,12 @@ specialtiesRoutes.post(
   specialtiesController.create
 );
 specialtiesRoutes.put(
-  "/",
+  "/:id",
   authMiddleware.adminOrHealthProfessional,
   specialtiesController.update
 );
 specialtiesRoutes.delete(
-  "/",
+  "/:id",
   authMiddleware.adminOrHealthProfessional,
   specialtiesController.delete
 );

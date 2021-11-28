@@ -192,8 +192,9 @@ module.exports = {
       const found = await this.findById(id);
       if (!!found.error) return found;
 
+      var passwordHash;
       if (patient.password) {
-        const passwordHash = await encryptPassword(patient.password);
+        passwordHash = await encryptPassword(patient.password);
       }
 
       const updated = {

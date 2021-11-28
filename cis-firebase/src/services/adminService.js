@@ -75,6 +75,7 @@ module.exports = {
           error: "Admin Not Found!",
         };
       }
+      console.log(admin);
       return admin;
     } catch (error) {
       throw new Error(error.message);
@@ -175,6 +176,7 @@ module.exports = {
       }
 
       const updated = {
+        id: id,
         name: !!admin.name ? admin.name : found.name,
         email: !!admin.email ? admin.email : found.email,
         password: !!admin.password ? passwordHash : found.password,

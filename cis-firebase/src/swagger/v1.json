@@ -1,0 +1,330 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "UNIAMERICA CIS - DOCUMENTAÇÃO DE API",
+    "description": "Documentação dos endpoints utilizados no sistema desenvolvido para o CIS",
+    "contact": {
+      "name": "Uniamerica",
+      "url": "https://uniamerica.br/"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081/",
+      "description": "Servidor de Desenvolvimento"
+    },
+    {
+      "url": "http://localhost:8081/",
+      "description": "Servidor em Produção"
+    }
+  ],
+  "paths": {
+    "/admin": {
+      "post": {
+        "summary": "Cadastro de Administrador",
+        "description": "Rota responsável pelo cadastro de um administrador",
+        "tags": ["Admin"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {},
+              "examples": {
+                "Create Admin": {
+                  "value": {
+                    "email": "admin@example.com",
+                    "name": "example admin",
+                    "phone": "554599999999",
+                    "username": "example_admin",
+                    "password": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "create with success"
+          },
+          "400": {
+            "description": "Error Message"
+          }
+        }
+      },
+      "get": {
+        "summary": "Lista Paginada de Administradores",
+        "description": "Rota responsável pela listagem de administradores",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Por qual atributo listar",
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Quantos elementos buscar na lista",
+            "required": false
+          },
+          {
+            "name": "startAfter",
+            "in": "query",
+            "description": "A partir de qual administrador inicar a lista baseado na order",
+            "required": false
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "description": "Listagem Asc ou DESC",
+            "required": false
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "admin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "appointment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "pattern": "dd-MM-yyy"
+          },
+          "time": {
+            "type": "string",
+            "format": "time",
+            "pattern": "hh:mm"
+          },
+          "room": {
+            "$ref": "#/components/schemas/room"
+          },
+          "observation": {
+            "type": "string"
+          },
+          "patient": {
+            "$ref": "#/components/schemas/patient"
+          },
+          "healthProfessional": {
+            "$ref": "#/components/schemas/healthProfessional"
+          },
+          "price": {
+            "type": "number"
+          },
+          "paid": {
+            "type": "boolean"
+          }
+        }
+      },
+      "diagnoses": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "appointment": {
+            "$ref": "#/components/schemas/appointment"
+          },
+          "healthProfessional": {
+            "$ref": "#/components/schemas/healthProfessional"
+          },
+          "patient": {
+            "$ref": "#/components/schemas/patient"
+          },
+          "observation": {
+            "type": "string"
+          },
+          "recipe": {
+            "type": "string"
+          }
+        }
+      },
+      "healthProfessional": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "professionalDocument": {
+            "type": "string"
+          },
+          "specialty": {
+            "$ref": "#/components/schemas/specialty"
+          }
+        }
+      },
+      "patient (public)": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "patient (private)": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "rg": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "motherName": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "birthdate": {
+            "type": "date",
+            "pattern": "dd-MM-yyy"
+          },
+          "biologialSex": {
+            "type": "string",
+            "max": 1
+          },
+          "address": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      },
+      "room": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "specialties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/components/schemas/specialty"
+            }
+          }
+        }
+      },
+      "specialty": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "address": {
+        "type": "object",
+        "properties": {
+          "cep": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "uf": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  }
+}

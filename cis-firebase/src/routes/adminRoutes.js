@@ -13,8 +13,18 @@ adminRoutes.get(
 adminRoutes.get("/:id", authMiddleware.admin, adminController.findById);
 adminRoutes.post("/", adminController.create);
 adminRoutes.post("/signin", adminController.signIn);
-adminRoutes.put("/:id", authMiddleware.admin, adminController.update);
-adminRoutes.delete("/:id", authMiddleware.admin, adminController.delete);
+adminRoutes.put(
+  "/:id",
+  authMiddleware.admin,
+  authMiddleware.compareIds,
+  adminController.update
+);
+adminRoutes.delete(
+  "/:id",
+  authMiddleware.admin,
+  authMiddleware.compareIds,
+  adminController.delete
+);
 
 module.exports = {
   adminRoutes,

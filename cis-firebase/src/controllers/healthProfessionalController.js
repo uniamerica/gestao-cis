@@ -1,4 +1,4 @@
-const healthProfessionalDTO = require("../models/healhProfessionals/healthProfessionalDTO");
+const healthProfessionalDTO = require("../models/healthProfessionals/healthProfessionalDTO");
 const healthProfessionalService = require("../services/healthProfessionalService");
 
 module.exports = {

@@ -2,10 +2,10 @@ const { db } = require("../firebase");
 const uuid = require("uuid");
 const {
   healthProfessionalSchema,
-} = require("../models/healhProfessionals/healthProfessionalSchema");
+} = require("../models/healthProfessionals/healthProfessionalSchema");
 const { encryptPassword, comparePassword } = require("../utils/hashUtils");
 
-const healthProfessionalDTO = require("../models/healhProfessionals/healthProfessionalDTO");
+const healthProfessionalDTO = require("../models/healthProfessionals/healthProfessionalDTO");
 const jwtUtils = require("../utils/jwtUtils");
 
 const healthProfessionalCollection = db.collection("healthProfessional");

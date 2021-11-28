@@ -205,6 +205,9 @@ module.exports = {
         specialty: !!healthProfessional.specialty
           ? healthProfessional.specialty
           : found.specialty,
+        professionalDocument: !!healthProfessional.professionalDocument
+          ? healthProfessional.professionalDocument
+          : found.professionalDocument,
       };
 
       const result = await healthProfessionalCollection.doc(id).set(updated);

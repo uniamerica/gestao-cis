@@ -104,9 +104,7 @@ module.exports = {
   signIn: async (req, res) => {
     try {
       const { username, password } = req.body;
-      console.log(req.body);
       const data = await healthProfessionalService.signIn(username, password);
-      console.log(data);
       if (!!data.error) {
         throw new Error(data.error);
       }

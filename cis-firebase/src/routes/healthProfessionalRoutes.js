@@ -4,31 +4,23 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 const healthProfessionalRoutes = Router();
 
-healthProfessionalRoutes.get(
-  "/",
-  authMiddleware.healthProfessional,
-  healthProfessionalController.index
-);
+healthProfessionalRoutes.get("/", healthProfessionalController.index);
 healthProfessionalRoutes.get(
   "/find",
-  authMiddleware.healthProfessional,
   healthProfessionalController.findByEmailOrUsername
 );
-healthProfessionalRoutes.get(
-  "/:id",
-  authMiddleware.healthProfessional,
-  healthProfessionalController.findById
-);
+healthProfessionalRoutes.get("/:id", healthProfessionalController.findById);
 healthProfessionalRoutes.post("/", healthProfessionalController.create);
 healthProfessionalRoutes.post("/signin", healthProfessionalController.signIn);
 healthProfessionalRoutes.put(
   "/:id",
-  authMiddleware.healthProfessional,
+  authMiddleware.compareIds,
   healthProfessionalController.update
 );
 healthProfessionalRoutes.delete(
   "/:id",
   authMiddleware.healthProfessional,
+  authMiddleware.compareIds,
   healthProfessionalController.delete
 );
 

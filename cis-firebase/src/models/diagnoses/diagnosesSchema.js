@@ -20,7 +20,7 @@ const diagnosesSchema = Joi.object({
     weight: Joi.number().required(),
   },
   observation: Joi.string().required(),
-  recipe: Joi.string().required(),
+  prescription: Joi.string().required(),
 });
 
 module.exports = {

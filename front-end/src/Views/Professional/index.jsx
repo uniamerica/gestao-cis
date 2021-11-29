@@ -82,6 +82,7 @@ export default function Professional() {
                   sx={{ marginTop: "1.5rem" }}
                 />
                 <Autocomplete
+                required
                 sx={{ marginTop: "1.5rem" }}
                 multiple
                 id="tags-outlined"

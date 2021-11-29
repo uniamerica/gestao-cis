@@ -134,6 +134,8 @@ module.exports = {
         .where("time", "==", time)
         .where("healthProfessional", "==", healthProfessionalId);
 
+      console.log(typeof snapshot);
+
       const appointmentDoc = snapshot.doc;
 
       console.log(appointmentDoc);

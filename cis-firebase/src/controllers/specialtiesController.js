@@ -49,7 +49,7 @@ module.exports = {
 
       res.status(200).json(data);
     } catch (error) {
-      throw new Error(error.message);
+      res.status(400).json({ error: error.message });
     }
   },
 

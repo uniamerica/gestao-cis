@@ -8,11 +8,12 @@ module.exports = {
       const { startAfter, limit, order, desc } = req.query;
       const data = await adminService.index(startAfter, limit, order, desc);
 
-      res.json(data).status(200);
+      res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   },
+
   // FIND BY EMAIL OR USERNAME
   findByEmailOrUsename: async (req, res) => {
     try {
@@ -27,7 +28,7 @@ module.exports = {
         if (!data) {
           throw new Error("admin not found");
         }
-        res.json(data).status(200);
+        res.status(200).json(data);
         return;
       }
 
@@ -36,21 +37,21 @@ module.exports = {
         if (!data) {
           throw new Error("admin not found");
         }
-        res.json(data).status(200);
+        res.status(200).json(data);
         return;
       }
 
       const dataByEmail = await adminService.findByEmail(email);
 
       if (dataByEmail) {
-        res.json(adminDTO(dataByEmail)).status(200);
+        res.status(200).json(adminDTO(dataByEmail));
         return;
       }
 
       const dataByUsername = await adminService.findByUsername(username);
 
       if (dataByUsername) {
-        res.json(adminDTO(dataByUsername)).status(200);
+        res.status(200).json(adminDTO(dataByUsername));
         return;
       }
 
@@ -61,6 +62,7 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
+
   //FIND BY ID
   findById: async (req, res) => {
     try {
@@ -71,11 +73,12 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json(adminDTO(data)).status(200);
+      res.status(200).json(adminDTO(data));
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   },
+
   // CREATE
   create: async (req, res) => {
     try {
@@ -89,6 +92,7 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
+
   // SIGN IN
   signIn: async (req, res) => {
     try {
@@ -98,11 +102,12 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ token: data }).status(201);
+      res.status(201).json({ token: data });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   },
+
   // UPDATE
   update: async (req, res) => {
     try {
@@ -112,7 +117,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "updated with success" }).status(200);
+      res.status(200).json({ success: "updated with success" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -127,7 +132,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "delete with success" }).status(200);
+      res.status(200).json({ success: "delete with success" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

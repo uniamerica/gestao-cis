@@ -15,7 +15,7 @@ module.exports = {
         .startAfter(startAfter)
         .limit(limit * 1)
         .get();
-
+      console.log(docs);
       const paginatedData = {
         count: docs.length,
         limit: limit * 1,
@@ -46,25 +46,151 @@ module.exports = {
     }
   },
 
-  // FIND BY ?
-  // IMPLEMENTATION
+  // // FIND BY HEALTH PROFESSIONAL ID
+  // findByHealthProfessionalId: async function (healthProfessionalId) {
+  //   try {
+  //     const snapshot = await appointmentCollection
+  //       .where("healthProfessional.id", "==", healthProfessionalId)
+  //       .get();
+  //     const appointmentDoc = snapshot.docs;
 
-  // CREATE - VALIDATION BY?
-  // create: async function(obj) {
-  //  try {
-  //   const validData = appointmentSchema.validate(obj)
+  //     if (appointmentDoc.length === 0) {
+  //       return null;
+  //     }
 
-  //   if(validData.error) {
-  //    return {
-  //     error: validData.error
-  //    }
+  //     return patientsDoc.map((doc) => doc.data())[0];
+  //   } catch (error) {
+  //     throw new Error(error.message);
   //   }
+  // },
 
-  //   const appointmentExistById = await this.findById(obj)
-  //  } catch (error) {
+  // // FIND BY PATIENT ID
+  // findByPatientId: async function (patientId) {
+  //   try {
+  //     const snapshot = await appointmentCollection
+  //       .where("patient.id", "==", patientId)
+  //       .get();
+  //     const appointmentDoc = snapshot.docs;
 
-  //  }
-  // }
+  //     if (appointmentDoc.length === 0) {
+  //       return null;
+  //     }
+
+  //     return patientsDoc.map((doc) => doc.data())[0];
+  //   } catch (error) {
+  //     throw new Error(error.message);
+  //   }
+  // },
+
+  // // FIND BY DATE
+  // findByDate: async function (date) {
+  //   try {
+  //     const snapshot = await appointmentCollection
+  //       .where("date", "==", date)
+  //       .get();
+  //     const appointmentDoc = snapshot.docs;
+
+  //     if (appointmentDoc.length === 0) {
+  //       return null;
+  //     }
+
+  //     return patientsDoc.map((doc) => doc.data())[0];
+  //   } catch (error) {
+  //     throw new Error(error.message);
+  //   }
+  // },
+
+  // // FIND BY TIME
+  // findByTime: async function (time) {
+  //   try {
+  //     const snapshot = await appointmentCollection
+  //       .where("time", "==", time)
+  //       .get();
+  //     const appointmentDoc = snapshot.docs;
+
+  //     if (appointmentDoc.length === 0) {
+  //       return null;
+  //     }
+
+  //     return patientsDoc.map((doc) => doc.data())[0];
+  //   } catch (error) {
+  //     throw new Error(error.message);
+  //   }
+  // },
+
+  // FIND BY BOOKING (?)
+  findByBooking: async function (healthProfessionalId, patientId, date, time) {
+    try {
+      const appointmentCollection = db.collection("appointments");
+
+      const snapshot = appointmentCollection
+        .where("patient.id", "==", patientId)
+        .where("date", "==", date)
+        .where("time", "==", time)
+        .where("healthProfessional.id", "==", healthProfessionalId);
+
+      const appointmentDoc = snapshot.doc;
+
+      if (appointmentDoc && appointmentDoc.length === 0) {
+        return null;
+      }
+
+      if (appointmentDoc && appointmentDoc.length !== 0) {
+        return appointmentDoc.map((doc) => doc.data())[0];
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  // CREATE
+  create: async function (obj) {
+    try {
+      const validData = appointmentSchema.validate(obj);
+
+      if (validData.error) {
+        return {
+          error: validData.error,
+        };
+      }
+
+      const appointmentExistByBooking = await this.findByBooking(
+        obj.healthProfessional.id,
+        obj.patient.id,
+        obj.date,
+        obj.time
+      );
+
+      console.log(appointmentExistByBooking);
+
+      if (!!appointmentExistByBooking) {
+        return {
+          error: "Appointment already registered",
+        };
+      }
+
+      const id = uuid.v4();
+      const docRef = appointmentCollection.doc(id);
+
+      const result = await docRef.set({
+        id: id,
+        date: obj.date,
+        time: obj.time,
+        room: obj.room, // make a separate API call in front-end to fill in the room information
+        observation: obj.observation,
+        patient: obj.patient, // make a separate API call in front-end to fill in the patient information
+        healthProfessional: obj.healthProfessional, // make a separate API call in front-end to fill in the healthProfessional information
+        price: obj.price,
+        paid: obj.paid,
+      });
+
+      console.log(result);
+
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 
   // UPDATE
   update: async function (id, appointment) {

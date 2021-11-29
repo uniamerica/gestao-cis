@@ -12,7 +12,89 @@ module.exports = {
         desc
       );
 
-      res.json(data).status(200);
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // FIND BY BOOKING
+  findByBooking: async (req, res) => {
+    try {
+      const { healthProfessionalId, patientId, date, time } = req.params;
+
+      const data = await appointmentService.findByBooking(
+        healthProfessionalId,
+        patientId,
+        date,
+        time
+      );
+
+      if (!!data.error) {
+        throw new Error(error.message);
+      }
+
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // FIND BY ID
+  findById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await appointmentService.findById(id);
+
+      if (!!data.error) {
+        throw new Error(data.error);
+      }
+
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // CREATE
+  create: async (req, res) => {
+    try {
+      const data = await appointmentService.create(req.body);
+      if (!!data.error) {
+        throw new Error(error.message);
+      }
+
+      res.status(201).json({ success: "Created with success!" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // UPDATE
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await appointmentService.update(id, req.body);
+      if (!!data.error) {
+        throw new Error(error.message);
+      }
+
+      res.status(200).json({ success: "Record successfully updated!" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  // DELETE
+  delete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = await appointmentService.delete(id);
+      if (!!data.error) {
+        throw new Error(data.error);
+      }
+
+      res.status(200).json({ success: "Successfully deleted!" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

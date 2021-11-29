@@ -7,7 +7,7 @@ module.exports = {
       const { startAfter, limit, order, desc } = req.query;
       const data = await roomService.index(startAfter, limit, order, desc);
 
-      res.json(data).status(200);
+      res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -25,7 +25,7 @@ module.exports = {
       const dataByName = await roomService.findByName(name);
 
       if (dataByName) {
-        res.json(dataByName).status(200);
+        res.status(200).json(dataByName);
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -42,9 +42,9 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json(data).status(200);
+      res.status(200).json(data);
     } catch (error) {
-      throw new Error(error.message);
+      res.status(400).json({ error: error.message });
     }
   },
 
@@ -56,7 +56,7 @@ module.exports = {
         throw new Error(error.message);
       }
 
-      res.json({ success: "Created with success!" }).status(201);
+      res.status(201).json({ success: "Created with success!" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -71,7 +71,7 @@ module.exports = {
         throw new Error(error.message);
       }
 
-      res.json({ success: "Record successfully updated!" }).status(200);
+      res.status(200).json({ success: "Record successfully updated!" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -86,9 +86,9 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "Successfully deleted!" }).status(200);
+      res.status(200).json({ success: "Successfully deleted!" });
     } catch (error) {
-      res.json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
   },
 };

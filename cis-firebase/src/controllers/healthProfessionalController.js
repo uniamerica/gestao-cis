@@ -13,7 +13,7 @@ module.exports = {
         desc
       );
 
-      res.json(data).status(200);
+      res.status(200).json(data);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -33,7 +33,7 @@ module.exports = {
         if (!data) {
           throw new Error("Professional not found");
         }
-        res.json(healthProfessionalDTO(data)).status(200);
+        res.status(200).json(healthProfessionalDTO(data));
         return;
       }
 
@@ -42,14 +42,14 @@ module.exports = {
         if (!data) {
           throw new Error("Professional not found");
         }
-        res.json(healthProfessionalDTO(data)).status(200);
+        res.status(200).json(healthProfessionalDTO(data));
         return;
       }
 
       const dataByEmail = await healthProfessionalService.findByEmail(email);
 
       if (dataByEmail) {
-        res.json(healthProfessionalDTO(dataByEmail)).status(200);
+        res.status(200).json(healthProfessionalDTO(dataByEmail));
         return;
       }
 
@@ -58,7 +58,7 @@ module.exports = {
       );
 
       if (dataByUsername) {
-        res.json(healthProfessionalDTO(dataByUsername)).status(200);
+        res.status(200).json(healthProfessionalDTO(dataByUsername));
         return;
       }
 
@@ -80,7 +80,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json(healthProfessionalDTO(data)).status(200);
+      res.status(200).json(healthProfessionalDTO(data));
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -94,7 +94,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "Created with success" }).status(201);
+      res.status(201).json({ success: "Created with success" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -125,7 +125,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "Record successfully updated!" }).status(200);
+      res.status(200).json({ success: "Record successfully updated!" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -140,7 +140,7 @@ module.exports = {
         throw new Error(data.error);
       }
 
-      res.json({ success: "Successfully deleted!" }).status(200);
+      res.status(200).json({ success: "Successfully deleted!" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

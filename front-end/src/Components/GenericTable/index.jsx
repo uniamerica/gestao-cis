@@ -10,22 +10,22 @@ import Paper from '@mui/material/Paper';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#1CA78C",
     color: theme.palette.common.white,
+    fontSize: 18,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    
   },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor:"#dcdcdc",
+    
   },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
+
 }));
 
 function createData(clinic, identification, category, availability) {
@@ -33,11 +33,11 @@ function createData(clinic, identification, category, availability) {
 }
 
 const rows = [
-  createData('Frozen ', "sala-1", "locura", true),
-  createData('Elsa ', "sala-2", "tortura", false),
-  createData('Anna ', "sala-3", "masoquismmo", true),
-  createData('Olaf ', "sala-4", "ahhh", false),
-  createData('Rapariga ', "sala-51", "putero", true),
+  createData('Frozen ', 1, "locura", true),   //padronizar as inf
+  createData('Elsa ', 2, "tortura", false),
+  createData('Anna ', 3, "masoquismmo", true),
+  createData('Olaf ', 4, "ahhh", false),
+  createData('Rapariga ', 5, "putero", true),
 ];
 
 export default function CustomizedTables() {
@@ -47,7 +47,7 @@ export default function CustomizedTables() {
         <TableHead>
           <TableRow>
             <StyledTableCell>Nomes</StyledTableCell>
-            <StyledTableCell align="right">Salas</StyledTableCell>
+            <StyledTableCell align="right">Sala</StyledTableCell>
             <StyledTableCell align="right">Especialidade</StyledTableCell>
             <StyledTableCell align="right">Disponibilidade</StyledTableCell>
           </TableRow>

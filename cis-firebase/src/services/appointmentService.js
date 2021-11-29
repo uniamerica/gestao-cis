@@ -119,25 +119,38 @@ module.exports = {
   // },
 
   // FIND BY BOOKING (?)
-  findByBooking: async function (healthProfessionalId, patientId, date, time) {
+  findByBooking: async function (patientId, date, time, healthProfessionalId) {
     try {
+      console.log(patientId);
+      console.log(date);
+      console.log(time);
+      console.log(healthProfessionalId);
+
       const appointmentCollection = db.collection("appointments");
 
-      const snapshot = appointmentCollection
-        .where("patient.id", "==", patientId)
+      const snapshot = await appointmentCollection
+        .where("patient", "==", patientId)
         .where("date", "==", date)
         .where("time", "==", time)
-        .where("healthProfessional.id", "==", healthProfessionalId);
+        .where("healthProfessional", "==", healthProfessionalId);
 
       const appointmentDoc = snapshot.doc;
 
-      if (appointmentDoc && appointmentDoc.length === 0) {
+      console.log(appointmentDoc);
+
+      if (appointmentDoc === undefined || appointmentDoc === null) {
+        throw Error(
+          "Oops, an unexpected error occurred was thrown. Please try again."
+        );
+      }
+
+      if (appointmentDoc.length === 0) {
         return null;
       }
 
-      if (appointmentDoc && appointmentDoc.length !== 0) {
-        return appointmentDoc.map((doc) => doc.data())[0];
-      }
+      // if (appointmentDoc && appointmentDoc.length !== 0) {
+      return appointmentDoc.map((doc) => doc.data())[0];
+      // }
     } catch (error) {
       throw new Error(error.message);
     }
@@ -155,10 +168,10 @@ module.exports = {
       }
 
       const appointmentExistByBooking = await this.findByBooking(
-        obj.healthProfessional.id,
-        obj.patient.id,
+        obj.patient,
         obj.date,
-        obj.time
+        obj.time,
+        obj.healthProfessional
       );
 
       console.log(appointmentExistByBooking);
@@ -176,10 +189,10 @@ module.exports = {
         id: id,
         date: obj.date,
         time: obj.time,
-        room: obj.room, // make a separate API call in front-end to fill in the room information
+        room: obj.room,
         observation: obj.observation,
-        patient: obj.patient, // make a separate API call in front-end to fill in the patient information
-        healthProfessional: obj.healthProfessional, // make a separate API call in front-end to fill in the healthProfessional information
+        patient: obj.patient,
+        healthProfessional: obj.healthProfessional,
         price: obj.price,
         paid: obj.paid,
       });

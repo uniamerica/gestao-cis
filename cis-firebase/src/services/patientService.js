@@ -84,21 +84,6 @@ module.exports = {
     }
   },
 
-  // TODO: CHANGE PASSWORD
-  // passwordChange: async function (id, password) {
-  //   try {
-  //     const snapshot = this.findById(id);
-  //     const patientDoc = snapshot.data();
-
-  //     if(patientDoc.password === password) {
-  //       return {
-  //         error: "Password must be different from current password!"
-  //       }
-  //     }
-
-  //   }
-  // }
-
   // SIGN IN
   signIn: async function (username, password) {
     try {

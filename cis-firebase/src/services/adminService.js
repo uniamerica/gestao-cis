@@ -2,8 +2,9 @@ const { db } = require("../firebase");
 const uuid = require("uuid");
 const { adminSchema } = require("../models/admins/adminSchema");
 const { encryptPassword, comparePassword } = require("../utils/hashUtils");
-const { signJWT } = require("../utils/jwtUtils");
+
 const adminDTO = require("../models/admins/adminDTO");
+const jwtUtils = require("../utils/jwtUtils");
 
 const adminCollection = db.collection("admins");
 
@@ -74,6 +75,7 @@ module.exports = {
           error: "Admin Not Found!",
         };
       }
+      console.log(admin);
       return admin;
     } catch (error) {
       throw new Error(error.message);
@@ -107,7 +109,8 @@ module.exports = {
         };
       }
 
-      const token = signJWT(adminDTO(admin));
+      const token = jwtUtils.signJWT(adminDTO(admin), "admin");
+
       return token;
     } catch (error) {
       throw new Error(error.message);
@@ -148,6 +151,7 @@ module.exports = {
 
       const result = await docRef.set({
         id: id,
+        role: "admin",
         name: obj.name,
         email: obj.email,
         password: passwordHash,
@@ -157,43 +161,48 @@ module.exports = {
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 
   // UPDATE
   update: async function (id, admin) {
     try {
-      const founded = await this.findByid(id);
-      if (!founded.error) return founded;
+      const found = await this.findByid(id);
+      if (!!found.error) return found;
+
+      if (admin.password) {
+        const passwordHash = await encryptPassword(admin.password);
+      }
 
       const updated = {
-        name: !!admin.name ? admin.name : founded.name,
-        email: !!admin.email ? admin.email : founded.email,
-        password: founded.password,
-        phone: !!admin.phone ? admin.phone : founded.phone,
-        username: !!admin.username ? admin.username : founded.username,
+        id: id,
+        name: !!admin.name ? admin.name : found.name,
+        email: !!admin.email ? admin.email : found.email,
+        password: !!admin.password ? passwordHash : found.password,
+        phone: !!admin.phone ? admin.phone : found.phone,
+        username: !!admin.username ? admin.username : found.username,
       };
 
       const result = await adminCollection.doc(id).set(updated);
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 
   // DELETE
   delete: async function (id) {
     try {
-      const founded = await this.findByid(id);
-      if (!founded.error) return founded;
+      const found = await this.findByid(id);
+      if (!!found.error) return found;
 
       const result = await adminCollection.doc(id).delete();
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   },
 };

@@ -1,5 +1,5 @@
 import { Fragment, useContext, useEffect } from "react";
-import CustomizedTables from "../../Components/GenericTable";
+import CustomizedTables from "../../Components/GenericUserTable";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Contexts/authContext";

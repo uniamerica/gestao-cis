@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/pacientes")
+@RequestMapping("/api/patients")
 public class PatientsController {
 
   @Autowired private PatientService patientService;

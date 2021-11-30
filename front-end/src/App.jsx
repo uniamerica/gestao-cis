@@ -21,8 +21,8 @@ function App() {
             <Route path="/login" element={<PacientLogin />} />
             <Route path="/home" element={<Home />} />
             <Route path="/testes" element={<NameForm />} />
-            <Route path="/profissionais" element={<Professional />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/profissionais" element={<Professional />} />
             <Route path="*" element={<Erro404 />} />
           </Routes>
         </BrowserRouter>

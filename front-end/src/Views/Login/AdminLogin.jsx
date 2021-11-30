@@ -23,22 +23,21 @@ export default function Login() {
     if (isAuth) {
       return navigate('/home')
     } else {
-      return navigate('/admin/login');
+
+      return console.log('Credenciais Inválidas');
     }
   }, []);
 
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
   const onSubmit = handleSubmit( async (data) => {
-    const response = await axios.post("http://localhost:8080/admin/signin", data);
+    const response = await axios.post("http://localhost:8080/admin/login", data);
     if (response.status == 200) {
       const {token} = response.data;
       Cookies.set('cis.validator', token, {
         expires: 1, //Expira em 1 dia
       });
-
       // Cookies.remove('cis.validator')
-
       setIsAuth(true);
       navigate('/home')
     } else {

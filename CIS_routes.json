@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "3f752d6e-0ee8-446f-b105-cc1db57a6851",
+		"name": "CIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwMzc0MjIsImRhdGEiOnsidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJlbWFpbCI6ImZhYmlvLmZyYXNzQGdtYWlsLmNvbSIsInBob25lIjoiNDU5OTk0MzkxMDUiLCJuYW1lIjoiRmFiaW8iLCJpZCI6IjA0ZGFhODUwLWI0MWYtNGZlYy1hOTM5LWE4NDU1Y2ZhZjcxNiIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2Mzc5NTEwMjJ9.0-GvuDSnw4QDHVNctOiWM_KG3WxezwUvoIULszBYsGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by email/username",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwMzc0MjIsImRhdGEiOnsidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJlbWFpbCI6ImZhYmlvLmZyYXNzQGdtYWlsLmNvbSIsInBob25lIjoiNDU5OTk0MzkxMDUiLCJuYW1lIjoiRmFiaW8iLCJpZCI6IjA0ZGFhODUwLWI0MWYtNGZlYy1hOTM5LWE4NDU1Y2ZhZjcxNiIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2Mzc5NTEwMjJ9.0-GvuDSnw4QDHVNctOiWM_KG3WxezwUvoIULszBYsGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/admin/find?username=fabiofrasson",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"admin",
+								"find"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "fabiofrasson"
+								},
+								{
+									"key": "email",
+									"value": "fabio.frass@gmail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"fabio.frass@gmail.com\",\r\n    \"name\": \"Fabio\",\r\n    \"phone\": \"45999439105\",\r\n    \"username\": \"fabiofrasson\",\r\n    \"password\": \"teste123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"fabiofrasson\",\r\n    \"password\": \"teste123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/admin/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"admin",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/patients/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by email/username",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/patients/find?username=fabiofrasson",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients",
+								"find"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "fabiofrasson"
+								},
+								{
+									"key": "email",
+									"value": "fabio.frass@gmail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/patients/49faaa3d-9933-4d6f-a7d6-d737dd5cf74d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients",
+								"49faaa3d-9933-4d6f-a7d6-d737dd5cf74d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"0000000000\",\r\n    \"rg\": \"111111111\",\r\n    \"name\": \"Fabio\",\r\n    \"email\": \"fabio.frass@gmail.com\",\r\n    \"motherName\": \"Severina\",\r\n    \"weight\": \"60\",\r\n    \"birthdate\": \"04/05/1989\",\r\n    \"biologicalSex\": \"M\",\r\n    \"address\": {\r\n        \"cep\": \"85857600\",\r\n        \"city\": \"Foz do Iguaçu\",\r\n        \"country\": \"Brazeel\",\r\n        \"neighborhood\": \"Conjunto Libra\",\r\n        \"number\": \"709\",\r\n        \"street\": \"Rua Ipanema\",\r\n        \"uf\": \"Paraná\"\r\n    },\r\n    \"phone\": \"45999439105\",\r\n    \"username\": \"fabiofrasson\",\r\n    \"password\": \"teste123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/patients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"fabiofrasson\",\r\n    \"password\": \"teste123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/patients/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"11111111111\",\r\n    \"rg\": \"000000000\",\r\n    \"name\": \"Fabio Frasson\",\r\n    \"weight\": \"65\",\r\n    \"password\": \"123teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/patients/49faaa3d-9933-4d6f-a7d6-d737dd5cf74d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients",
+								"49faaa3d-9933-4d6f-a7d6-d737dd5cf74d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/patients/49faaa3d-9933-4d6f-a7d6-d737dd5cf74d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"patients",
+								"49faaa3d-9933-4d6f-a7d6-d737dd5cf74d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/rooms",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/rooms/find?name=403",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"rooms",
+								"find"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "403"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/rooms/49faaa3d-9933-4d6f-a7d6-d737dd5cf74d",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"rooms",
+								"49faaa3d-9933-4d6f-a7d6-d737dd5cf74d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Fabio\",\r\n    \"specialties\": [\"Clínica geral\", \"Fisioterapia\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/rooms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Fabio\",\r\n    \"specialties\": [\"Clínica geral\", \"Fisioterapia\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/rooms/49faaa3d-9933-4d6f-a7d6-d737dd5cf74d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"rooms",
+								"49faaa3d-9933-4d6f-a7d6-d737dd5cf74d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzgwNDEwMDAsImRhdGEiOnsibW90aGVyTmFtZSI6IlNldmVyaW5hIiwicGhvbmUiOiI0NTk5OTQzOTEwNSIsImlkIjoiNDlmYWFhM2QtOTkzMy00ZDZmLWE3ZDYtZDczN2RkNWNmNzRkIiwidXNlcm5hbWUiOiJmYWJpb2ZyYXNzb24iLCJiaW9sb2dpY2FsU2V4IjoiTSIsIm5hbWUiOiJGYWJpbyIsImVtYWlsIjoiZmFiaW8uZnJhc3NAZ21haWwuY29tIn0sImlhdCI6MTYzNzk1NDYwMH0.84_PGXBBrCPgQd_V4S3KloCY610cV3jj4DIyW4VOHXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/rooms/49faaa3d-9933-4d6f-a7d6-d737dd5cf74d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"rooms",
+								"49faaa3d-9933-4d6f-a7d6-d737dd5cf74d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

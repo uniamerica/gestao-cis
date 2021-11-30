@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/rooms")
-public class RoomControlles {
+public class RoomController {
 
     @Autowired
     private RoomService roomService;
@@ -34,9 +34,7 @@ public class RoomControlles {
     public ResponseEntity<?> findAll() throws Exception{
         try{
             List<Room> found = roomService.findAll();
-            if(!found.isEmpty()){
                 return new ResponseEntity<>(found, null, HttpStatus.OK);
-            } else return new ResponseEntity<>(found, null, HttpStatus.NO_CONTENT);
         }
         catch(Exception ex){
             throw new Exception(ex);

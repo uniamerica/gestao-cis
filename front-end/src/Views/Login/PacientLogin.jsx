@@ -62,7 +62,8 @@ export default function Login() {
     if (isAuth) {
       return navigate('/home')
     } else {
-      return navigate ('/login')
+      return console.log('Deveria voltar pro login')
+      // return navigate('/login')
     }
   }, []);
 

@@ -8,7 +8,6 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const token = Cookies.get("cis.validator");
-
     token ? setIsAuth(true) : setIsAuth(false);
   }, []);
 

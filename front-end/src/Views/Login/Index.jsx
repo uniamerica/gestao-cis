@@ -12,7 +12,7 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -59,9 +59,10 @@ export default function Login() {
   const { isAuth, setIsAuth } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(isAuth)
     if (isAuth) {
       return navigate('/home')
+    } else {
+      return navigate ('/login')
     }
   }, []);
 
@@ -78,7 +79,6 @@ export default function Login() {
     const response = await axios.post("http://localhost:8081/admin/signin", data);
     if (response.status == 200) {
       const {token} = response.data;
-      console.log(token)
       Cookies.set('cis.validator', token, {
         expires: 1, //Expira em 1 dia
       });

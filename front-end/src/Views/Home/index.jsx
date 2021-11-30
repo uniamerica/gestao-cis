@@ -9,7 +9,6 @@ export default function Home() {
   const { isAuth } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log('Home:', isAuth);
     if (isAuth) {
       return navigate("/home");
     } else {

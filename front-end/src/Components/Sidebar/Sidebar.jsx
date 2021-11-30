@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -17,6 +17,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 import { sideBarStyle } from "./style.js";
 import { AuthContext } from "./../../Contexts/authContext";
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router';
 
 const sideBarItems = [
   {
@@ -32,6 +34,14 @@ const sideBarItems = [
 export default function Sidebar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const { isAuth } = React.useContext(AuthContext);
+
+  const navigate = useNavigate();
+  
+  function Logout() {
+    Cookies.remove('cis.validator');
+    window.location.replace('login')
+    // return navigate('/login')
+  }
 
   if (!isAuth) {
     return (
@@ -98,7 +108,7 @@ export default function Sidebar() {
                     sx={{ marginTop: "12px" }}
                     onClick={() =>
                       window.confirm("Deseja realizar logout do sistema?")
-                        ? alert("Saiu")
+                        ? Logout()
                         : ""
                     }
                   >

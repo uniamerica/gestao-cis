@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./Views/Login";
+import PacientLogin from "./Views/Login/PacientLogin";
+import AdminLogin from "./Views/Login/AdminLogin";
 import Header from "./Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Home from "./Views/Home";
@@ -17,10 +18,11 @@ function App() {
           <Header />
           <Sidebar />
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<PacientLogin />} />
             <Route path="/home" element={<Home />} />
             <Route path="/testes" element={<NameForm />} />
-            <Route path="/profissionais" element={<Professional />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/profissionais" element={<Professional />} />
             <Route path="*" element={<Erro404 />} />
           </Routes>
         </BrowserRouter>

@@ -49,6 +49,8 @@ public class Address implements Serializable {
   @ToString.Exclude
   private List<User> users = new ArrayList<>();
 
+  public Address(Long id, String cep, String street, String city, String uf, String neighborhood) {}
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

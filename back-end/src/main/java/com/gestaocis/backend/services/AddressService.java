@@ -49,15 +49,12 @@ public class AddressService {
   @Transactional
   public Address save(Address address) throws Exception {
     Address findAddress = repository.findByCep(address.getCep());
+
     Address addressToBeSaved =
         CepService.convertCepToAddress(CepService.formatCep(address.getCep()));
+
     if (findAddress != null) {
-      // setar ID
-      findAddress.setStreet(addressToBeSaved.getStreet());
-      findAddress.setCity(addressToBeSaved.getCity());
-      findAddress.setUf(addressToBeSaved.getUf());
-      findAddress.setNeighborhood(addressToBeSaved.getNeighborhood());
-      repository.save(findAddress);
+      return findAddress;
     } else {
       if (!(Objects.equals(address.getCep(), addressToBeSaved.getCep())
           & Objects.equals(address.getStreet(), addressToBeSaved.getStreet())
@@ -70,33 +67,7 @@ public class AddressService {
         return repository.save(address);
       }
     }
-    return repository.save(address);
   }
-
-  // ** cep que só tenha cidade - abrir os campos para a pessoa preencher e salvar após o
-  // preenchimento **
-
-  // autocomplete nos campos que o user for digitar, buscando dos registros já existentes no BD
-
-  //  @Transactional
-  //  public Address save(Address address) throws Exception {
-  //    Address findAddress = repository.findByCep(address.getCep());
-  //    if (findAddress != null) {
-  //      throw new ResourceAlreadyExistsException("Endereço já existente.");
-  //    } else {
-  //      Address address1 = CepService.convertCepToAddress(CepService.formatCep(address.getCep()));
-  //      if (!(Objects.equals(address.getCep(), address1.getCep())
-  //          & Objects.equals(address.getStreet(), address1.getStreet())
-  //          & Objects.equals(address.getCity(), address1.getCity())
-  //          & Objects.equals(address.getUf(), address1.getUf())
-  //          & Objects.equals(address.getNeighborhood(), address1.getNeighborhood()))) {
-  //        throw new InconsistentDataException(
-  //            "Os dados de endereço não batem. Por favor, tente novamente.");
-  //      } else {
-  //        return repository.save(address);
-  //      }
-  //    }
-  //  }
 
   public void delete(Long id) {
     repository.delete(findByIdOrThrowResourceNotFoundException(id));

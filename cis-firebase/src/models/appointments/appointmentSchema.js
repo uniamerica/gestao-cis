@@ -1,6 +1,9 @@
 const Joi = require("joi");
 
 const appointmentSchema = Joi.object({
+  id: Joi.string()
+    .guid({ version: ["uuidv4"] })
+    .required(),
   date: Joi.string().required(),
   time: Joi.string().required(),
   room: Joi.string().required(),

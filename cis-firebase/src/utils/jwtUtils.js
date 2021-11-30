@@ -1,35 +1,71 @@
+const { object } = require("joi");
 const jwt = require("jsonwebtoken");
-const { addOneDay, isDateBefore } = require("./dateUtils");
+const { isDateBefore } = require("./dateUtils");
 require("dotenv").config();
 
-const secret = process.env.JWT_SECRET;
-
-const signJWT = (obj) => {
-  let expDate = addOneDay(Date.now());
-
-  const token = jwt.sign({ exp: expDate, data: obj }, secret);
-
-  return token;
-};
-
-const verifyJWT = (token) => {
-  try {
-    const decoded = jwt.verify(token, secret);
-    const createdAt = new Date(decoded.exp);
-
-    const verifyDate = isDateBefore(createdAt, Date.now());
-
-    if (verifyDate) {
-      return decoded;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
+const ADMIN_SECRET = `${process.env.ADMIN_SECRET}`;
+const HEALTH_PROFESSIONAL_SECRET = `${process.env.JWT_HEALTH_PROFESSIONAL_SECRET}`;
+const PATIENT_SECRET = `${process.env.JWT_PATIENT_SECRET}`;
 
 module.exports = {
-  signJWT,
-  verifyJWT,
+  signJWT: function (obj, role) {
+    let expDate = Math.floor(Date.now() / 1000) + 60 * 60 * 24; //86400s = 1 day;
+    var secret;
+
+    switch (role) {
+      case "admin":
+        secret = ADMIN_SECRET;
+        break;
+      case "health_professional":
+        secret = HEALTH_PROFESSIONAL_SECRET;
+        break;
+      case "patient":
+        secret = PATIENT_SECRET;
+        break;
+      default:
+        break;
+    }
+
+    const token = jwt.sign(
+      {
+        exp: expDate,
+        data: obj,
+      },
+      secret
+    );
+
+    return token;
+  },
+  verifyJWT: function (token, role) {
+    try {
+      var secret;
+
+      switch (role) {
+        case "admin":
+          secret = ADMIN_SECRET;
+          break;
+        case "health_professional":
+          secret = HEALTH_PROFESSIONAL_SECRET;
+          break;
+        case "patient":
+          secret = PATIENT_SECRET;
+          break;
+        default:
+          break;
+      }
+
+      const decoded = jwt.verify(token, secret);
+      const expiredDate = new Date(decoded.exp);
+
+      const verifyDate = isDateBefore(expiredDate, Date.now());
+
+      if (verifyDate) {
+        return decoded;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
 };

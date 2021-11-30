@@ -12,11 +12,15 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useForm } from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { AuthContext } from "../../Contexts/authContext";
+import { useNavigate } from "react-router";
+import Cookies from 'js-cookie';
 
 // PAINEIS START -----------------
 function TabPanel(props) {
@@ -30,11 +34,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -54,6 +54,18 @@ function a11yProps(index) {
 
 // PAINEIS END ---------------------------------------------
 export default function Login() {
+
+  const navigate = useNavigate();
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuth) {
+      return navigate('/home')
+    } else {
+      return navigate ('/login')
+    }
+  }, []);
+
   // PAINEIS -----------------------------------------------
   const [value, setValue] = React.useState(0);
 
@@ -63,9 +75,24 @@ export default function Login() {
   // PAINEIS END ---------------------------------------------
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
-  })
+  const onSubmit = handleSubmit( async (data) => {
+    const response = await axios.post("http://localhost:8081/admin/signin", data);
+    if (response.status == 200) {
+      const {token} = response.data;
+      Cookies.set('cis.validator', token, {
+        expires: 1, //Expira em 1 dia
+      });
+
+      // Cookies.remove('cis.validator')
+
+      setIsAuth(true);
+      navigate('/home')
+    } else {
+      alert('Credenciais Inválidas')
+    }
+
+    
+  });
 
   return (
     <Fragment>
@@ -149,11 +176,11 @@ export default function Login() {
                 </Typography>
                 <TextField
                   required
-                  type="email"
+                  type="text"
                   id="outlined-required"
-                  label="Email"
+                  label="Email ou Username"
                   sx={{ marginTop: "1.5rem" }}
-                  {...register('email')}
+                  {...register("username")}
                 />
                 <TextField
                   required
@@ -161,7 +188,7 @@ export default function Login() {
                   label="Senha"
                   sx={{ marginTop: "1.5rem" }}
                   type="password"
-                  {...register('password')}
+                  {...register("password")}
                 />
                 <Button
                   type="submit"

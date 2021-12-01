@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import * as React from "react";
 import { Fragment } from "react";
 import {
   Box,
@@ -9,7 +9,6 @@ import {
   Container,
   Grid,
 } from "@mui/material";
-import axios from "axios";
 
 const buttonStyle = {
   marginTop: "2%",
@@ -21,18 +20,32 @@ const buttonStyle = {
 };
 
 export default function Professional() {
-  const [room, setRoom] = useState(
-    (room = {
-      id: 0,
-      name: "",
-      specialties: [],
-    })
-  );
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  useEffect(() => {
-    axios.get();
-  }, []);
+  // name: "",
+  // email: "",
+  // phone: "",
+  // username: "",
+  // password: "",
+  // professionalDocument: "",
+  // specialy: ["",""]
+
   return (
+    // <Box>
+    //   <Box
+    //     component="form"
+    //     sx={{
+    //       display: "flex",
+    //       flexDirection: "column",
+    //       width: "80%",
+    //       margin: "50px auto",
+    //       justifyContent: "center",
+    //       // alignItems: "center",
+    //     }}
+    //     // onSubmit={onSubmit}
+    //   >
     <Container>
       <Grid container spacing={2}>
         <Grid item lg={12} md={12}>
@@ -42,7 +55,7 @@ export default function Professional() {
             textAlign="center"
             marginTop="30px"
           >
-            Atualizar Sala <br />
+            Atualizar Profissional <br />
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -51,7 +64,28 @@ export default function Professional() {
             fullWidth
             type="text"
             id="outlined-required"
-            label="Nome da Sala"
+            label="Nome"
+            sx={{ marginTop: "1.5rem" }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            type="phone"
+            id="outlined-required"
+            label="Telefone"
+            sx={{ marginTop: "1.5rem" }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            type="text"
+            id="outlined-required"
+            label="Registro Profissional"
             sx={{ marginTop: "1.5rem" }}
           />
         </Grid>
@@ -74,7 +108,26 @@ export default function Professional() {
             )}
           />
         </Grid>
-
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            type="email"
+            id="outlined-required"
+            label="Email"
+            sx={{ marginTop: "1.5rem" }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            id="outlined-required"
+            label="Senha"
+            sx={{ marginTop: "1.5rem" }}
+            type="password"
+          />
+        </Grid>
         <Grid item xs={12} display="flex" justifyContent="center">
           <Button
             type="submit"

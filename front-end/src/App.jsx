@@ -11,6 +11,7 @@ import AuthProvider from "./Contexts/authContext";
 import Professional from "./Views/Professional";
 import ProfessionalLogin from "./Views/Login/ProfessionalLogin";
 import RoomUpdate from "./Views/RoomUpdate";
+import ProfessionalUpdate from "./Views/ProfessionalUpdate";
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/professional/login" element={<ProfessionalLogin />} />
             <Route path="/room/update" element={<RoomUpdate />} />
+            <Route
+              path="/professional/update"
+              element={<ProfessionalUpdate />}
+            />
             <Route path="*" element={<Erro404 />} />
           </Routes>
         </BrowserRouter>

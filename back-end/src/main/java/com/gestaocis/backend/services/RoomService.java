@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RoomService {
@@ -21,7 +22,8 @@ public class RoomService {
     }
 
     public Room create(Room room) {
-        return repository.save(room);
+        Room quartinho = Room.builder().roomNumber(room.getRoomNumber()).uuid(UUID.randomUUID()).build();
+        return repository.save(quartinho);
     }
 
     public List<Room> findAll() {

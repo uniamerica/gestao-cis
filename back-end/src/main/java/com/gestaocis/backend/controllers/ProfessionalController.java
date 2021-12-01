@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.UUID;
 
 public class ProfessionalController {
-    
+
 }

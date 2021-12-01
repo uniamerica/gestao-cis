@@ -9,7 +9,7 @@ import {
   Autocomplete,
   Container,
 } from "@mui/material";
-import CustomizedTables from "../../Components/GenericUserTable";
+import CustomizedTables from "../../Components/Tables/AllUsersTable";
 
 const modalStyle = {
   position: "absolute",

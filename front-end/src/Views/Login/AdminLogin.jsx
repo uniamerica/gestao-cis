@@ -145,7 +145,6 @@ export default function Login() {
               </Box>
             </div>
           </Box>
-        
         </Box>
       </Container>
     </Fragment>

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -10,25 +10,37 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MenuIcon from "@mui/icons-material/Menu";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import PhoneIcon from "@mui/icons-material/Phone";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import Logo from "../../assets/images/logo.png";
 import Avatar from "@mui/material/Avatar";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Typography from "@mui/material/Typography";
 import { sideBarStyle } from "./style.js";
 import { AuthContext } from "./../../Contexts/authContext";
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router';
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router";
 
 const sideBarItems = [
   {
     text: "Agendamentos",
     icon: <DateRangeIcon />,
-    action: () => alert("bla bla"),
+    route: "/home",
   },
-  { text: "Pacientes", icon: <AssignmentIndIcon /> },
-  { text: "Profissionais", icon: <LocalHospitalIcon /> },
-  { text: "Secretárias", icon: <PhoneIcon /> },
+  {
+    text: "Pacientes", 
+    icon: <AssignmentIndIcon />, 
+    route: "/admin/pacientes",
+  },
+  {
+    text: "Profissionais",
+    icon: <LocalHospitalIcon />,
+    route: "/admin/profissionais",
+  },
+  { 
+    text: "Gerenciamento de Salas", 
+    icon: <MeetingRoomIcon />,
+    route: "/admin/salas"
+  },
 ];
 
 export default function Sidebar() {
@@ -36,18 +48,20 @@ export default function Sidebar() {
   const { isAuth } = React.useContext(AuthContext);
 
   const navigate = useNavigate();
-  
+
   function Logout() {
-    Cookies.remove('cis.validator');
-    window.location.replace('login')
+    Cookies.remove("cis.validator");
+    window.location.replace("login");
     // return navigate('/login')
   }
 
+  function onClickButton(route) {
+    setMenuOpen(false);
+    navigate(route);
+  }
+
   if (!isAuth) {
-    return (
-      <>
-      </>
-    )
+    return <></>;
   } else {
     return (
       <div>
@@ -88,12 +102,12 @@ export default function Sidebar() {
                     </Typography>
                   </Box>
 
-                  {sideBarItems.map(({ text, icon, action }) => (
+                  {sideBarItems.map(({ text, icon, route }) => (
                     <ListItem
                       button
                       key={text}
                       sx={{ marginTop: "12px" }}
-                      onClick={action}
+                      onClick={() => onClickButton(route)}
                     >
                       <ListItemIcon sx={{ color: "white" }}>
                         {icon}

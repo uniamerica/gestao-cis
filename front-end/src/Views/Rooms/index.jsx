@@ -16,7 +16,7 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  minHeight: 600,
+  minHeight: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,

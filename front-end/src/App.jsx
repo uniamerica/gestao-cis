@@ -5,10 +5,12 @@ import AdminLogin from "./Views/Login/AdminLogin";
 import Header from "./Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Home from "./Views/Home";
-import Erro404 from "./Views/Erro404"
+import Erro404 from "./Views/Erro404";
 import { NameForm } from "./Views/Testes";
 import AuthProvider from "./Contexts/authContext";
 import Professional from "./Views/Professional";
+import ProfessionalLogin from "./Views/Login/ProfessionalLogin";
+import RoomUpdate from "./Views/RoomUpdate";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/testes" element={<NameForm />} />
             <Route path="/profissionais" element={<Professional />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/professional/login" element={<ProfessionalLogin />} />
+            <Route path="/room/update" element={<RoomUpdate />} />
             <Route path="*" element={<Erro404 />} />
           </Routes>
         </BrowserRouter>

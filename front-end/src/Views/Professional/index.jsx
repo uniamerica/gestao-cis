@@ -37,6 +37,9 @@ export default function Professional() {
   return (
     <Fragment>
       <Container maxWidth="lg">
+      <Typography variant="h4" color="initial" sx={{margin: '1rem 0'}}>
+          Listagem de Profissionais
+        </Typography>
         <Button
           variant="contained"
           style={buttonStyle}

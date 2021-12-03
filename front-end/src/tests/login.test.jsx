@@ -6,6 +6,7 @@ import Login from "../Views/Login/PacientLogin";
 
 const mockOnSubmit = jest.fn();
 window.alert = jest.fn();
+
 describe("Login Page Test", () => {
   describe("Mostrar Alert", () => {
     it("Should show alert message", async () => {

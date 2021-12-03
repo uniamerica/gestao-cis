@@ -125,8 +125,6 @@ public class SecretaryCreator {
                 .fullName("João Teste da Silva")
                 .email("test@test.com")
                 .build();
-
-
     }
 
 }

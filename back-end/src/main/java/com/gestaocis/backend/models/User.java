@@ -90,7 +90,7 @@ public class User implements Serializable, UserDetails {
   @OneToMany(mappedBy = "patient")
   private List<Appointment> appointments = new ArrayList<>();
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "user_has_specialties",
       joinColumns = @JoinColumn(name = "user_id"),

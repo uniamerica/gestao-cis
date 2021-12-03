@@ -28,6 +28,6 @@ public class SpecialtyEntity {
 
   private String specialtyName;
 
-  @ManyToMany(mappedBy = "specialties", cascade = CascadeType.ALL)
+  @ManyToMany(mappedBy = "specialties", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<User> users = new ArrayList<>();
 }

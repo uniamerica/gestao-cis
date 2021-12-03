@@ -2,10 +2,13 @@ package com.gestaocis.backend.utils;
 
 import com.gestaocis.backend.enums.Role;
 import com.gestaocis.backend.enums.RoleEntity;
+import com.gestaocis.backend.enums.Specialty;
+import com.gestaocis.backend.enums.SpecialtyEntity;
 import com.gestaocis.backend.models.Address;
 import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.AddressRepository;
 import com.gestaocis.backend.repositories.RoleEntityRepository;
+import com.gestaocis.backend.repositories.SpecialtyEntityRepository;
 import com.gestaocis.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +34,9 @@ public class SeedUtil {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    private SpecialtyEntityRepository specialtyEntityRepository;
+
     @Value("${manager.password}")
     private String password;
 
@@ -39,6 +45,7 @@ public class SeedUtil {
 
         if(userRepository.findByEmail("admin@cis.com.br").isEmpty()){
             List<RoleEntity> roles = new ArrayList<>();
+            List<SpecialtyEntity> specialties = new ArrayList<>();
             try{
                 for(Role role : Role.values()){
                     RoleEntity entity = RoleEntity.builder()
@@ -48,7 +55,17 @@ public class SeedUtil {
                     roles.add(entity);
                 }
 
+                for(Specialty specialty: Specialty.values()){
+                    SpecialtyEntity entity = SpecialtyEntity.builder()
+                            .uuid(UUID.randomUUID())
+                            .specialtyName(specialty.getSpecialtyValue())
+                            .build();
+
+                    specialties.add(entity);
+                }
+
                 roleEntityRepository.saveAll(roles);
+                specialtyEntityRepository.saveAll((specialties));
 
                 Address addressToBeSaved = addressRepository.save(Address.builder()
                         .cep("85853-260")

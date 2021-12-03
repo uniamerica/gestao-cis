@@ -23,15 +23,6 @@ const modalStyle = {
   p: 4,
 };
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     return navigate("/home");
-  //   } else {
-  //     return navigate("../");
-  //   }
-  // }, []);
-=======
 const buttonStyle = {
   marginTop: "4%",
   borderRadius: 20,
@@ -42,7 +33,6 @@ export default function Home() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
->>>>>>> 267eb290595c18be653f1262b0c3330661a3584b
 
   return (
     <React.Fragment>

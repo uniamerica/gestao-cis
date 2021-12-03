@@ -5,8 +5,7 @@ import AdminLogin from "./Views/Login/AdminLogin";
 import Header from "./Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Home from "./Views/Home";
-import Erro404 from "./Views/Erro404"
-import { NameForm } from "./Views/Testes";
+import Erro404 from "./Views/Erro404";
 import AuthProvider from "./Contexts/authContext";
 import Professional from "./Views/Professional";
 
@@ -20,7 +19,6 @@ function App() {
           <Routes>
             <Route path="/login" element={<PacientLogin />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/testes" element={<NameForm />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/profissionais" element={<Professional />} />
             <Route path="*" element={<Erro404 />} />

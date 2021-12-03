@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 // PAINEIS START -----------------
 function TabPanel(props) {
@@ -54,18 +54,8 @@ function a11yProps(index) {
 
 // PAINEIS END ---------------------------------------------
 export default function Login() {
-
   const navigate = useNavigate();
   const { isAuth, setIsAuth } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (isAuth) {
-      return navigate('/home')
-    } else {
-      return console.log('Deveria voltar pro login')
-      // return navigate('/login')
-    }
-  }, []);
 
   // PAINEIS -----------------------------------------------
   const [value, setValue] = React.useState(0);
@@ -76,23 +66,8 @@ export default function Login() {
   // PAINEIS END ---------------------------------------------
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
-  const onSubmit = handleSubmit( async (data) => {
-    const response = await axios.post("http://localhost:8081/admin/signin", data);
-    if (response.status == 200) {
-      const {token} = response.data;
-      Cookies.set('cis.validator', token, {
-        expires: 1, //Expira em 1 dia
-      });
-
-      // Cookies.remove('cis.validator')
-
-      setIsAuth(true);
-      navigate('/home')
-    } else {
-      alert('Credenciais Inválidas')
-    }
-
-    
+  const onSubmit = handleSubmit(async (data) => {
+    window.alert("Hello World");
   });
 
   return (
@@ -160,6 +135,7 @@ export default function Login() {
             >
               <Box
                 component="form"
+                data-testid="form_test"
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -178,6 +154,7 @@ export default function Login() {
                 <TextField
                   required
                   type="text"
+                  inputProps={{ "data-testid": "email_inputTest" }}
                   id="outlined-required"
                   label="Email ou Username"
                   sx={{ marginTop: "1.5rem" }}
@@ -186,6 +163,7 @@ export default function Login() {
                 <TextField
                   required
                   id="outlined-required"
+                  inputProps={{ "data-testid": "password_inputTest" }}
                   label="Senha"
                   sx={{ marginTop: "1.5rem" }}
                   type="password"

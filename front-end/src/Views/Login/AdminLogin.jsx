@@ -1,10 +1,4 @@
-import {
-  Container,
-  Box,
-  Typography,
-  TextField,
-  Button
-} from "@mui/material";
+import { Container, Box, Typography, TextField, Button } from "@mui/material";
 import React, { Fragment, useContext, useEffect } from "react";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -12,39 +6,38 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export default function Login() {
-
   const navigate = useNavigate();
   const { isAuth, setIsAuth } = useContext(AuthContext);
 
   useEffect(() => {
     if (isAuth) {
-      return navigate('/home')
+      return navigate("/home");
     } else {
-
-      return console.log('Credenciais Inválidas');
+      return console.log("Credenciais Inválidas");
     }
-  }, []);
+  }, [isAuth, navigate]);
 
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
-  const onSubmit = handleSubmit( async (data) => {
-    const response = await axios.post("http://localhost:8080/admin/login", data);
-    if (response.status == 200) {
-      const {token} = response.data;
-      Cookies.set('cis.validator', token, {
+  const onSubmit = handleSubmit(async (data) => {
+    const response = await axios.post(
+      "http://localhost:8080/admin/login",
+      data
+    );
+    if (response.status === 200) {
+      const { token } = response.data;
+      Cookies.set("cis.validator", token, {
         expires: 1, //Expira em 1 dia
       });
       // Cookies.remove('cis.validator')
       setIsAuth(true);
-      navigate('/home')
+      navigate("/home");
     } else {
-      alert('Credenciais Inválidas')
+      alert("Credenciais Inválidas");
     }
-
-    
   });
 
   return (
@@ -90,9 +83,7 @@ export default function Login() {
               justifyContent: "center",
             }}
           >
-
-
-<div
+            <div
               name="FormLogin"
               style={{
                 width: "100%",
@@ -115,7 +106,11 @@ export default function Login() {
                 <AccountCircleIcon
                   sx={{ alignSelf: "center", fontSize: "60px" }}
                 />
-                <Typography variant="h5" color="initial" sx={{textAlign: "center"}}>
+                <Typography
+                  variant="h5"
+                  color="initial"
+                  sx={{ textAlign: "center" }}
+                >
                   Olá Administrador! <br />
                   Entre com seu email e senha!
                 </Typography>
@@ -145,7 +140,6 @@ export default function Login() {
               </Box>
             </div>
           </Box>
-        
         </Box>
       </Container>
     </Fragment>

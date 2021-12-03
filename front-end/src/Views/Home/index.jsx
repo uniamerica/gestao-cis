@@ -8,13 +8,13 @@ export default function Home() {
   const navigate = useNavigate();
   const { isAuth } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (isAuth) {
-      return navigate("/home");
-    } else {
-      return navigate("../");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     return navigate("/home");
+  //   } else {
+  //     return navigate("../");
+  //   }
+  // }, []);
 
   return (
     <Fragment>

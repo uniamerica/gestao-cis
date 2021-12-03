@@ -30,6 +30,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/api/professional")
 public class ProfessionalController {
+<<<<<<< HEAD
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -73,4 +74,7 @@ public class ProfessionalController {
         }
     }
     
+=======
+
+>>>>>>> 267eb290595c18be653f1262b0c3330661a3584b
 }

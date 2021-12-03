@@ -1,10 +1,14 @@
 package com.gestaocis.backend.services;
 
+import com.gestaocis.backend.exceptions.BadRequestException;
 import com.gestaocis.backend.models.Room;
+import com.gestaocis.backend.models.User;
 import com.gestaocis.backend.repositories.RoomRepository;
 import com.gestaocis.backend.repositories.SpecialtyEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +36,12 @@ public class RoomService {
 
     public Room findById(Long id) {
         Optional<Room> found = repository.findById(id);
+        if(found.isPresent()) return found.get();
+        else return null;
+    }
 
+    public Room findByUuid(UUID uuid) {
+        Optional<Room> found = repository.findByUuid(uuid);
         if(found.isPresent()) return found.get();
         else return null;
     }
@@ -48,7 +57,20 @@ public class RoomService {
         return repository.save(room);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public boolean delete(UUID uuid){
+        try{
+            Room room = this.repository.findByUuid(uuid)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room not Found. Please check your UUID again"));
+            this.repository.delete(room);
+
+            if(repository.findByUuid(uuid).isEmpty()) {
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception exception){
+            throw new BadRequestException(exception.getMessage());
+        }
     }
 }

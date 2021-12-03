@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -10,7 +10,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MenuIcon from "@mui/icons-material/Menu";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import PhoneIcon from "@mui/icons-material/Phone";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import Logo from "../../assets/images/logo.png";
 import Avatar from "@mui/material/Avatar";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -24,11 +24,23 @@ const sideBarItems = [
   {
     text: "Agendamentos",
     icon: <DateRangeIcon />,
-    action: () => alert("bla bla"),
+    route: "/home",
   },
-  { text: "Pacientes", icon: <AssignmentIndIcon /> },
-  { text: "Profissionais", icon: <LocalHospitalIcon /> },
-  { text: "Secretárias", icon: <PhoneIcon /> },
+  {
+    text: "Pacientes", 
+    icon: <AssignmentIndIcon />, 
+    route: "/admin/pacientes",
+  },
+  {
+    text: "Profissionais",
+    icon: <LocalHospitalIcon />,
+    route: "/admin/profissionais",
+  },
+  { 
+    text: "Gerenciamento de Salas", 
+    icon: <MeetingRoomIcon />,
+    route: "/admin/salas"
+  },
 ];
 
 export default function Sidebar() {
@@ -43,6 +55,7 @@ export default function Sidebar() {
     // return navigate('/login')
   }
 
+<<<<<<< HEAD
   return (
     <div>
       <React.Fragment>
@@ -62,6 +75,35 @@ export default function Sidebar() {
                 <Box sx={{ width: "100%", textAlign: "center" }}>
                   <img src={Logo} width={360} />
                 </Box>
+=======
+  function onClickButton(route) {
+    setMenuOpen(false);
+    navigate(route);
+  }
+
+  if (!isAuth) {
+    return <></>;
+  } else {
+    return (
+      <div>
+        <React.Fragment>
+          <Box sx={{ position: "fixed", left: "60px", top: "100px" }}>
+            <Button variant="outlined" onClick={() => setMenuOpen(true)}>
+              <MenuIcon />
+              <ListItemText>Menu</ListItemText>
+            </Button>
+            <Drawer
+              anchor="left"
+              onOpen={() => setMenuOpen(true)}
+              onClose={() => setMenuOpen(false)}
+              open={menuOpen}
+            >
+              <Box sx={sideBarStyle} role="presentation">
+                <List>
+                  <Box sx={{ width: "100%", textAlign: "center" }}>
+                    <img src={Logo} width={360} />
+                  </Box>
+>>>>>>> 267eb290595c18be653f1262b0c3330661a3584b
 
                 <Box
                   sx={{
@@ -82,7 +124,25 @@ export default function Sidebar() {
                   </Typography>
                 </Box>
 
+<<<<<<< HEAD
                 {sideBarItems.map(({ text, icon, action }) => (
+=======
+                  {sideBarItems.map(({ text, icon, route }) => (
+                    <ListItem
+                      button
+                      key={text}
+                      sx={{ marginTop: "12px" }}
+                      onClick={() => onClickButton(route)}
+                    >
+                      <ListItemIcon sx={{ color: "white" }}>
+                        {icon}
+                      </ListItemIcon>
+                      <ListItemText primary={text} sx={{ color: "white" }} />
+                    </ListItem>
+                  ))}
+                </List>
+                <List>
+>>>>>>> 267eb290595c18be653f1262b0c3330661a3584b
                   <ListItem
                     button
                     key={text}

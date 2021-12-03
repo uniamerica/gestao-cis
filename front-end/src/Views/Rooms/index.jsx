@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Fragment } from "react";
 import {
   Box,
   Button,
@@ -9,7 +8,7 @@ import {
   Autocomplete,
   Container,
 } from "@mui/material";
-import CustomizedTables from "../../Components/Tables/AllUsersTable";
+import RoomsTable from "../../Components/Tables/RoomsTable";
 
 const modalStyle = {
   position: "absolute",
@@ -17,7 +16,7 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  minHeight: 600,
+  minHeight: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -29,31 +28,27 @@ const buttonStyle = {
   backgroundColor: "#00939F",
 };
 
-export default function Professional() {
+export default function Rooms() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  return (
-    <Fragment>
+  return(
+    <React.Fragment>
       <Container maxWidth="lg">
-      <Typography variant="h4" color="initial" sx={{margin: '1rem 0'}}>
-          Listagem de Profissionais
-        </Typography>
-        <Button
+      <Button
           variant="contained"
           style={buttonStyle}
           onClick={handleOpen}
           disableRipple
         >
-          Cadastrar
+          Cadastrar Sala
         </Button>
-        <CustomizedTables />
+        <RoomsTable />
       </Container>
       <Modal
         disableBackdropClick
-        open={open}
-        // onClose={handleClose}
+        open={open} // onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -65,30 +60,22 @@ export default function Professional() {
               flexDirection: "column",
               justifyContent: "center",
             }}
-            // onSubmit={onSubmit}
           >
             <Typography variant="h5" color="initial">
-              Novo profissional <br />
+              Nova Sala <br />
             </Typography>
             <TextField
               required
               type="text"
               id="outlined-required"
-              label="Nome"
+              label="Clinica"
               sx={{ marginTop: "1.5rem" }}
             />
             <TextField
               required
-              type="phone"
+              type="room"
               id="outlined-required"
-              label="Telefone"
-              sx={{ marginTop: "1.5rem" }}
-            />
-            <TextField
-              required
-              type="text"
-              id="outlined-required"
-              label="Número de documento"
+              label="Identificação"
               sx={{ marginTop: "1.5rem" }}
             />
             <Autocomplete
@@ -96,33 +83,25 @@ export default function Professional() {
               sx={{ marginTop: "1.5rem" }}
               multiple
               id="tags-outlined"
-              options={especialidades}
+              options={categoria}
               getOptionLabel={(option) => option.name}
               filterSelectedOptions
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Especialidades"
-                  placeholder="Especialidades"
+                  label="Categoria"
+                  placeholder="Catogoria"
                 />
               )}
             />
             <TextField
               required
-              type="email"
+              type="ocupMax"
               id="outlined-required"
-              label="Email"
+              label="Ocupação Max."
               sx={{ marginTop: "1.5rem" }}
-              //   {...register('email')}
             />
-            <TextField
-              required
-              id="outlined-required"
-              label="Senha"
-              sx={{ marginTop: "1.5rem" }}
-              type="password"
-              //   {...register('password')}
-            />
+
             <Button
               type="submit"
               variant="contained"
@@ -141,11 +120,11 @@ export default function Professional() {
           </Box>
         </Box>
       </Modal>
-    </Fragment>
+    </React.Fragment>
   );
 }
 
-const especialidades = [
+const categoria = [
   { id: 0, name: "Acupuntura" },
   { id: 1, name: "Psicologia" },
   { id: 2, name: "Nutrição" },

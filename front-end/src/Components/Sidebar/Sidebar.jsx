@@ -52,30 +52,8 @@ export default function Sidebar() {
   function Logout() {
     Cookies.remove("cis.validator");
     window.location.replace("login");
-    // return navigate('/login')
   }
 
-<<<<<<< HEAD
-  return (
-    <div>
-      <React.Fragment>
-        <Box sx={{ position: "fixed", left: "60px", top: "100px" }}>
-          <Button variant="outlined" onClick={() => setMenuOpen(true)}>
-            <MenuIcon />
-            <ListItemText>Menu</ListItemText>
-          </Button>
-          <Drawer
-            anchor="left"
-            onOpen={() => setMenuOpen(true)}
-            onClose={() => setMenuOpen(false)}
-            open={menuOpen}
-          >
-            <Box sx={sideBarStyle} role="presentation">
-              <List>
-                <Box sx={{ width: "100%", textAlign: "center" }}>
-                  <img src={Logo} width={360} />
-                </Box>
-=======
   function onClickButton(route) {
     setMenuOpen(false);
     navigate(route);
@@ -103,7 +81,6 @@ export default function Sidebar() {
                   <Box sx={{ width: "100%", textAlign: "center" }}>
                     <img src={Logo} width={360} />
                   </Box>
->>>>>>> 267eb290595c18be653f1262b0c3330661a3584b
 
                 <Box
                   sx={{
@@ -124,9 +101,6 @@ export default function Sidebar() {
                   </Typography>
                 </Box>
 
-<<<<<<< HEAD
-                {sideBarItems.map(({ text, icon, action }) => (
-=======
                   {sideBarItems.map(({ text, icon, route }) => (
                     <ListItem
                       button
@@ -142,38 +116,26 @@ export default function Sidebar() {
                   ))}
                 </List>
                 <List>
->>>>>>> 267eb290595c18be653f1262b0c3330661a3584b
                   <ListItem
                     button
-                    key={text}
                     sx={{ marginTop: "12px" }}
-                    onClick={action}
+                    onClick={() =>
+                      window.confirm("Deseja realizar logout do sistema?")
+                        ? Logout()
+                        : ""
+                    }
                   >
-                    <ListItemIcon sx={{ color: "white" }}>{icon}</ListItemIcon>
-                    <ListItemText primary={text} sx={{ color: "white" }} />
+                    <ListItemIcon sx={{ color: "#FFFF" }}>
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText sx={{ color: "#FFFF" }}>Logout</ListItemText>
                   </ListItem>
-                ))}
-              </List>
-              <List>
-                <ListItem
-                  button
-                  sx={{ marginTop: "12px" }}
-                  onClick={() =>
-                    window.confirm("Deseja realizar logout do sistema?")
-                      ? Logout()
-                      : ""
-                  }
-                >
-                  <ListItemIcon sx={{ color: "#FFFF" }}>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText sx={{ color: "#FFFF" }}>Logout</ListItemText>
-                </ListItem>
-              </List>
-            </Box>
-          </Drawer>
-        </Box>
-      </React.Fragment>
-    </div>
-  );
+                </List>
+              </Box>
+            </Drawer>
+          </Box>
+        </React.Fragment>
+      </div>
+    );
+  }
 }

@@ -1,15 +1,11 @@
 import * as React from "react";
 import { Fragment } from "react";
-import {
-  Box,
-  Button,
-  Modal,
-  Typography,
-  TextField,
-  Autocomplete,
-  Container,
-} from "@mui/material";
+import { Box, Button, Modal, Typography, TextField, Autocomplete, Container,} from "@mui/material";
 import CustomizedTables from "../../Components/Tables/AllUsersTable";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
 
 const modalStyle = {
   position: "absolute",
@@ -17,7 +13,8 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  minHeight: 600,
+  maxHeight: '80vh',
+  overflowY: 'scroll',
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -37,10 +34,11 @@ export default function Professional() {
   return (
     <Fragment>
       <Container maxWidth="lg">
-      <Typography variant="h4" color="initial" sx={{margin: '1rem 0'}}>
+        <Typography variant="h4" color="initial" sx={{ margin: "1rem 0" }}>
           Listagem de Profissionais
         </Typography>
         <Button
+          id="cadastrarProfissional"
           variant="contained"
           style={buttonStyle}
           onClick={handleOpen}
@@ -53,6 +51,7 @@ export default function Professional() {
       <Modal
         disableBackdropClick
         open={open}
+        data-testid="modalPraTestes"
         // onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -68,15 +67,22 @@ export default function Professional() {
             // onSubmit={onSubmit}
           >
             <Typography variant="h5" color="initial">
-              Novo profissional <br />
+              Novo profissional
             </Typography>
             <TextField
               required
               type="text"
               id="outlined-required"
-              label="Nome"
+              label="Nome Completo"
               sx={{ marginTop: "1.5rem" }}
             />
+            <FormLabel component="legend" sx={{ marginTop: '1.5rem'}}>Sexo</FormLabel>
+            <RadioGroup aria-label="gender" name="radio-buttons-group">
+              <div sx={{display:'flex'}}>
+                <FormControlLabel value="m" control={<Radio />} label="Masculino" />
+                <FormControlLabel value="f" control={<Radio />} label="Feminino"/>
+              </div>
+            </RadioGroup>
             <TextField
               required
               type="phone"
@@ -88,7 +94,21 @@ export default function Professional() {
               required
               type="text"
               id="outlined-required"
-              label="Número de documento"
+              label="RG"
+              sx={{ marginTop: "1.5rem" }}
+            />
+            <TextField
+              required
+              type="text"
+              id="outlined-required"
+              label="Nº CRM"
+              sx={{ marginTop: "1.5rem" }}
+            />
+            <FormLabel component="legend" sx={{ marginTop: '1.5rem', marginBottom: '-1rem'}}>Data de Nascimento</FormLabel>
+            <TextField
+              required
+              type="date"
+              id="outlined-required"
               sx={{ marginTop: "1.5rem" }}
             />
             <Autocomplete
@@ -100,12 +120,22 @@ export default function Professional() {
               getOptionLabel={(option) => option.name}
               filterSelectedOptions
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Especialidades"
-                  placeholder="Especialidades"
-                />
+                <TextField {...params} label="Especialidades" placeholder="Especialidades"/>
               )}
+            />
+            <TextField
+              required
+              type="text"
+              id="outlined-required"
+              label="País"
+              sx={{ marginTop: "1.5rem" }}
+            />
+            <TextField
+              required
+              type="text"
+              id="outlined-required"
+              label="Endereço"
+              sx={{ marginTop: "1.5rem" }}
             />
             <TextField
               required
@@ -113,7 +143,6 @@ export default function Professional() {
               id="outlined-required"
               label="Email"
               sx={{ marginTop: "1.5rem" }}
-              //   {...register('email')}
             />
             <TextField
               required
@@ -121,7 +150,6 @@ export default function Professional() {
               label="Senha"
               sx={{ marginTop: "1.5rem" }}
               type="password"
-              //   {...register('password')}
             />
             <Button
               type="submit"

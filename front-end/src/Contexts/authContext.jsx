@@ -4,12 +4,12 @@ import Cookies from "js-cookie";
 export const AuthContext = createContext({});
 
 export default function AuthProvider({ children }) {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true); // <- TROCAR ESSA PORRA
 
-  useEffect(() => {
-    const token = Cookies.get("cis.validator");
-    token ? setIsAuth(true) : setIsAuth(false);
-  }, []);
+  // useEffect(() => {
+  //   const token = Cookies.get("cis.validator");
+  //   token ? setIsAuth(true) : setIsAuth(false);
+  // }, []);
 
   return (
     <Fragment>

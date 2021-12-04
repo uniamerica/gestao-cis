@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import {
   Box,
   Button,
@@ -8,7 +8,8 @@ import {
   Autocomplete,
   Container,
 } from "@mui/material";
-
+import { AuthContext } from "./../../Contexts/authContext";
+import { useNavigate } from "react-router";
 import ImgAgen from "../../assets/images/imageAgend.png"
 
 const modalStyle = {
@@ -30,9 +31,18 @@ const buttonStyle = {
 };
 
 export default function Home() {
+  const navigate = useNavigate();
+  const { isAuth } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  useEffect(() => {
+    if (isAuth) {
+      return navigate("/home");
+    } else {
+      return console.log('Credenciais Inválidas');
+    }
+  }, []);
 
   return (
     <React.Fragment>

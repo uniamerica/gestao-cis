@@ -24,6 +24,14 @@ const modalStyle = {
   p: 4,
 };
 
+// useEffect(() => {
+//   if (isAuth) {
+//     return navigate("/home");
+//   } else {
+//     return navigate("../");
+//   }
+// }, []);
+
 const buttonStyle = {
   marginTop: "4%",
   borderRadius: 20,
@@ -61,18 +69,18 @@ export default function Home() {
           <img src={ImgAgen} alt="" />
         </Box>
 
-        <Box sx={{
-          maxHeight: "92vh",
-          width: "40vw",
-          alignItems:"center",
-          display: "flex",
-          flexDirection:"column",
-          justifyContent: "center",
-
-        }}>
-
+        <Box
+          sx={{
+            maxHeight: "92vh",
+            width: "40vw",
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <Typography variant="h5" align="center" marginTop="30%">
-            Realize seu agendamento de consulta  <br />
+            Realize seu agendamento de consulta <br />
           </Typography>
 
           <Button
@@ -83,9 +91,7 @@ export default function Home() {
           >
             Solicitar
           </Button>
-
         </Box>
-
       </Container>
 
       <Modal
@@ -94,7 +100,6 @@ export default function Home() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-
         <Box sx={modalStyle}>
           <Box
             component="form"
@@ -105,7 +110,7 @@ export default function Home() {
             }}
           >
             <Typography variant="h5" color="initial">
-              Solicitação de Agendamento  <br />
+              Solicitação de Agendamento <br />
             </Typography>
             <TextField
               required

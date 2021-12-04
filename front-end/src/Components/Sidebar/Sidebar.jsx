@@ -10,7 +10,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MenuIcon from "@mui/icons-material/Menu";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import Logo from "../../assets/images/logo.png";
 import Avatar from "@mui/material/Avatar";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -27,8 +27,8 @@ const sideBarItems = [
     route: "/home",
   },
   {
-    text: "Pacientes", 
-    icon: <AssignmentIndIcon />, 
+    text: "Pacientes",
+    icon: <AssignmentIndIcon />,
     route: "/admin/pacientes",
   },
   {
@@ -36,10 +36,10 @@ const sideBarItems = [
     icon: <LocalHospitalIcon />,
     route: "/admin/profissionais",
   },
-  { 
-    text: "Gerenciamento de Salas", 
+  {
+    text: "Gerenciamento de Salas",
     icon: <MeetingRoomIcon />,
-    route: "/admin/salas"
+    route: "/admin/salas",
   },
 ];
 

@@ -55,6 +55,8 @@ const rows = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
+
   // Auth Validation
   const { isAuth } = React.useContext(AuthContext);
   const [openSave, createStatus] = React.useState(false);
@@ -75,7 +77,10 @@ export default function Home() {
   const [hour, setHour] = React.useState('');
   const handleHour = (event) => {
     setHour(event.target.value);
-  };    
+  };
+  const handleOpen = (event) => {
+    setHour(event.target.value);
+  };
 
 
   if (!isAuth) {
@@ -134,7 +139,7 @@ export default function Home() {
           </Box>
         </Container>
 
-        <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal disableBackdropClick open={openCreate} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
           <Box component="form" sx={modalStyle}>
             <Typography variant="h5" color="initial">
               Solicitação de Agendamento

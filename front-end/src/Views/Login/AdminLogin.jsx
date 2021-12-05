@@ -1,5 +1,6 @@
-import { Container, Box, Typography, TextField, Button } from "@mui/material";
+import { Container, Box, Typography, TextField, Button, Tab, Tabs } from "@mui/material";
 import React, { Fragment, useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useForm } from "react-hook-form";
@@ -7,18 +8,59 @@ import axios from "axios";
 import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
+import { Link } from 'react-router-dom'
+
+// PAINEIS START -----------------
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+// PAINEIS END ---------------------------------------------
 
 export default function Login() {
   const navigate = useNavigate();
   const { isAuth, setIsAuth } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (isAuth) {
-      return navigate("/home");
-    } else {
-      return console.log("Credenciais Inválidas");
-    }
-  }, [isAuth, navigate]);
+  // PAINEIS -----------------------------------------------
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  // PAINEIS END ---------------------------------------------
+
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     return navigate("/home");
+  //   } else {
+  //     return console.log("Credenciais Inválidas");
+  //   }
+  // }, [isAuth, navigate]);
 
   // LOGIN ---------------------------------------------------
   const { register, handleSubmit } = useForm();
@@ -83,7 +125,17 @@ export default function Login() {
               justifyContent: "center",
             }}
           >
-            <div
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="Administrador" {...a11yProps(0)} />
+              <Tab label="Colaborador" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+          <div
               name="FormLogin"
               style={{
                 width: "100%",
@@ -95,6 +147,7 @@ export default function Login() {
             >
               <Box
                 component="form"
+                data-testid="form_test"
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -103,9 +156,9 @@ export default function Login() {
                 }}
                 onSubmit={onSubmit}
               >
-                <AccountCircleIcon
+                {/* <AccountCircleIcon
                   sx={{ alignSelf: "center", fontSize: "60px" }}
-                />
+                /> */}
                 <Typography
                   variant="h5"
                   color="initial"
@@ -137,6 +190,94 @@ export default function Login() {
                 >
                   Login
                 </Button>
+              </Box>
+            </div>
+          </TabPanel>
+
+          <TabPanel value={value} index={1}>
+            <div
+              name="FormCadastro"
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="form"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "80%",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  color="initial"
+                  sx={{ textAlign: "center" }}
+                >
+                  Olá Colaborador! <br />
+                  Entre com seu email e senha!
+                </Typography>
+                <TextField
+                  required
+                  type="text"
+                  id="outlined-required"
+                  label="Email ou Username"
+                  sx={{ marginTop: "1.5rem" }}
+                  {...register("username")}
+                />
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Senha"
+                  sx={{ marginTop: "1.5rem" }}
+                  type="password"
+                  {...register("password")}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ marginTop: "2rem" }}
+                >
+                  Login
+                </Button>
+              </Box>
+            </div>
+          </TabPanel>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              name="FormLogin"
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="form"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "80%",
+                  justifyContent: "center",
+                }}
+                onSubmit={onSubmit}
+              >
+                {/* <AccountCircleIcon
+                  sx={{ alignSelf: "center", fontSize: "60px" }}
+                /> */}
+                
               </Box>
             </div>
           </Box>

@@ -13,6 +13,7 @@ import {
   Radio,
 } from "@mui/material";
 import React, { Fragment, useContext, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -144,11 +145,11 @@ export default function Login() {
                 }}
                 onSubmit={onSubmit}
               >
-                <AccountCircleIcon
+                {/* <AccountCircleIcon
                   sx={{ alignSelf: "center", fontSize: "60px" }}
-                />
+                /> */}
                 <Typography variant="h5" color="initial">
-                  Já tem conta? <br />
+                  Já é nosso paciente? <br />
                   Entre com seu email e senha!
                 </Typography>
                 <TextField
@@ -169,6 +170,9 @@ export default function Login() {
                   type="password"
                   {...register("password")}
                 />
+                <Typography variant="p" color="initial" sx={{margin: 'auto', marginTop: '1.5rem'}}>
+                  Colaborador? <Link to='/admin/login'>Clique aqui</Link> <br />
+                </Typography>
                 <Button
                   type="submit"
                   variant="contained"

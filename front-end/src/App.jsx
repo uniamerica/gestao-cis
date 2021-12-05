@@ -19,7 +19,7 @@ function App() {
           <Header />
           <Sidebar />
           <Routes>
-            <Route path="/login" element={<PacientLogin />} />
+            <Route path="/" exact element={<PacientLogin />} />
             <Route path="/home" element={<Home />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/profissionais" element={<Professional />} />

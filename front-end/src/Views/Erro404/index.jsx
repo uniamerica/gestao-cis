@@ -6,7 +6,6 @@ export default function Home() {
 
     return (
     <Fragment>
-
         <Box
           name="BackgroundErro"
           sx={{
@@ -20,8 +19,7 @@ export default function Home() {
         >
           <img src={BackgroundErro} alt="" />
         </Box>
+    </Fragment>
     );
     
-   </Fragment>
-    );
 }

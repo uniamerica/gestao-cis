@@ -50,9 +50,12 @@ const rows = [
 ];
 
 export default function Rooms() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openSave, createStatus] = React.useState(false);
+  const openCreate = () => createStatus(true);
+  const closeCreate = () => createStatus(false);
+  const [openModify, editStatus] = React.useState(false);
+  const openEdit = () => editStatus(true);
+  const closeEdit = () => editStatus(false);
 
   return(
     <React.Fragment>
@@ -62,7 +65,7 @@ export default function Rooms() {
             <Typography variant="h5" fontWeight="bold">
                 Salas Registradas
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={openCreate}>
               Nova sala
             </Button>
           </Box>
@@ -83,13 +86,13 @@ export default function Rooms() {
                     <StyledTableCell align="center">{row.number}</StyledTableCell>
                     <StyledTableCell align="center">{row.specialty}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center' }} startIcon={<CheckIcon />}>
+                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center', boxShadow: "none" }} startIcon={<CheckIcon />}>
                         {row.confirm}
                       </Button>
-                      <Button variant="contained" size="small" color="warning" startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
-                      <Button variant="contained" size="small" color="error" startIcon={<DeleteIcon />}>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>
@@ -101,10 +104,10 @@ export default function Rooms() {
         </Box>
       </Container>
 
-      <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
-            Cadastro de nova
+            Cadastro de nova sala
           </Typography>
           <TextField required type="number" id="outlined-required" label="Número" />
           <Autocomplete
@@ -125,7 +128,36 @@ export default function Rooms() {
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Cadastrar
           </Button>
-          <Button type="reset" variant="contained" onClick={handleClose} sx={{backgroundColor: "#c3c3c3" }}>
+          <Button type="reset" variant="contained" onClick={closeCreate} sx={{backgroundColor: "#c3c3c3" }}>
+            Cancelar
+          </Button>
+        </Box>
+      </Modal>
+      <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle}>
+          <Typography variant="h5" color="initial">
+            Editar sala
+          </Typography>
+          <TextField required type="number" id="outlined-required" label="Número" />
+          <Autocomplete
+            required
+            multiple
+            id="tags-outlined"
+            options={specialty}
+            getOptionLabel={(option) => option.name}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Especialidades"
+                placeholder="Especialidades"
+              />
+            )}
+          />
+          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+            Salvar
+          </Button>
+          <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
             Cancelar
           </Button>
         </Box>

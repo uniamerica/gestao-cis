@@ -62,7 +62,7 @@ export default function Professional() {
             <Typography variant="h5" fontWeight="bold">
                 Profissionais Registrados
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={handleOpen}>
               Novo Profissional
             </Button>
           </Box>
@@ -87,13 +87,10 @@ export default function Professional() {
                     <StyledTableCell align="center">{row.phone}</StyledTableCell>
                     <StyledTableCell align="center">{row.crm}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center' }} startIcon={<CheckIcon />}>
-                        {row.confirm}
-                      </Button>
-                      <Button variant="contained" size="small" color="warning" startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
-                      <Button variant="contained" size="small" color="error" startIcon={<DeleteIcon />}>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>

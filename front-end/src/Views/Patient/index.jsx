@@ -62,7 +62,7 @@ export default function Patients() {
             <Typography variant="h5" fontWeight="bold">
                 Pacientes Registrados
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={handleOpen}>
               Novo Paciente
             </Button>
           </Box>
@@ -83,10 +83,10 @@ export default function Patients() {
                     <StyledTableCell align="center">{row.name}</StyledTableCell>
                     <StyledTableCell align="center">{row.email}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="warning" startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
-                      <Button variant="contained" size="small" color="error" startIcon={<DeleteIcon />}>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>
@@ -118,13 +118,13 @@ export default function Patients() {
                 <TextField required type="text" id="outlined-required" label="RG"/>
                 <TextField required type="email" id="outlined-required" label="Email"/>
                 <TextField required type="text" id="outlined-required" label="Telefone"/>
+                <TextField required type="text" id="outlined-required" label="CEP"/>
                 <TextField required type="text" id="outlined-required" label="Rua" />
                 <TextField required type="text" id="outlined-required" label="Cidade" />
                 <TextField required type="text" id="outlined-required" label="Bairro" />
                 <TextField required type="text" id="outlined-required" label="País" />
                 <TextField required type="text" id="outlined-required" label="UF" />
                 <TextField required type="text" id="outlined-required" label="Número" />
-                <TextField required type="text" id="outlined-required" label="CEP"/>
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Cadastrar
           </Button>

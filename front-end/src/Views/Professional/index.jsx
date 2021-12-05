@@ -50,9 +50,12 @@ const rows = [
 ];
 
 export default function Professional() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openSave, createStatus] = React.useState(false);
+  const openCreate = () => createStatus(true);
+  const closeCreate = () => createStatus(false);
+  const [openModify, editStatus] = React.useState(false);
+  const openEdit = () => editStatus(true);
+  const closeEdit = () => editStatus(false);
 
   return (
     <React.Fragment>
@@ -62,7 +65,7 @@ export default function Professional() {
             <Typography variant="h5" fontWeight="bold">
                 Profissionais Registrados
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={openCreate}>
               Novo Profissional
             </Button>
           </Box>
@@ -87,7 +90,7 @@ export default function Professional() {
                     <StyledTableCell align="center">{row.phone}</StyledTableCell>
                     <StyledTableCell align="center">{row.crm}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" onClick={openEdit} sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
                       <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
@@ -102,7 +105,7 @@ export default function Professional() {
         </Box>
       </Container>
 
-      <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Cadastro de novo profissional
@@ -130,7 +133,40 @@ export default function Professional() {
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Cadastrar
           </Button>
-          <Button type="reset" variant="contained" onClick={handleClose} sx={{backgroundColor: "#c3c3c3" }}>
+          <Button type="reset" variant="contained" onClick={closeCreate} sx={{backgroundColor: "#c3c3c3" }}>
+            Cancelar
+          </Button>
+        </Box>
+      </Modal>
+      <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle}>
+          <Typography variant="h5" color="initial">
+            Editar profissional
+          </Typography>
+          <TextField required type="text" id="outlined-required" label="Nome Completo"/>
+          <TextField required type="text" id="outlined-required" label="Senha"/>
+          <TextField required type="mail" id="outlined-required" label="Email"/>
+          <TextField required type="text" id="outlined-required" label="Telefone" />
+          <TextField required type="text" id="outlined-required" label="CRM" />
+          <Autocomplete
+            required
+            multiple
+            id="tags-outlined"
+            options={especialidades}
+            getOptionLabel={(option) => option.name}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Especialidades"
+                placeholder="Especialidades"
+              />
+            )}
+          />
+          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+            Salvar
+          </Button>
+          <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
             Cancelar
           </Button>
         </Box>

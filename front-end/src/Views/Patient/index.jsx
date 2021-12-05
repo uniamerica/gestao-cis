@@ -8,7 +8,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -50,9 +49,12 @@ const rows = [
 ];
 
 export default function Patients() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openSave, createStatus] = React.useState(false);
+  const openCreate = () => createStatus(true);
+  const closeCreate = () => createStatus(false);
+  const [openModify, editStatus] = React.useState(false);
+  const openEdit = () => editStatus(true);
+  const closeEdit = () => editStatus(false);
 
   return(
     <React.Fragment>
@@ -62,7 +64,7 @@ export default function Patients() {
             <Typography variant="h5" fontWeight="bold">
                 Pacientes Registrados
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={openCreate}>
               Novo Paciente
             </Button>
           </Box>
@@ -83,7 +85,7 @@ export default function Patients() {
                     <StyledTableCell align="center">{row.name}</StyledTableCell>
                     <StyledTableCell align="center">{row.email}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
                       <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
@@ -98,7 +100,7 @@ export default function Patients() {
         </Box>
       </Container>
 
-      <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Cadastro de novo paciente
@@ -128,7 +130,42 @@ export default function Patients() {
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Cadastrar
           </Button>
-          <Button type="reset" variant="contained" onClick={handleClose} sx={{backgroundColor: "#c3c3c3" }}>
+          <Button type="reset" variant="contained" onClick={closeCreate} sx={{backgroundColor: "#c3c3c3" }}>
+            Cancelar
+          </Button>
+        </Box>
+      </Modal>
+      <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle}>
+          <Typography variant="h5" color="initial">
+            Editar paciente
+          </Typography>
+          <TextField required type="text" id="outlined-required" label="Nome Completo"/>
+                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", }}>
+                  <TextField required type="date" id="outlined-required"  label="Data de Nascimento" value={"2000-01-01"}/>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Gênero</FormLabel>
+                    <RadioGroup>
+                      <FormControlLabel value="M" control={<Radio />} label="Masculino"/>
+                      <FormControlLabel value="F"  control={<Radio />} label="Feminino"/>
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <TextField required type="text" id="outlined-required" label="CPF"/>
+                <TextField required type="text" id="outlined-required" label="RG"/>
+                <TextField required type="email" id="outlined-required" label="Email"/>
+                <TextField required type="text" id="outlined-required" label="Telefone"/>
+                <TextField required type="text" id="outlined-required" label="CEP"/>
+                <TextField required type="text" id="outlined-required" label="Rua" />
+                <TextField required type="text" id="outlined-required" label="Cidade" />
+                <TextField required type="text" id="outlined-required" label="Bairro" />
+                <TextField required type="text" id="outlined-required" label="País" />
+                <TextField required type="text" id="outlined-required" label="UF" />
+                <TextField required type="text" id="outlined-required" label="Número" />
+          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+            Salvar
+          </Button>
+          <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
             Cancelar
           </Button>
         </Box>

@@ -56,9 +56,12 @@ const rows = [
 export default function Home() {
   const navigate = useNavigate();
   const { isAuth } = React.useContext(AuthContext);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openSave, createStatus] = React.useState(false);
+  const openCreate = () => createStatus(true);
+  const closeCreate = () => createStatus(false);
+  const [openModify, editStatus] = React.useState(false);
+  const openEdit = () => editStatus(true);
+  const closeEdit = () => editStatus(false);
   
   useEffect(() => {
     if (isAuth) {
@@ -82,7 +85,7 @@ export default function Home() {
             <Typography variant="h5" fontWeight="bold">
                 Próximas Consultas
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={openCreate}>
               Nova Consulta
             </Button>
           </Box>
@@ -106,7 +109,7 @@ export default function Home() {
                       <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center', boxShadow: "none" }} startIcon={<CheckIcon />}>
                         {row.confirm}
                       </Button>
-                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
                       <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
@@ -121,7 +124,7 @@ export default function Home() {
         </Box>
       </Container>
 
-      <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Solicitação de Agendamento <br />
@@ -168,7 +171,59 @@ export default function Home() {
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Solicitar
           </Button>
-          <Button type="reset" variant="contained" onClick={handleClose} sx={{backgroundColor: "#c3c3c3" }}>
+          <Button type="reset" variant="contained" onClick={closeCreate} sx={{backgroundColor: "#c3c3c3" }}>
+            Cancelar
+          </Button>
+        </Box>
+      </Modal>
+      <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle}>
+          <Typography variant="h5" color="initial">
+            Alteração de Agendamento <br />
+          </Typography>
+          <TextField required type="text" id="outlined-required" label="Nome"/>
+          <TextField required type="date" id="outlined-required" />
+          <Autocomplete
+            required
+            multiple
+            id="tags-outlined"
+            options={categoria}
+            getOptionLabel={(option) => option.name}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Categoria"
+                placeholder="Catogoria"
+              />
+            )}
+          />
+          <Box sx={{display: 'flex'}}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Horário</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={hour}
+                label="Horário"
+                onChange={handleHour}
+              >
+                <MenuItem value={1}>08:00</MenuItem>
+                <MenuItem value={2}>08:30</MenuItem>
+                <MenuItem value={3}>09:00</MenuItem>
+                <MenuItem value={4}>09:30</MenuItem>
+                <MenuItem value={5}>10:00</MenuItem>
+                <MenuItem value={6}>10:30</MenuItem>
+                <MenuItem value={7}>11:00</MenuItem>
+                <MenuItem value={8}>11:30</MenuItem>
+                <MenuItem value={9}>12:00</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+            Solicitar alteração
+          </Button>
+          <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
             Cancelar
           </Button>
         </Box>

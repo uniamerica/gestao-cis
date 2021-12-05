@@ -41,12 +41,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(id, email, name, phone, crm ) {
-  return {id, email, name, phone, crm };
+function createData(id, email, name, phone, crm, edit, del ) {
+  return {id, email, name, phone, crm, edit, del };
 }
 
 const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiosexy@mail.com", "fabiofrassonsexy", "(45)9345678", "111111"),  
+  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiosexy@mail.com", "fabiofrassonsexy", "(45)9345678", "111111", "Editar", "Deletar"),  
 ];
 
 export default function Professional() {
@@ -62,7 +62,7 @@ export default function Professional() {
             <Typography variant="h5" fontWeight="bold">
                 Profissionais Registrados
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={handleOpen}>
+            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12}} onClick={handleOpen}>
               Novo Profissional
             </Button>
           </Box>

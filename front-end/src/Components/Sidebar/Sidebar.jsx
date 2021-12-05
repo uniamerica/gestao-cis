@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -45,8 +45,7 @@ const sideBarItems = [
 
 export default function Sidebar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const { isAuth } = React.useContext(AuthContext);
-
+  const { isAuth, user } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   function Logout() {
@@ -70,44 +69,24 @@ export default function Sidebar() {
               <MenuIcon />
               <ListItemText>Menu</ListItemText>
             </Button>
-            <Drawer
-              anchor="left"
-              onOpen={() => setMenuOpen(true)}
-              onClose={() => setMenuOpen(false)}
-              open={menuOpen}
-            >
+            <Drawer anchor="left" onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} open={menuOpen}>
               <Box sx={sideBarStyle} role="presentation">
                 <List>
                   <Box sx={{ width: "100%", textAlign: "center" }}>
                     <img src={Logo} width={360} />
                   </Box>
-
-                <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    margin: "24px 0",
-                  }}
-                >
+                <Box sx={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center", margin: "24px 0",}}>
                   <Avatar sx={{ width: 56, height: 56 }}>V</Avatar>
                   <Typography
                     variant="h5"
                     color="#FFFF"
                     sx={{ marginTop: "12px" }}
                   >
-                    Olá Visitante
+                    Olá {user.sub}
                   </Typography>
                 </Box>
-
                   {sideBarItems.map(({ text, icon, route }) => (
-                    <ListItem
-                      button
-                      key={text}
-                      sx={{ marginTop: "12px" }}
-                      onClick={() => onClickButton(route)}
-                    >
+                    <ListItem button key={text} sx={{ marginTop: "12px" }} onClick={() => onClickButton(route)} >
                       <ListItemIcon sx={{ color: "white" }}>
                         {icon}
                       </ListItemIcon>
@@ -116,15 +95,7 @@ export default function Sidebar() {
                   ))}
                 </List>
                 <List>
-                  <ListItem
-                    button
-                    sx={{ marginTop: "12px" }}
-                    onClick={() =>
-                      window.confirm("Deseja realizar logout do sistema?")
-                        ? Logout()
-                        : ""
-                    }
-                  >
+                  <ListItem button sx={{ marginTop: "12px" }} onClick={() => window.confirm("Deseja realizar logout do sistema?") ? Logout() : ""}>
                     <ListItemIcon sx={{ color: "#FFFF" }}>
                       <LogoutIcon />
                     </ListItemIcon>

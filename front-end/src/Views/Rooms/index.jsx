@@ -41,12 +41,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(id, number, specialty ) {
-  return {id, number, specialty };
+function createData(id, number, specialty, edit, del ) {
+  return {id, number, specialty, edit, del };
 }
 
 const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", 69, "Nutrição"),  
+  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", 69, "Nutrição", "Editar", "Deletar"),  
 ];
 
 export default function Rooms() {
@@ -83,9 +83,6 @@ export default function Rooms() {
                     <StyledTableCell align="center">{row.number}</StyledTableCell>
                     <StyledTableCell align="center">{row.specialty}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center' }} startIcon={<CheckIcon />}>
-                        {row.confirm}
-                      </Button>
                       <Button variant="contained" size="small" color="warning" startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>

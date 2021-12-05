@@ -17,6 +17,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import AuthError from './../AuthError/index';
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -45,28 +46,22 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(name, room, time, confirm, edit, del) {
-  return { name, room, time, confirm, edit, del };
+function createData(name, room, time, date, confirm, edit, del) {
+  return { name, room, time, date, confirm, edit, del };
 }
 
 const rows = [
-  createData( "fabiofrassonsexy", 69, "14:20", "Confirmar", "Editar", "Deletar")
+  createData( "fabiofrassonsexy", "69", "14:20", "01/01/2023", "Confirmar", "Editar", "Deletar")
 ];
 
 export default function Home() {
-  const navigate = useNavigate();
+  // Auth Validation
   const { isAuth } = React.useContext(AuthContext);
+
+  // Sidebar Controls
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
-  useEffect(() => {
-    if (isAuth) {
-      return navigate("/home");
-    } else {
-      return console.log('Credenciais Inválidas');
-    }
-  }, []);
 
   const [hour, setHour] = React.useState('');
   const handleHour = (event) => {
@@ -74,107 +69,117 @@ export default function Home() {
   };    
 
 
-  return (
-    <React.Fragment>
-      <Container maxWidth="lg">
-        <Box sx={{marginTop: '4rem', display: 'flex', flexDirection: 'column', gap: '2rem'}}>
-          <Box sx={{display: 'flex', alignItems: "center", justifyContent: 'space-between'}}>
-            <Typography variant="h5" fontWeight="bold">
-                Próximas Consultas
+  if (!isAuth) {
+    return (
+      <React.Fragment>
+        <AuthError />
+      </React.Fragment>
+    )
+  } else {
+    return (
+      <React.Fragment>
+        <Container maxWidth="lg">
+          <Box sx={{marginTop: '4rem', display: 'flex', flexDirection: 'column', gap: '2rem'}}>
+            <Box sx={{display: 'flex', alignItems: "center", justifyContent: 'space-between'}}>
+              <Typography variant="h5" fontWeight="bold">
+                  Próximas Consultas
+              </Typography>
+              <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12}} onClick={handleOpen}>
+                Nova Consulta
+              </Button>
+            </Box>
+            <TableContainer component={Paper}>
+              <Table aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">Nome</StyledTableCell>
+                    <StyledTableCell align="center">Sala</StyledTableCell>
+                    <StyledTableCell align="center">Data</StyledTableCell>
+                    <StyledTableCell align="center">Horário</StyledTableCell>
+                    <StyledTableCell align="center">Ações</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <TableRow key={row.id}>
+                      <StyledTableCell align="center" component="th" scope="row">{row.name}</StyledTableCell>
+                      <StyledTableCell align="center">{row.room}</StyledTableCell>
+                      <StyledTableCell align="center">{row.date}</StyledTableCell>
+                      <StyledTableCell align="center">{row.time}</StyledTableCell>
+                      <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
+                        <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center', boxShadow: "none" }} startIcon={<CheckIcon />}>
+                          {row.confirm}
+                        </Button>
+                        <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                          {row.edit}
+                          </Button>
+                        <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
+                          {row.del}
+                        </Button>
+                      </StyledTableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </Container>
+  
+        <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+          <Box component="form" sx={modalStyle}>
+            <Typography variant="h5" color="initial">
+              Solicitação de Agendamento
             </Typography>
-            <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={handleOpen}>
-              Nova Consulta
+            <TextField required type="text" id="outlined-required" label="Nome"/>
+            <TextField required type="date" id="outlined-required" />
+            <Autocomplete
+              required
+              multiple
+              id="tags-outlined"
+              options={categoria}
+              getOptionLabel={(option) => option.name}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Categoria"
+                  placeholder="Catogoria"
+                />
+              )}
+            />
+            <Box sx={{display: 'flex'}}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Horário</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={hour}
+                  label="Horário"
+                  onChange={handleHour}
+                >
+                  <MenuItem value={1}>08:00</MenuItem>
+                  <MenuItem value={2}>08:30</MenuItem>
+                  <MenuItem value={3}>09:00</MenuItem>
+                  <MenuItem value={4}>09:30</MenuItem>
+                  <MenuItem value={5}>10:00</MenuItem>
+                  <MenuItem value={6}>10:30</MenuItem>
+                  <MenuItem value={7}>11:00</MenuItem>
+                  <MenuItem value={8}>11:30</MenuItem>
+                  <MenuItem value={9}>12:00</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+              Solicitar
+            </Button>
+            <Button type="reset" variant="contained" onClick={handleClose} sx={{backgroundColor: "#c3c3c3" }}>
+              Cancelar
             </Button>
           </Box>
-          <TableContainer component={Paper}>
-            <Table aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Nome</StyledTableCell>
-                  <StyledTableCell align="center">Sala</StyledTableCell>
-                  <StyledTableCell align="center">Horário</StyledTableCell>
-                  <StyledTableCell align="center">Ações</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.id}>
-                    <StyledTableCell align="center" component="th" scope="row">{row.name}</StyledTableCell>
-                    <StyledTableCell align="center">{row.room}</StyledTableCell>
-                    <StyledTableCell align="center">{row.time}</StyledTableCell>
-                    <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center', boxShadow: "none" }} startIcon={<CheckIcon />}>
-                        {row.confirm}
-                      </Button>
-                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
-                        {row.edit}
-                        </Button>
-                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
-                        {row.del}
-                      </Button>
-                    </StyledTableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Container>
-
-      <Modal disableBackdropClick open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle}>
-          <Typography variant="h5" color="initial">
-            Solicitação de Agendamento <br />
-          </Typography>
-          <TextField required type="text" id="outlined-required" label="Nome"/>
-          <TextField required type="date" id="outlined-required" />
-          <Autocomplete
-            required
-            multiple
-            id="tags-outlined"
-            options={categoria}
-            getOptionLabel={(option) => option.name}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Categoria"
-                placeholder="Catogoria"
-              />
-            )}
-          />
-          <Box sx={{display: 'flex'}}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Horário</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={hour}
-                label="Horário"
-                onChange={handleHour}
-              >
-                <MenuItem value={1}>08:00</MenuItem>
-                <MenuItem value={2}>08:30</MenuItem>
-                <MenuItem value={3}>09:00</MenuItem>
-                <MenuItem value={4}>09:30</MenuItem>
-                <MenuItem value={5}>10:00</MenuItem>
-                <MenuItem value={6}>10:30</MenuItem>
-                <MenuItem value={7}>11:00</MenuItem>
-                <MenuItem value={8}>11:30</MenuItem>
-                <MenuItem value={9}>12:00</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
-            Solicitar
-          </Button>
-          <Button type="reset" variant="contained" onClick={handleClose} sx={{backgroundColor: "#c3c3c3" }}>
-            Cancelar
-          </Button>
-        </Box>
-      </Modal>
-    </React.Fragment>
-  );
+        </Modal>
+      </React.Fragment>
+    );
+  }
 }
 
 const categoria = [

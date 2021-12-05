@@ -83,9 +83,6 @@ export default function Patients() {
                     <StyledTableCell align="center">{row.name}</StyledTableCell>
                     <StyledTableCell align="center">{row.email}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center' }} startIcon={<CheckIcon />}>
-                        {row.confirm}
-                      </Button>
                       <Button variant="contained" size="small" color="warning" startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>

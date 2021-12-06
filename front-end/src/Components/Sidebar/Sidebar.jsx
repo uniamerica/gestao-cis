@@ -41,6 +41,11 @@ const sideBarItems = [
     icon: <MeetingRoomIcon />,
     route: "/admin/salas",
   },
+  {
+    text: "Agenda",
+    icon: <MeetingRoomIcon />,
+    route: "/professional/schedule",
+  },
 ];
 
 export default function Sidebar() {

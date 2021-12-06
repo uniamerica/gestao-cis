@@ -65,14 +65,6 @@ export default function Home() {
   const [openModify, editStatus] = React.useState(false);
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
-  
-  useEffect(() => {
-    if (isAuth) {
-      return navigate("/home");
-    } else {
-      return console.log('Credenciais Inválidas');
-    }
-  }, []);
 
   const [hour, setHour] = React.useState('');
   const handleHour = (event) => {

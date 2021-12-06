@@ -8,6 +8,7 @@ import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import jsonwebtoken from 'jsonwebtoken';
+import Footer from "../../Components/Footer";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -127,6 +128,7 @@ export default function Login() {
           </TabPanel>
         </Box>
       </Container>
+      <Footer />
     </Fragment>
   );
 }

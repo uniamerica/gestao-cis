@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { TextField, Button, Container, Box, Typography, Autocomplete, Modal} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -8,9 +8,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -45,17 +45,28 @@ function createData(id, number, specialty, edit, del ) {
   return {id, number, specialty, edit, del };
 }
 
-const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", 69, "Nutrição", "Editar", "Deletar"),  
-];
-
 export default function Rooms() {
-  const [openSave, createStatus] = React.useState(false);
+  
+  // Create
+  const [openSave, createStatus] = React.useState(false); 
   const openCreate = () => createStatus(true);
   const closeCreate = () => createStatus(false);
+
+  // Edit
   const [openModify, editStatus] = React.useState(false);
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
+
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => { 
+    axios.get("http://localhost:8080/api/salas").then(function (response) {
+      const data = response.data;
+      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.roomNumber, "Especialidade", "Editar", "Deletar"))
+      setRows(dataRows);
+      console.log(rows)
+    });
+  }, []);
 
   return(
     <React.Fragment>
@@ -86,12 +97,9 @@ export default function Rooms() {
                     <StyledTableCell align="center">{row.number}</StyledTableCell>
                     <StyledTableCell align="center">{row.specialty}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center', boxShadow: "none" }} startIcon={<CheckIcon />}>
-                        {row.confirm}
-                      </Button>
                       <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
-                        </Button>
+                      </Button>
                       <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>

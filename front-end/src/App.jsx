@@ -10,6 +10,8 @@ import AuthProvider from "./Contexts/authContext";
 import Professional from "./Views/Professional";
 import Rooms from "./Views/Rooms";
 import Patients from "./Views/Patient";
+import Reclamacoes from './Views/Reclamacoes/Index';
+import Footer from "./Components/Footer";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/admin/profissionais" element={<Professional />} />
             <Route path="/admin/pacientes" element={<Patients />} />
             <Route path="/admin/salas" element={<Rooms />} />
+            <Route path="/professional/schedule" element={<Rooms />} />
+            <Route path="/reclamacoes" element={<Reclamacoes />} />
             <Route path="*" element={<Erro404 />} />
           </Routes>
         </BrowserRouter>

@@ -1,41 +1,27 @@
-import { render, fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { render } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter } from "react-router-dom";
 
 import Login from "../Views/Login/PacientLogin";
 
-const mockOnSubmit = jest.fn();
-window.alert = jest.fn();
+const { getByTestId } = render(
+  <BrowserRouter>
+    <Login />
+  </BrowserRouter>
+);
 
 describe("Login Page Test", () => {
-  describe("Mostrar Alert", () => {
-    it("Should show alert message", async () => {
-      const { getByTestId } = render(
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      );
+  describe("Render Form Elements", () => {
+    it("Should render Page Elements", () => {
+      const loginTitle = getByTestId("login-title");
+      const inputEmail = getByTestId("input-email");
+      const inputPassword = getByTestId("input-password");
+      const inputButton = getByTestId("input-button");
 
-      const form = getByTestId("form_test");
-      const email = getByTestId("email_inputTest");
-      const password = getByTestId("password_inputTest");
-
-      form.onsubmit = mockOnSubmit();
-
-      await act(async () => {
-        fireEvent.change(email, {
-          target: { value: "admin" },
-        });
-        fireEvent.change(password, {
-          target: { value: "admin" },
-        });
-      });
-
-      await act(async () => {
-        fireEvent.submit(form);
-      });
-
-      expect(window.alert).toBeCalledWith("Hello World");
+      expect(inputEmail).toBeInTheDocument();
+      expect(inputPassword).toBeInTheDocument();
+      expect(inputButton).toBeInTheDocument();
+      expect(loginTitle).toBeInTheDocument();
     });
   });
 });

@@ -7,15 +7,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="back-end" />
+        <module name="cis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="back-end" target="11" />
+      <module name="cis" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="back-end" options="-parameters" />
+      <module name="cis" options="-parameters" />
     </option>
   </component>
 </project>

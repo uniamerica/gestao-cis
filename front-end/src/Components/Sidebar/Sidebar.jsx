@@ -72,15 +72,26 @@ export default function Sidebar() {
             <Drawer anchor="left" onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} open={menuOpen}>
               <Box sx={sideBarStyle} role="presentation">
                 <List>
-                  <Box sx={{ width: "100%", textAlign: "center" }}>
-                    <img src={Logo} width={360} />
+                  <Box sx={{ width: "100%", paddingTop: '8%', marginTop: '-12%', height: '20%', textAlign: "center", backgroundColor: '#fff' }}>
+                    <img src={Logo} width={250} />
                   </Box>
-                <Box sx={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center", margin: "24px 0",}}>
+                <Box sx={{width: "100%",
+                height: '25%',
+                display: "flex", 
+                justifyItems: 'center',
+                alignItems: 'center',
+                flexDirection: "column", 
+                alignItems: "center", 
+                margin: "24px 0", 
+                backgroundColor: '#00000025', 
+                marginTop: 0,
+                paddingTop: '5%', 
+                paddingBottom: '5%'}}>
                   <Avatar sx={{ width: 56, height: 56 }}>V</Avatar>
                   <Typography
                     variant="h5"
                     color="#FFFF"
-                    sx={{ marginTop: "12px" }}
+                    sx={{ marginTop: "15px" }}
                   >
                     Olá {user.sub}
                   </Typography>

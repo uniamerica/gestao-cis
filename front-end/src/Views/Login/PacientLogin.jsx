@@ -50,6 +50,7 @@ export default function Login() {
     if (response.status === 201) {
       const { jwt } = response.data;
       setUser(jsonwebtoken.decode(jwt));
+      console.log(jsonwebtoken.decode(jwt));
       Cookies.set("cis.validator", jwt, {expires: 1,});
       setIsAuth(true);
       navigate("/home");

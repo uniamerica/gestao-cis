@@ -8,6 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MenuIcon from "@mui/icons-material/Menu";
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
@@ -43,7 +44,7 @@ const sideBarItems = [
   },
   {
     text: "Agenda",
-    icon: <MeetingRoomIcon />,
+    icon: <FactCheckIcon />,
     route: "/professional/schedule",
   },
 ];

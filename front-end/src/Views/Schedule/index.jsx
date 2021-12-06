@@ -1,4 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { Box,Button,Modal,Typography,TextField,Autocomplete,Container } from "@mui/material";
+import { AuthContext } from "./../../Contexts/authContext";
+import { useNavigate } from "react-router";
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import CheckIcon from '@mui/icons-material/Check';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import AuthError from './../AuthError/index';
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -27,19 +46,38 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(name, room, time, date, confirm, edit, del) {
-  return { name, room, time, date, confirm, edit, del };
+function createData(room, date, hour, minute, edit, del) {
+  return { room, date, hour, minute, edit, del };
 }
 
 const rows = [
-  createData( "fabiofrassonsexy", "69", "14:20", "01/01/2023", "Confirmar", "Editar", "Deletar")
+  createData( 1, "01/01/2023", "14", "30" , "Editar", "Deletar")
 ];
 
-const { isAuth } = React.useContext(AuthContext);
 
 export default function Schedule() {
-  const [open, setOpen] = React.useState(false);
 
+  const [openModify, editStatus] = React.useState(false);
+  const openEdit = () => editStatus(true);
+  const closeEdit = () => editStatus(false);
+
+  const [hour, setHour] = React.useState('');
+  const [minute, setMinute] = React.useState('');
+  const [room, setRoom] = React.useState('');
+
+  const handleHour = (event) => {
+    setHour(event.target.value);
+  };
+
+  const handleMinute = (event) => {
+    setMinute(event.target.value);
+  };
+
+  const handleRoom = (event) => {
+    setRoom(event.target.value);
+  };
+
+  const { isAuth } = React.useContext(AuthContext);
   if (!isAuth) {
     return (
       <React.Fragment>
@@ -53,17 +91,16 @@ export default function Schedule() {
           <Box sx={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <Box sx={{ display: 'flex', alignItems: "center", justifyContent: 'space-between' }}>
               <Typography variant="h5" fontWeight="bold">
-                Próximas Consultas
+                Horários Disponíveis
               </Typography>
-              <Button variant="contained" sx={{ backgroundColor: "#00939F", borderRadius: 12 }} onClick={openCreate}>
-                Nova Consulta
+              <Button variant="contained" onClick={openEdit} sx={{ backgroundColor: "#00939F", borderRadius: 12 }} >
+                Novo Horário
               </Button>
             </Box>
             <TableContainer component={Paper}>
               <Table aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="center">Nome</StyledTableCell>
                     <StyledTableCell align="center">Sala</StyledTableCell>
                     <StyledTableCell align="center">Data</StyledTableCell>
                     <StyledTableCell align="center">Horário</StyledTableCell>
@@ -73,15 +110,11 @@ export default function Schedule() {
                 <TableBody>
                   {rows.map((row) => (
                     <TableRow key={row.id}>
-                      <StyledTableCell align="center" component="th" scope="row">{row.name}</StyledTableCell>
-                      <StyledTableCell align="center">{row.room}</StyledTableCell>
+                      <StyledTableCell align="center" component="th" scope="row">{row.room}</StyledTableCell>
                       <StyledTableCell align="center">{row.date}</StyledTableCell>
-                      <StyledTableCell align="center">{row.time}</StyledTableCell>
+                      <StyledTableCell align="center">{row.hour + ':' + row.minute}</StyledTableCell>
                       <StyledTableCell align="center" sx={{ display: 'flex', gap: '.5rem', justifyContent: 'center' }}>
-                        <Button variant="contained" size="small" color="success" sx={{ backgroundColor: '#00a887', textAlign: 'center', boxShadow: "none" }} startIcon={<CheckIcon />}>
-                          {row.confirm}
-                        </Button>
-                        <Button variant="contained" size="small" color="warning" sx={{ boxShadow: "none" }} onClick={openEdit} startIcon={<EditIcon />}>
+                        <Button variant="contained" size="small" color="warning" sx={{ boxShadow: "none" }} startIcon={<EditIcon />}>
                           {row.edit}
                         </Button>
                         <Button variant="contained" size="small" color="error" sx={{ boxShadow: "none" }} startIcon={<DeleteIcon />}>
@@ -95,44 +128,64 @@ export default function Schedule() {
             </TableContainer>
           </Box>
         </Container>
-
-        <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-          <Box component="form" sx={modalStyle}>
-            <Typography variant="h5" color="initial">
-              Solicitação de Agendamento <br />
-            </Typography>
-            <TextField required type="text" id="outlined-required" label="Nome"/>
-            <TextField required type="date" id="outlined-required" />
-        =
-            <Box sx={{display: 'flex'}}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Horário</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={hour}
-                  label="Horário"
-                  onChange={handleHour}
-                >
-                  <MenuItem value={1}>08:00</MenuItem>
-                  <MenuItem value={2}>08:30</MenuItem>
-                  <MenuItem value={3}>09:00</MenuItem>
-                  <MenuItem value={4}>09:30</MenuItem>
-                  <MenuItem value={5}>10:00</MenuItem>
-                  <MenuItem value={6}>10:30</MenuItem>
-                  <MenuItem value={7}>11:00</MenuItem>
-                  <MenuItem value={8}>11:30</MenuItem>
-                  <MenuItem value={9}>12:00</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
-              Solicitar
-            </Button>
-            <Button type="reset" variant="contained" onClick={closeCreate} sx={{backgroundColor: "#c3c3c3" }}>
-              Cancelar
-            </Button>
+        <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle}>
+          <Typography variant="h5" color="initial">
+            Novo Horário Dispoível
+          </Typography>
+          <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Sala</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={room}
+                label="Hora"
+                onChange={handleRoom}
+              >
+                <MenuItem value={0}>1</MenuItem>
+                <MenuItem value={1}>2</MenuItem>
+                <MenuItem value={2}>3</MenuItem>
+              </Select>
+            </FormControl>
+          <TextField required type="date" id="outlined-required" />
+          <Box sx={{display: 'flex'}}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Hora</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={hour}
+                label="Hora"
+                onChange={handleHour}
+              >
+                <MenuItem value={0}>08</MenuItem>
+                <MenuItem value={1}>09</MenuItem>
+                <MenuItem value={2}>10</MenuItem>
+                <MenuItem value={3}>11</MenuItem>
+                <MenuItem value={4}>12</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Minuto</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={minute}
+                label="Minuto"
+                onChange={handleMinute}
+              >
+                <MenuItem value={0}>00</MenuItem>
+                <MenuItem value={1}>30</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
+          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+            Solicitar
+          </Button>
+          <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
+            Cancelar
+          </Button>
+        </Box>
         </Modal>
       </React.Fragment>
     );

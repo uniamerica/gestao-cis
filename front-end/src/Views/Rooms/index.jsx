@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -46,7 +47,15 @@ function createData(id, number, specialty, edit, del ) {
 }
 
 export default function Rooms() {
-  
+  const { register, handleSubmit } = useForm();
+  const onSubmit = handleSubmit((sala) =>  {
+    axios.post("http://localhost:8080/api/room", sala).then(function (response) {
+      if(response.status === 201) {
+        alert("Sala criada com sucesso");
+      }
+    }
+  )})
+
   // Create
   const [openSave, createStatus] = React.useState(false); 
   const openCreate = () => createStatus(true);
@@ -57,16 +66,44 @@ export default function Rooms() {
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
 
+  // Get Rows
   const [rows, setRows] = useState([]);
 
+  const [sala] = useState({});
+
+  // GET
   useEffect(() => { 
-    axios.get("http://localhost:8080/api/salas").then(function (response) {
+    axios.get("http://localhost:8080/api/room").then(function (response) {
       const data = response.data;
       const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.roomNumber, "Especialidade", "Editar", "Deletar"))
       setRows(dataRows);
-      console.log(rows)
     });
   }, []);
+
+  // CREATE
+  const submit = axios.post("http://localhost:8080/api/room", sala).then(function (response) {
+    if(response.status === 201) {
+      alert("Sala criada com sucesso")
+    }
+  })
+
+  // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
+  const editRoom = (id) => {
+    axios.put("http://localhost:8080/api/room" + id, sala).then(function (response) {
+    if(response.status === 201) {
+      alert("Sala editada com sucesso")
+    }
+  })
+  }
+
+  // DELETE
+  const deleteRoom = (id) => {
+    axios.delete("http://localhost:8080/api/room/" + id).then(function (response) {
+      if(response.status === 204) {
+        alert("Sala deletada com sucesso")
+      }
+    })
+  }
 
   return(
     <React.Fragment>
@@ -100,7 +137,7 @@ export default function Rooms() {
                       <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                       </Button>
-                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} onClick={() => deleteRoom(row.id)} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>
@@ -113,11 +150,11 @@ export default function Rooms() {
       </Container>
 
       <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle}>
+        <Box component="form" sx={modalStyle} onSubmit={onSubmit}>
           <Typography variant="h5" color="initial">
             Cadastro de nova sala
           </Typography>
-          <TextField required type="number" id="outlined-required" label="Número" />
+          <TextField required type="number" id="outlined-required" label="Número" {...register('roomNumber')} />
           <Autocomplete
             required
             multiple
@@ -147,7 +184,7 @@ export default function Rooms() {
             Editar sala
           </Typography>
           <TextField required type="number" id="outlined-required" label="Número" />
-          <Autocomplete
+          <Autocomplete 
             required
             multiple
             id="tags-outlined"

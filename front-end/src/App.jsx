@@ -1,13 +1,17 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./Views/Login";
+import PacientLogin from "./Views/Login/PacientLogin";
+import AdminLogin from "./Views/Login/AdminLogin";
 import Header from "./Components/Header/Header";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Home from "./Views/Home";
-import Erro404 from "./Views/Erro404"
-import { NameForm } from "./Views/Testes";
+import Erro404 from "./Views/Erro404";
 import AuthProvider from "./Contexts/authContext";
 import Professional from "./Views/Professional";
+import Rooms from "./Views/Rooms";
+import Patients from "./Views/Patient";
+import Reclamacoes from './Views/Reclamacoes/Index';
+import Schedule from "./Views/Schedule";
 
 function App() {
   return (
@@ -17,10 +21,15 @@ function App() {
           <Header />
           <Sidebar />
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" exact element={<PacientLogin />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/testes" element={<NameForm />} />
-            <Route path="/profissionais" element={<Professional />} />
+            <Route path="/login" element={<AdminLogin />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/profissionais" element={<Professional />} />
+            <Route path="/admin/pacientes" element={<Patients />} />
+            <Route path="/admin/salas" element={<Rooms />} />
+            <Route path="/professional/schedule" element={<Schedule />} />
+            <Route path="/reclamacoes" element={<Reclamacoes />} />
             <Route path="*" element={<Erro404 />} />
           </Routes>
         </BrowserRouter>

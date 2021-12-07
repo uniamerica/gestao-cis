@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { TextField, Button, Container, Box, Typography, Autocomplete, Modal} from "@mui/material";
+import { TextField, Button, Container, Box, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Modal} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,7 +8,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -41,15 +40,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(id, email, name, phone, crm, edit, del ) {
-  return {id, email, name, phone, crm, edit, del };
+function createData(id, name, email, confirm, edit, del) {
+  return {id, name, email, confirm, edit, del };
 }
 
 const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiosexy@mail.com", "fabiofrassonsexy", "(45)9345678", "111111", "Editar", "Deletar"),  
+  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiofrassonsexy", "fabiosexy@mail.com", "Confirmar", 'Editar', "Deletar"),  
 ];
 
-export default function Professional() {
+export default function Patients() {
   const [openSave, createStatus] = React.useState(false);
   const openCreate = () => createStatus(true);
   const closeCreate = () => createStatus(false);
@@ -57,16 +56,16 @@ export default function Professional() {
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
 
-  return (
+  return(
     <React.Fragment>
       <Container maxWidth="lg">
         <Box sx={{marginTop: '4rem', display: 'flex', flexDirection: 'column', gap: '2rem'}}>
           <Box sx={{display: 'flex', alignItems: "center", justifyContent: 'space-between'}}>
             <Typography variant="h5" fontWeight="bold">
-                Profissionais Registrados
+                Pacientes Registrados
             </Typography>
             <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={openCreate}>
-              Novo Profissional
+              Novo Paciente
             </Button>
           </Box>
           <TableContainer component={Paper}>
@@ -74,10 +73,8 @@ export default function Professional() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">Id</StyledTableCell>
-                  <StyledTableCell align="center">Email</StyledTableCell>
                   <StyledTableCell align="center">Nome</StyledTableCell>
-                  <StyledTableCell align="center">Telefone</StyledTableCell>
-                  <StyledTableCell align="center">CRM</StyledTableCell>
+                  <StyledTableCell align="center">Email</StyledTableCell>
                   <StyledTableCell align="center">Ações</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -85,12 +82,10 @@ export default function Professional() {
                 {rows.map((row) => (
                   <TableRow key={row.id}>
                     <StyledTableCell align="center" component="th" scope="row">{row.id}</StyledTableCell>
-                    <StyledTableCell align="center">{row.email}</StyledTableCell>
                     <StyledTableCell align="center">{row.name}</StyledTableCell>
-                    <StyledTableCell align="center">{row.phone}</StyledTableCell>
-                    <StyledTableCell align="center">{row.crm}</StyledTableCell>
+                    <StyledTableCell align="center">{row.email}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="warning" onClick={openEdit} sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
                       <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
@@ -108,28 +103,30 @@ export default function Professional() {
       <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
-            Cadastro de novo profissional
+            Cadastro de novo paciente
           </Typography>
           <TextField required type="text" id="outlined-required" label="Nome Completo"/>
-          <TextField required type="text" id="outlined-required" label="Senha"/>
-          <TextField required type="mail" id="outlined-required" label="Email"/>
-          <TextField required type="text" id="outlined-required" label="Telefone" />
-          <TextField required type="text" id="outlined-required" label="CRM" />
-          <Autocomplete
-            required
-            multiple
-            id="tags-outlined"
-            options={especialidades}
-            getOptionLabel={(option) => option.name}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Especialidades"
-                placeholder="Especialidades"
-              />
-            )}
-          />
+                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", }}>
+                  <TextField required type="date" id="outlined-required"  label="Data de Nascimento" value={"2000-01-01"}/>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Gênero</FormLabel>
+                    <RadioGroup>
+                      <FormControlLabel value="M" control={<Radio />} label="Masculino"/>
+                      <FormControlLabel value="F"  control={<Radio />} label="Feminino"/>
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <TextField required type="text" id="outlined-required" label="CPF"/>
+                <TextField required type="text" id="outlined-required" label="RG"/>
+                <TextField required type="email" id="outlined-required" label="Email"/>
+                <TextField required type="text" id="outlined-required" label="Telefone"/>
+                <TextField required type="text" id="outlined-required" label="CEP"/>
+                <TextField required type="text" id="outlined-required" label="Rua" />
+                <TextField required type="text" id="outlined-required" label="Cidade" />
+                <TextField required type="text" id="outlined-required" label="Bairro" />
+                <TextField required type="text" id="outlined-required" label="País" />
+                <TextField required type="text" id="outlined-required" label="UF" />
+                <TextField required type="text" id="outlined-required" label="Número" />
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Cadastrar
           </Button>
@@ -141,28 +138,30 @@ export default function Professional() {
       <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
-            Editar profissional
+            Editar paciente
           </Typography>
           <TextField required type="text" id="outlined-required" label="Nome Completo"/>
-          <TextField required type="text" id="outlined-required" label="Senha"/>
-          <TextField required type="mail" id="outlined-required" label="Email"/>
-          <TextField required type="text" id="outlined-required" label="Telefone" />
-          <TextField required type="text" id="outlined-required" label="CRM" />
-          <Autocomplete
-            required
-            multiple
-            id="tags-outlined"
-            options={especialidades}
-            getOptionLabel={(option) => option.name}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Especialidades"
-                placeholder="Especialidades"
-              />
-            )}
-          />
+                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", }}>
+                  <TextField required type="date" id="outlined-required"  label="Data de Nascimento" value={"2000-01-01"}/>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Gênero</FormLabel>
+                    <RadioGroup>
+                      <FormControlLabel value="M" control={<Radio />} label="Masculino"/>
+                      <FormControlLabel value="F"  control={<Radio />} label="Feminino"/>
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <TextField required type="text" id="outlined-required" label="CPF"/>
+                <TextField required type="text" id="outlined-required" label="RG"/>
+                <TextField required type="email" id="outlined-required" label="Email"/>
+                <TextField required type="text" id="outlined-required" label="Telefone"/>
+                <TextField required type="text" id="outlined-required" label="CEP"/>
+                <TextField required type="text" id="outlined-required" label="Rua" />
+                <TextField required type="text" id="outlined-required" label="Cidade" />
+                <TextField required type="text" id="outlined-required" label="Bairro" />
+                <TextField required type="text" id="outlined-required" label="País" />
+                <TextField required type="text" id="outlined-required" label="UF" />
+                <TextField required type="text" id="outlined-required" label="Número" />
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Salvar
           </Button>
@@ -174,14 +173,3 @@ export default function Professional() {
     </React.Fragment>
   );
 }
-
-const especialidades = [
-  { id: 0, name: "Acupuntura" },
-  { id: 1, name: "Psicologia" },
-  { id: 2, name: "Nutrição" },
-  { id: 3, name: "Educação Física" },
-  { id: 4, name: "Fonoaudiologia" },
-  { id: 5, name: "Farmácia" },
-  { id: 6, name: "Medicina" },
-  { id: 7, name: "Odontologia" },
-];

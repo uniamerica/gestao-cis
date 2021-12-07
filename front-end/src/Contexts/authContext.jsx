@@ -5,6 +5,7 @@ export const AuthContext = createContext({});
 
 export default function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const token = Cookies.get("cis.validator");
@@ -13,7 +14,7 @@ export default function AuthProvider({ children }) {
 
   return (
     <Fragment>
-      <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+      <AuthContext.Provider value={{ isAuth, setIsAuth, user, setUser }}>
         {children}
       </AuthContext.Provider>
     </Fragment>

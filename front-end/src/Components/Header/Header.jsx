@@ -22,10 +22,6 @@ export default function Header() {
                         justifyContent: 'space-between'
                     }}>
                     <img src={Logo} height={60} />
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="h6">Olá Visitante</Typography>
-                        <Avatar sx={{ marginLeft: '12px' }}>V</Avatar>
-                    </Box>
                 </Container>
             </Box>
         </Fragment>

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { TextField, Button, Container, Box, Typography, Autocomplete, Modal} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -8,9 +8,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -41,32 +42,79 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(id, email, name, phone, crm, edit, del ) {
-  return {id, email, name, phone, crm, edit, del };
+function createData(id, number, specialty, edit, del ) {
+  return {id, number, specialty, edit, del };
 }
 
-const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiosexy@mail.com", "fabiofrassonsexy", "(45)9345678", "111111", "Editar", "Deletar"),  
-];
+export default function Rooms() {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = handleSubmit((sala) =>  {
+    axios.post("http://localhost:8080/api/room", sala).then(function (response) {
+      if(response.status === 201) {
+        alert("Sala criada com sucesso");
+      }
+    }
+  )})
 
-export default function Professional() {
-  const [openSave, createStatus] = React.useState(false);
+  // Create
+  const [openSave, createStatus] = React.useState(false); 
   const openCreate = () => createStatus(true);
   const closeCreate = () => createStatus(false);
+
+  // Edit
   const [openModify, editStatus] = React.useState(false);
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
 
-  return (
+  // Get Rows
+  const [rows, setRows] = useState([]);
+
+  const [sala] = useState({});
+
+  // GET
+  useEffect(() => { 
+    axios.get("http://localhost:8080/api/room").then(function (response) {
+      const data = response.data;
+      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.roomNumber, "Especialidade", "Editar", "Deletar"))
+      setRows(dataRows);
+    });
+  }, []);
+
+  // CREATE
+  const submit = axios.post("http://localhost:8080/api/room", sala).then(function (response) {
+    if(response.status === 201) {
+      alert("Sala criada com sucesso")
+    }
+  })
+
+  // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
+  const editRoom = (id) => {
+    axios.put("http://localhost:8080/api/room" + id, sala).then(function (response) {
+    if(response.status === 201) {
+      alert("Sala editada com sucesso")
+    }
+  })
+  }
+
+  // DELETE
+  const deleteRoom = (id) => {
+    axios.delete("http://localhost:8080/api/room/" + id).then(function (response) {
+      if(response.status === 204) {
+        alert("Sala deletada com sucesso")
+      }
+    })
+  }
+
+  return(
     <React.Fragment>
       <Container maxWidth="lg">
         <Box sx={{marginTop: '4rem', display: 'flex', flexDirection: 'column', gap: '2rem'}}>
           <Box sx={{display: 'flex', alignItems: "center", justifyContent: 'space-between'}}>
             <Typography variant="h5" fontWeight="bold">
-                Profissionais Registrados
+                Salas Registradas
             </Typography>
             <Button variant="contained" sx={{backgroundColor: "#00939F", borderRadius: 12, boxShadow: "none"}} onClick={openCreate}>
-              Novo Profissional
+              Nova sala
             </Button>
           </Box>
           <TableContainer component={Paper}>
@@ -74,10 +122,8 @@ export default function Professional() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">Id</StyledTableCell>
-                  <StyledTableCell align="center">Email</StyledTableCell>
-                  <StyledTableCell align="center">Nome</StyledTableCell>
-                  <StyledTableCell align="center">Telefone</StyledTableCell>
-                  <StyledTableCell align="center">CRM</StyledTableCell>
+                  <StyledTableCell align="center">Numero</StyledTableCell>
+                  <StyledTableCell align="center">Especialidades</StyledTableCell>
                   <StyledTableCell align="center">Ações</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -85,15 +131,13 @@ export default function Professional() {
                 {rows.map((row) => (
                   <TableRow key={row.id}>
                     <StyledTableCell align="center" component="th" scope="row">{row.id}</StyledTableCell>
-                    <StyledTableCell align="center">{row.email}</StyledTableCell>
-                    <StyledTableCell align="center">{row.name}</StyledTableCell>
-                    <StyledTableCell align="center">{row.phone}</StyledTableCell>
-                    <StyledTableCell align="center">{row.crm}</StyledTableCell>
+                    <StyledTableCell align="center">{row.number}</StyledTableCell>
+                    <StyledTableCell align="center">{row.specialty}</StyledTableCell>
                     <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="warning" onClick={openEdit} sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                      <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
-                        </Button>
-                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
+                      </Button>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} onClick={() => deleteRoom(row.id)} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>
@@ -106,20 +150,16 @@ export default function Professional() {
       </Container>
 
       <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle}>
+        <Box component="form" sx={modalStyle} onSubmit={onSubmit}>
           <Typography variant="h5" color="initial">
-            Cadastro de novo profissional
+            Cadastro de nova sala
           </Typography>
-          <TextField required type="text" id="outlined-required" label="Nome Completo"/>
-          <TextField required type="text" id="outlined-required" label="Senha"/>
-          <TextField required type="mail" id="outlined-required" label="Email"/>
-          <TextField required type="text" id="outlined-required" label="Telefone" />
-          <TextField required type="text" id="outlined-required" label="CRM" />
+          <TextField required type="number" id="outlined-required" label="Número" {...register('roomNumber')} />
           <Autocomplete
             required
             multiple
             id="tags-outlined"
-            options={especialidades}
+            options={specialty}
             getOptionLabel={(option) => option.name}
             filterSelectedOptions
             renderInput={(params) => (
@@ -141,18 +181,14 @@ export default function Professional() {
       <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
-            Editar profissional
+            Editar sala
           </Typography>
-          <TextField required type="text" id="outlined-required" label="Nome Completo"/>
-          <TextField required type="text" id="outlined-required" label="Senha"/>
-          <TextField required type="mail" id="outlined-required" label="Email"/>
-          <TextField required type="text" id="outlined-required" label="Telefone" />
-          <TextField required type="text" id="outlined-required" label="CRM" />
-          <Autocomplete
+          <TextField required type="number" id="outlined-required" label="Número" />
+          <Autocomplete 
             required
             multiple
             id="tags-outlined"
-            options={especialidades}
+            options={specialty}
             getOptionLabel={(option) => option.name}
             filterSelectedOptions
             renderInput={(params) => (
@@ -175,7 +211,7 @@ export default function Professional() {
   );
 }
 
-const especialidades = [
+const specialty = [
   { id: 0, name: "Acupuntura" },
   { id: 1, name: "Psicologia" },
   { id: 2, name: "Nutrição" },

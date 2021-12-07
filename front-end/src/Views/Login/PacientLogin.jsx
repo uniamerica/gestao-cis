@@ -13,16 +13,17 @@ import {
   Radio,
 } from "@mui/material";
 import React, { Fragment, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
-import Cookies from 'js-cookie';
+import axios from "axios";
+import Cookies from "js-cookie";
+import jsonwebtoken from "jsonwebtoken";
 
-// PAINEIS START -----------------
+// PAINEIS
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -52,46 +53,55 @@ function a11yProps(index) {
   };
 }
 
-// PAINEIS END ---------------------------------------------
 export default function Login() {
-
   const navigate = useNavigate();
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { register, handleSubmit } = useForm();
+  const { isAuth, setIsAuth, setUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (isAuth) {
-      return navigate('/home')
+  const loginSubmit = handleSubmit(async (data) => {
+    const response = await axios.post(
+      "http://localhost:8080/api/patients/login",
+      data
+    );
+    if (response.status === 201) {
+      const { jwt } = response.data;
+      setUser(jsonwebtoken.decode(jwt));
+      console.log(jsonwebtoken.decode(jwt));
+      Cookies.set("cis.validator", jwt, { expires: 1 });
+      setIsAuth(true);
+      navigate("/home");
     } else {
-      return navigate ('/login')
+      alert("Credenciais Inválidas");
     }
-  }, []);
+  });
 
-  // PAINEIS -----------------------------------------------
+  // PRECISA TRABALHAR NISSO
+  const singupSubmit = handleSubmit(async (data) => {
+    const response = await axios.post(
+      "http://localhost:8080/api/patients/login",
+      data
+    );
+    if (response.status === 201) {
+      const { jwt } = response.data;
+      setUser(jsonwebtoken.decode(jwt));
+      Cookies.set("cis.validator", jwt, { expires: 1 });
+      setIsAuth(true);
+      navigate("/home");
+    } else {
+      alert("Credenciais Inválidas");
+    }
+  });
+
+  // PAINEIS
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // PAINEIS END ---------------------------------------------
-  // LOGIN ---------------------------------------------------
-  const { register, handleSubmit } = useForm();
-  const onSubmit = handleSubmit( async (data) => {
-    const response = await axios.post("http://localhost:8081/admin/signin", data);
-    if (response.status == 200) {
-      const {token} = response.data;
-      Cookies.set('cis.validator', token, {
-        expires: 1, //Expira em 1 dia
-      });
 
-      // Cookies.remove('cis.validator')
-
-      setIsAuth(true);
-      navigate('/home')
-    } else {
-      alert('Credenciais Inválidas')
-    }
-
-    
+  // LOGIN
+  const onSubmit = handleSubmit(async (data) => {
+    window.alert("Hello World");
   });
 
   return (
@@ -121,86 +131,85 @@ export default function Login() {
         <Box
           name="Card"
           sx={{
-            width: 600,
+            width: 500,
             backgroundColor: "#ffff",
-            marginTop: "10%",
+            marginTop: "12%",
             padding: "1rem",
-            borderRadius: "8px",
+            borderRadius: 1,
           }}
         >
-          <Typography variant="h5" sx={{ textAlign: "center" }}>
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center" }}
+            data-testid="login-title"
+          >
             Centro Integrado de Saúde
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Tabs
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Login" {...a11yProps(0)} />
-              <Tab label="Cadastre-se" {...a11yProps(1)} />
+              <Tab label="Login" {...a11yProps(0)} data-testid="test-tab0" />
+              <Tab
+                label="Cadastrar"
+                {...a11yProps(1)}
+                data-testid="test-tab1"
+              />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <div
-              name="FormLogin"
-              style={{
-                width: "100%",
-                height: "100%",
+            <Box
+              component="form"
+              onSubmit={loginSubmit}
+              sx={{
                 display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
                 justifyContent: "center",
-                alignItems: "center",
               }}
             >
-              <Box
-                component="form"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "80%",
-                  justifyContent: "center",
-                }}
-                onSubmit={onSubmit}
+              <Typography
+                variant="h5"
+                color="initial"
+                sx={{ textAlign: "center" }}
               >
-                <AccountCircleIcon
-                  sx={{ alignSelf: "center", fontSize: "60px" }}
-                />
-                <Typography variant="h5" color="initial">
-                  Já tem conta? <br />
-                  Entre com seu email e senha!
-                </Typography>
-                <TextField
-                  required
-                  type="text"
-                  id="outlined-required"
-                  label="Email ou Username"
-                  sx={{ marginTop: "1.5rem" }}
-                  {...register("username")}
-                />
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Senha"
-                  sx={{ marginTop: "1.5rem" }}
-                  type="password"
-                  {...register("password")}
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ marginTop: "2rem" }}
-                >
-                  Login
-                </Button>
-              </Box>
-            </div>
+                Já é nosso paciente? <br />
+                Entre com seu email e senha!
+              </Typography>
+              <TextField
+                required
+                type="text"
+                id="outlined-required"
+                label="Email"
+                {...register("email")}
+                data-testid="input-email"
+              />
+              <TextField
+                required
+                id="outlined-required"
+                label="Senha"
+                type="password"
+                {...register("password")}
+                data-testid="input-password"
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                data-testid="input-button"
+              >
+                Login
+              </Button>
+              <Typography
+                variant="p"
+                color="initial"
+                sx={{ margin: "auto", marginTop: "1.5rem" }}
+              >
+                Colaborador? <Link to="/admin/login">Clique aqui</Link> <br />
+              </Typography>
+            </Box>
           </TabPanel>
-
           <TabPanel value={value} index={1}>
             <div
               name="FormCadastro"

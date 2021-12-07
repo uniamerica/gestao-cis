@@ -5,8 +5,86 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c32f2db-8089-4355-85e5-5e7af719199f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/Views/Professional/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/Views/Professional/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/BackEndApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/AddressDTO/AddressDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/HealthInsuranceDTO/HealthInsuranceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/PatientDTOs/NewPatientRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/PatientDTOs/PatientResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/NewSecretaryRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/DTOs/SecretaryDTOs/SecretaryResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SecurityTestProfile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/jwt/AuthenticationRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/jwt/AuthenticationResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/jwt/JwtRequestFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/config/jwt/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/AddressController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/ManagerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/PatientsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/controllers/SecretaryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/RoleEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/Specialty.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/enums/SpecialtyEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/exceptions/BadRequestException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/exceptions/InconsistentDataException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/exceptions/ResourceAlreadyExistsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/exceptions/ResourceNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Address.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Appointment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/HealthInsurance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/Room.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/AddressRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/AppointmentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/HealthInsuranceRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/PatientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/RoleEntityRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/RoomRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/SpecialtyEntityRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/repositories/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/AddressService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/CepService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/PatientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/SecretaryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/services/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/utils/JsonToStringUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/gestaocis/backend/utils/SeedUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/resources/application-docker.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/BackEndApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/AddressControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/LoginControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/PatientControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/controllers/SecretaryControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/AddressControllerIntegrationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/PatientIntegrationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/integration/SecretaryIntegrationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/AddressRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/AppointmentRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/PatientRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/RoleEntityRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/RoomRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/SpecialtyEntityRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/repositories/UserRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/AddressServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/PatientServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/services/SecretaryServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/AddressCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/PatientCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/gestaocis/backend/util/SecretaryCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/resources/logback-test.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +94,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -37,9 +115,6 @@
     </option>
   </component>
   <component name="ProjectId" id="1wsGOg6i7rT6VTOOxWJ0XOBgWkf" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -47,29 +122,18 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RunManager">
-    <configuration name="BackEndApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.gestaocis.backend.BackEndApplication" />
-      <module name="back-end" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.gestaocis.backend.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration name="CisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cis.CisApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.BackEndApplication" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -79,18 +143,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1629239853069</updated>
+      <workItem from="1638832540482" duration="132000" />
     </task>
     <servers />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

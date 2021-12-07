@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Gestão CIS.iml" filepath="$PROJECT_DIR$/.idea/Gestão CIS.iml" />
       <module fileurl="file://$PROJECT_DIR$/back-end/back-end.iml" filepath="$PROJECT_DIR$/back-end/back-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/cis.iml" filepath="$PROJECT_DIR$/back-end/cis.iml" />
     </modules>
   </component>
 </project>

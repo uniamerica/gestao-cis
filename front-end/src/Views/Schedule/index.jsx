@@ -128,7 +128,7 @@ export default function Schedule() {
             </TableContainer>
           </Box>
         </Container>
-        <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Novo Horário Dispoível

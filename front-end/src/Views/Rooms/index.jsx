@@ -49,7 +49,7 @@ function createData(id, number, specialty, edit, del ) {
 export default function Rooms() {
   const { register, handleSubmit } = useForm();
   const onSubmit = handleSubmit((sala) =>  {
-    axios.post("http://localhost:8080/api/room", sala).then(function (response) {
+    axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
       if(response.status === 201) {
         alert("Sala criada com sucesso");
       }
@@ -73,7 +73,7 @@ export default function Rooms() {
 
   // GET
   useEffect(() => { 
-    axios.get("http://localhost:8080/api/room").then(function (response) {
+    axios.get("http://localhost:8080/api/rooms").then(function (response) {
       const data = response.data;
       const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.roomNumber, "Especialidade", "Editar", "Deletar"))
       setRows(dataRows);
@@ -81,7 +81,7 @@ export default function Rooms() {
   }, []);
 
   // CREATE
-  const submit = axios.post("http://localhost:8080/api/room", sala).then(function (response) {
+  const submit = axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
     if(response.status === 201) {
       alert("Sala criada com sucesso")
     }
@@ -89,7 +89,7 @@ export default function Rooms() {
 
   // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
   const editRoom = (id) => {
-    axios.put("http://localhost:8080/api/room" + id, sala).then(function (response) {
+    axios.put("http://localhost:8080/api/rooms" + id, sala).then(function (response) {
     if(response.status === 201) {
       alert("Sala editada com sucesso")
     }
@@ -98,7 +98,7 @@ export default function Rooms() {
 
   // DELETE
   const deleteRoom = (id) => {
-    axios.delete("http://localhost:8080/api/room/" + id).then(function (response) {
+    axios.delete("http://localhost:8080/api/rooms/" + id).then(function (response) {
       if(response.status === 204) {
         alert("Sala deletada com sucesso")
       }
@@ -149,7 +149,7 @@ export default function Rooms() {
         </Box>
       </Container>
 
-      <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal  open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle} onSubmit={onSubmit}>
           <Typography variant="h5" color="initial">
             Cadastro de nova sala
@@ -178,7 +178,7 @@ export default function Rooms() {
           </Button>
         </Box>
       </Modal>
-      <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Editar sala

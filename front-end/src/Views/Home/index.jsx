@@ -131,7 +131,7 @@ export default function Home() {
           </Box>
         </Container>
 
-        <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal  open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Solicitação de Agendamento <br />
@@ -184,7 +184,7 @@ export default function Home() {
         </Box>
       </Modal>
 
-        <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
           <Box component="form" sx={modalStyle}>
             <Typography variant="h5" color="initial">
               Solicitação de Agendamento <br />
@@ -234,7 +234,7 @@ export default function Home() {
             </Button>
           </Box>
         </Modal>
-        <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
           <Box component="form" sx={modalStyle}>
             <Typography variant="h5" color="initial">
               Alteração de Agendamento <br />

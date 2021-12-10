@@ -105,7 +105,7 @@ export default function Professional() {
         </Box>
       </Container>
 
-      <Modal disableBackdropClick open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal  open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Cadastro de novo profissional
@@ -138,7 +138,7 @@ export default function Professional() {
           </Button>
         </Box>
       </Modal>
-      <Modal disableBackdropClick open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Editar profissional

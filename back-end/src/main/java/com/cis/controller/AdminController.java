@@ -41,7 +41,7 @@ public class AdminController {
 
   // LIST
   @GetMapping
-  public ResponseEntity<Page<Admin>> list(Pageable pageable) {
+  public ResponseEntity<Page<AdminReturnDTO>> list(Pageable pageable) {
     return ResponseEntity.ok(service.listAll(pageable));
   }
 

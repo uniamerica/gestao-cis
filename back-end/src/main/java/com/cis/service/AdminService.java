@@ -77,8 +77,9 @@ public class AdminService implements UserDetailsService {
     }
 
     // LIST
-    public Page<Admin> listAll(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<AdminReturnDTO> listAll(Pageable pageable) {
+        Page<Admin> all = repository.findAll(pageable);
+        return all.map(AdminReturnDTO::new);
     }
 
     // UPDATE

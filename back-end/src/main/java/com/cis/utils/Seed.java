@@ -1,10 +1,10 @@
 package com.cis.utils;
 
+import com.cis.model.Admin;
 import com.cis.model.HealthProfessional;
 import com.cis.model.Room;
 import com.cis.model.Specialty;
-import com.cis.model.dto.HeathProfessionalDTO.HealthProfessionalCreationDTO;
-import com.cis.model.dto.HeathProfessionalDTO.HealthProfessionalResponseDTO;
+import com.cis.repository.AdminRepository;
 import com.cis.repository.HealthProfessionalRepository;
 import com.cis.repository.RoomRepository;
 import com.cis.repository.SpecialtyRepository;
@@ -23,11 +23,13 @@ public class Seed {
     private final SpecialtyRepository specialtyRepository;
     private final RoomRepository roomRepository;
     private final HealthProfessionalRepository healthProfessionalRepository;
+    private final AdminRepository adminRepository;
 
-    public Seed(SpecialtyRepository specialtyRepository, RoomRepository roomRepository, HealthProfessionalRepository healthProfessionalRepository) {
+    public Seed(SpecialtyRepository specialtyRepository, RoomRepository roomRepository, HealthProfessionalRepository healthProfessionalRepository, AdminRepository adminRepository) {
         this.specialtyRepository = specialtyRepository;
         this.roomRepository = roomRepository;
         this.healthProfessionalRepository = healthProfessionalRepository;
+        this.adminRepository = adminRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -87,6 +89,15 @@ public class Seed {
             rooms.add(build);
         });
 
+        Admin adminToBeSaved = new Admin();
+        adminToBeSaved.setName("CIS ADMIN");
+        adminToBeSaved.setPhone("45789456789");
+        adminToBeSaved.setEmail("admin@cis.com.br");
+        adminToBeSaved.setRole("ROLE_ADMIN");
+        adminToBeSaved.setPassword((new BCryptPasswordEncoder().encode("admin12345")));
+        adminToBeSaved.setActive(true);
+
+        adminRepository.save(adminToBeSaved);
         healthProfessionalRepository.saveAll(professionalsToBeSaved);
         roomRepository.saveAll(rooms);
     }

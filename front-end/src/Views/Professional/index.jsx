@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { TextField, Button, Container, Box, Typography, Autocomplete, Modal} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -8,9 +8,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -56,6 +56,8 @@ export default function Professional() {
   const [openModify, editStatus] = React.useState(false);
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
+
+  const [rows, setRows] = useState([]);
 
   // GET
   useEffect(() => { 

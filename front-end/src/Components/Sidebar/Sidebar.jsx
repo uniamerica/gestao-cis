@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -8,7 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MenuIcon from "@mui/icons-material/Menu";
-import FactCheckIcon from '@mui/icons-material/FactCheck';
+import FactCheckIcon from "@mui/icons-material/FactCheck";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
@@ -51,7 +51,7 @@ const sideBarItems = [
 
 export default function Sidebar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const { isAuth, user } = React.useContext(AuthContext);
+  const { user, tokenExists } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   function Logout() {
@@ -64,7 +64,7 @@ export default function Sidebar() {
     navigate(route);
   }
 
-  if (!isAuth) {
+  if (!tokenExists) {
     return <></>;
   } else {
     return (
@@ -75,35 +75,59 @@ export default function Sidebar() {
               <MenuIcon />
               <ListItemText>Menu</ListItemText>
             </Button>
-            <Drawer anchor="left" onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)} open={menuOpen}>
+            <Drawer
+              anchor="left"
+              onOpen={() => setMenuOpen(true)}
+              onClose={() => setMenuOpen(false)}
+              open={menuOpen}
+            >
               <Box sx={sideBarStyle} role="presentation">
                 <List>
-                  <Box sx={{ width: "100%", paddingTop: '8%', marginTop: '-12%', height: '20%', textAlign: "center", backgroundColor: '#fff' }}>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      paddingTop: "8%",
+                      marginTop: "-12%",
+                      height: "20%",
+                      textAlign: "center",
+                      backgroundColor: "#fff",
+                    }}
+                  >
                     <img src={Logo} width={250} />
                   </Box>
-                <Box sx={{width: "100%",
-                height: '25%',
-                display: "flex", 
-                justifyItems: 'center',
-                alignItems: 'center',
-                flexDirection: "column", 
-                alignItems: "center", 
-                margin: "24px 0", 
-                backgroundColor: '#00000025', 
-                marginTop: 0,
-                paddingTop: '5%', 
-                paddingBottom: '5%'}}>
-                  <Avatar sx={{ width: 56, height: 56 }}>V</Avatar>
-                  <Typography
-                    variant="h5"
-                    color="#FFFF"
-                    sx={{ marginTop: "15px" }}
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "25%",
+                      display: "flex",
+                      justifyItems: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                      margin: "24px 0",
+                      backgroundColor: "#00000025",
+                      marginTop: 0,
+                      paddingTop: "5%",
+                      paddingBottom: "5%",
+                    }}
                   >
-                    Olá {user.sub}
-                  </Typography>
-                </Box>
+                    <Avatar sx={{ width: 56, height: 56 }}>
+                      {!!user.email && user?.email[0]?.toUpperCase()}
+                    </Avatar>
+                    <Typography
+                      variant="h5"
+                      color="#FFFF"
+                      sx={{ marginTop: "15px" }}
+                    >
+                      Olá {!!user.email && user?.email}
+                    </Typography>
+                  </Box>
                   {sideBarItems.map(({ text, icon, route }) => (
-                    <ListItem button key={text} sx={{ marginTop: "12px" }} onClick={() => onClickButton(route)} >
+                    <ListItem
+                      button
+                      key={text}
+                      sx={{ marginTop: "12px" }}
+                      onClick={() => onClickButton(route)}
+                    >
                       <ListItemIcon sx={{ color: "white" }}>
                         {icon}
                       </ListItemIcon>
@@ -112,7 +136,15 @@ export default function Sidebar() {
                   ))}
                 </List>
                 <List>
-                  <ListItem button sx={{ marginTop: "12px" }} onClick={() => window.confirm("Deseja realizar logout do sistema?") ? Logout() : ""}>
+                  <ListItem
+                    button
+                    sx={{ marginTop: "12px" }}
+                    onClick={() =>
+                      window.confirm("Deseja realizar logout do sistema?")
+                        ? Logout()
+                        : ""
+                    }
+                  >
                     <ListItemIcon sx={{ color: "#FFFF" }}>
                       <LogoutIcon />
                     </ListItemIcon>

@@ -12,16 +12,14 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Background from "../../assets/images/medicineBg.svg";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
-import axios from "axios";
-import Cookies from "js-cookie";
-import jsonwebtoken from "jsonwebtoken";
+import { api } from "../../services/api";
 
 // PAINEIS
 function TabPanel(props) {
@@ -56,39 +54,51 @@ function a11yProps(index) {
 export default function Login() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const { isAuth, setIsAuth, setUser } = useContext(AuthContext);
+  const { addTokenInCookies, updateUserState } = useContext(AuthContext);
 
-  const loginSubmit = handleSubmit(async (data) => {
-    const response = await axios.post(
-      "http://localhost:8080/api/patients/login",
-      data
-    );
-    if (response.status === 201) {
+  const handlePatientLogin = handleSubmit(async (data) => {
+    try {
+      const { email, password } = data;
+
+      if (!email || !password) {
+        throw new Error("Email ou Senha Inválida");
+      }
+
+      const response = await api.post("/patients/login", { email, password });
+
+      if (response.status !== 201) throw new Error("Email ou Senha Inválida");
+
       const { jwt } = response.data;
-      setUser(jsonwebtoken.decode(jwt));
-      console.log(jsonwebtoken.decode(jwt));
-      Cookies.set("cis.validator", jwt, { expires: 1 });
-      setIsAuth(true);
+
+      addTokenInCookies(jwt);
+      updateUserState(jwt);
       navigate("/home");
-    } else {
-      alert("Credenciais Inválidas");
+    } catch (error) {
+      alert("Email ou Senha Inválida");
     }
   });
 
-  // PRECISA TRABALHAR NISSO
-  const singupSubmit = handleSubmit(async (data) => {
-    const response = await axios.post(
-      "http://localhost:8080/api/patients/login",
-      data
-    );
-    if (response.status === 201) {
-      const { jwt } = response.data;
-      setUser(jsonwebtoken.decode(jwt));
-      Cookies.set("cis.validator", jwt, { expires: 1 });
-      setIsAuth(true);
+  const handlePatientRegister = handleSubmit(async (data) => {
+    try {
+      const responseRegister = await api.post("/patients", data);
+      if (responseRegister.status !== 201)
+        throw new Error("Algo de errado aconteceu!");
+
+      const responseLogin = await api.post("/patients/login", {
+        email: data.email,
+        password: data.password,
+      });
+
+      if (responseLogin.status !== 201)
+        throw new Error("Email ou Senha Inválida");
+
+      const { jwt } = responseLogin.data;
+
+      addTokenInCookies(jwt);
+      updateUserState(jwt);
       navigate("/home");
-    } else {
-      alert("Credenciais Inválidas");
+    } catch (error) {
+      alert(error.message);
     }
   });
 
@@ -98,11 +108,6 @@ export default function Login() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  // LOGIN
-  const onSubmit = handleSubmit(async (data) => {
-    window.alert("Hello World");
-  });
 
   return (
     <Fragment>
@@ -162,7 +167,8 @@ export default function Login() {
           <TabPanel value={value} index={0}>
             <Box
               component="form"
-              onSubmit={loginSubmit}
+              data-testid="test-form"
+              onSubmit={handlePatientLogin}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -184,7 +190,7 @@ export default function Login() {
                 id="outlined-required"
                 label="Email"
                 {...register("email")}
-                data-testid="input-email"
+                inputProps={{ "data-testid": "input-email" }}
               />
               <TextField
                 required
@@ -192,7 +198,7 @@ export default function Login() {
                 label="Senha"
                 type="password"
                 {...register("password")}
-                data-testid="input-password"
+                inputProps={{ "data-testid": "input-password" }}
               />
               <Button
                 type="submit"
@@ -223,6 +229,7 @@ export default function Login() {
             >
               <Box
                 component="form"
+                onSubmit={handlePatientRegister}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -250,6 +257,7 @@ export default function Login() {
                   id="outlined-required"
                   label="Nome Completo"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("name")}
                 />
                 <div
                   style={{
@@ -263,15 +271,15 @@ export default function Login() {
                     type="date"
                     id="outlined-required"
                     label="Data de Nascimento"
-                    value={"2000-01-01"}
                     sx={{ marginTop: "1.5rem" }}
+                    {...register("dateOfBirth")}
                   />
                   <FormControl
                     component="fieldset"
                     sx={{ marginTop: "1.5rem" }}
                   >
                     <FormLabel component="legend">Gênero</FormLabel>
-                    <RadioGroup>
+                    <RadioGroup {...register("gender")}>
                       <FormControlLabel
                         value="M"
                         control={<Radio />}
@@ -291,6 +299,7 @@ export default function Login() {
                   id="outlined-required"
                   label="CPF"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("cpf")}
                 />
                 <TextField
                   required
@@ -298,6 +307,7 @@ export default function Login() {
                   id="outlined-required"
                   label="RG"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("rg")}
                 />
                 <TextField
                   required
@@ -305,6 +315,23 @@ export default function Login() {
                   id="outlined-required"
                   label="Email"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("email")}
+                />
+                <TextField
+                  required
+                  type="password"
+                  id="outlined-required"
+                  label="Senha"
+                  sx={{ marginTop: "1.5rem" }}
+                  {...register("password")}
+                />
+                <TextField
+                  required
+                  type="text"
+                  id="outlined-required"
+                  label="Nome da Mãe"
+                  sx={{ marginTop: "1.5rem" }}
+                  {...register("motherName")}
                 />
                 <TextField
                   required
@@ -312,6 +339,7 @@ export default function Login() {
                   id="outlined-required"
                   label="Telefone"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("phone")}
                 />
                 <TextField
                   required
@@ -319,6 +347,7 @@ export default function Login() {
                   id="outlined-required"
                   label="Rua"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("street")}
                 />
                 <TextField
                   required
@@ -326,6 +355,7 @@ export default function Login() {
                   id="outlined-required"
                   label="Cidade"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("city")}
                 />
                 <TextField
                   required
@@ -333,6 +363,7 @@ export default function Login() {
                   id="outlined-required"
                   label="Bairro"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("neighborhood")}
                 />
                 <TextField
                   required
@@ -340,6 +371,7 @@ export default function Login() {
                   id="outlined-required"
                   label="País"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("addressLine2")}
                 />
                 <TextField
                   required
@@ -347,6 +379,7 @@ export default function Login() {
                   id="outlined-required"
                   label="UF"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("UF")}
                 />
                 <TextField
                   required
@@ -354,6 +387,7 @@ export default function Login() {
                   id="outlined-required"
                   label="Número"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("addressNumber")}
                 />
                 <TextField
                   required
@@ -361,8 +395,13 @@ export default function Login() {
                   id="outlined-required"
                   label="CEP"
                   sx={{ marginTop: "1.5rem" }}
+                  {...register("cep")}
                 />
-                <Button variant="contained" sx={{ marginTop: "2rem" }}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{ marginTop: "2rem" }}
+                >
                   Cadastrar
                 </Button>
               </Box>

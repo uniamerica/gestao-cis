@@ -57,6 +57,15 @@ export default function Professional() {
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
 
+  // GET
+  useEffect(() => { 
+    axios.get("http://localhost:8080/api/health-professionals").then(function (response) {
+      const data = response.data;
+      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.email, dataRow.phone, dataRow.crm, "Especialidade", "Editar", "Deletar"))
+      setRows(dataRows);
+    });
+  }, []);
+
   return (
     <React.Fragment>
       <Container maxWidth="lg">

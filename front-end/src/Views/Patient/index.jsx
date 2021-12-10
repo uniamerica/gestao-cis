@@ -100,7 +100,7 @@ export default function Patients() {
         </Box>
       </Container>
 
-      <Modal  open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Cadastro de novo paciente
@@ -135,7 +135,7 @@ export default function Patients() {
           </Button>
         </Box>
       </Modal>
-      <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box component="form" sx={modalStyle}>
           <Typography variant="h5" color="initial">
             Editar paciente

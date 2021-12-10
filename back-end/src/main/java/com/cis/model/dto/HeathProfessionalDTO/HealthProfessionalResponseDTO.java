@@ -23,6 +23,7 @@ public class HealthProfessionalResponseDTO {
     private String name;
     private String phone;
     private String professionalDocument;
+    private String specialty;
 
 
     public HealthProfessionalResponseDTO(HealthProfessional entity){
@@ -31,6 +32,7 @@ public class HealthProfessionalResponseDTO {
         this.email = entity.getEmail();
         this.name = entity.getName();
         this.phone = entity.getPhone();
+        this.specialty = entity.getSpecialty().getName();
         this.professionalDocument = entity.getProfessionalDocument();
     }
 }

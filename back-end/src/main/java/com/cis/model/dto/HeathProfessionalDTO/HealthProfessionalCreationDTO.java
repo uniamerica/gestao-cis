@@ -18,4 +18,5 @@ public class HealthProfessionalCreationDTO {
     private String name;
     private String phone;
     private String professionalDocument;
+    private UUID specialtyId;
 }

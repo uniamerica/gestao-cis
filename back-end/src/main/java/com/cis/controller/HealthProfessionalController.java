@@ -16,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +35,15 @@ public class HealthProfessionalController {
     this.authenticationManager = authenticationManager;
     this.jwtTokenUtil = jwtTokenUtil;
     this.healthProfessionalService = healthProfessionalService;
+  }
+
+  @GetMapping
+  public ResponseEntity<List<HealthProfessionalResponseDTO>> index(){
+    try{
+      return new ResponseEntity<>(healthProfessionalService.listAll(), HttpStatus.OK);
+    }catch (Exception e){
+      throw new BadRequestException(e.getMessage());
+    }
   }
 
   @PostMapping

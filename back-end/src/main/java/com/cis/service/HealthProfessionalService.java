@@ -2,9 +2,11 @@ package com.cis.service;
 
 import com.cis.exceptions.BadRequestException;
 import com.cis.model.HealthProfessional;
+import com.cis.model.Specialty;
 import com.cis.model.dto.HeathProfessionalDTO.HealthProfessionalCreationDTO;
 import com.cis.model.dto.HeathProfessionalDTO.HealthProfessionalResponseDTO;
 import com.cis.repository.HealthProfessionalRepository;
+import com.cis.repository.SpecialtyRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,16 +14,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class HealthProfessionalService implements UserDetailsService {
 
   private final HealthProfessionalRepository healthProfessionalRepository;
+  private final SpecialtyRepository specialtyRepository;
 
-  public HealthProfessionalService(HealthProfessionalRepository healthProfessionalRepository) {
+  public HealthProfessionalService(HealthProfessionalRepository healthProfessionalRepository, SpecialtyRepository specialtyRepository) {
     this.healthProfessionalRepository = healthProfessionalRepository;
+    this.specialtyRepository = specialtyRepository;
   }
 
   @Override
@@ -29,6 +35,11 @@ public class HealthProfessionalService implements UserDetailsService {
     return this.healthProfessionalRepository
         .findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("Invalid Email or Password"));
+  }
+
+  public List<HealthProfessionalResponseDTO> listAll(){
+    List<HealthProfessional> all = healthProfessionalRepository.findAll();
+    return all.stream().map(HealthProfessionalResponseDTO::new).collect(Collectors.toList());
   }
 
   public HealthProfessionalResponseDTO findById(UUID id) {
@@ -49,6 +60,8 @@ public class HealthProfessionalService implements UserDetailsService {
       throw new BadRequestException("Email Already Exists");
     }
 
+    Specialty specialty = specialtyRepository.findById(entity.getSpecialtyId()).orElseThrow(() -> new BadRequestException("Specialty Not Found"));
+
     HealthProfessional professionalToBeSaved = new HealthProfessional();
 
     professionalToBeSaved.setProfessional_id(UUID.randomUUID());
@@ -57,6 +70,7 @@ public class HealthProfessionalService implements UserDetailsService {
     professionalToBeSaved.setProfessionalDocument(entity.getProfessionalDocument());
     professionalToBeSaved.setEmail(entity.getEmail());
     professionalToBeSaved.setRole("ROLE_PROFESSIONAL");
+    professionalToBeSaved.setSpecialty(specialty);
     professionalToBeSaved.setPassword(new BCryptPasswordEncoder().encode(entity.getPassword()));
     professionalToBeSaved.setActive(true);
 

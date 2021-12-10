@@ -1,5 +1,4 @@
 import { render, fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter } from "react-router-dom";
 import Login from "../Views/Login/PacientLogin";

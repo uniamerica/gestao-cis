@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +30,17 @@ public class HealthProfessional extends User implements Serializable {
 
   @Column(nullable = false)
   private String professionalDocument;
+
+  @OneToOne
+  private Specialty specialty;
+
+  public Specialty getSpecialty() {
+    return specialty;
+  }
+
+  public void setSpecialty(Specialty specialty) {
+    this.specialty = specialty;
+  }
 
   @OneToMany(mappedBy = "professional")
   private List<Schedule> schedules;

@@ -31,6 +31,9 @@ public class Specialty implements Serializable {
   @JsonBackReference
   private List<Room> rooms;
 
+  @OneToOne
+  private HealthProfessional professional;
+
   public UUID getId() {
     return id;
   }

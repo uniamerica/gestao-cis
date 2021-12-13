@@ -77,14 +77,6 @@ export default function Schedule() {
     setRoom(event.target.value);
   };
 
-  const { isAuth } = React.useContext(AuthContext);
-  if (!isAuth) {
-    return (
-      <React.Fragment>
-        <AuthError />
-      </React.Fragment>
-    )
-  } else {
     return (
       <React.Fragment>
         <Container maxWidth="lg">
@@ -190,4 +182,3 @@ export default function Schedule() {
       </React.Fragment>
     );
   }
-}

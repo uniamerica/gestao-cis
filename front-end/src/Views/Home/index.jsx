@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -25,7 +25,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import AuthError from "./../AuthError/index";
+import axios from "axios";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -57,23 +57,19 @@ function createData(name, room, time, date, confirm, edit, del) {
   return { name, room, time, date, confirm, edit, del };
 }
 
-const rows = [
-  createData(
-    "fabiofrassonsexy",
-    "69",
-    "14:20",
-    "01/01/2023",
-    "Confirmar",
-    "Editar",
-    "Deletar"
-  ),
-];
-
 export default function Home() {
   const navigate = useNavigate();
+  const [rows, setRows] = useState([]);
 
-  // Auth Validation
-  const { tokenExists, user } = React.useContext(AuthContext);
+    // GET
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/schedules").then(function (response) {
+    const data = response.data.content;
+    const dataRows = data.map((dataRow) => createData(dataRow.name, dataRow.room, dataRow.time, dataRow.date , "Confirmar", "Editar", "Deletar"))
+    setRows(dataRows);
+    })
+  }, []);
+
   const [openSave, createStatus] = React.useState(false);
   const openCreate = () => createStatus(true);
   const closeCreate = () => createStatus(false);
@@ -88,14 +84,6 @@ export default function Home() {
   const handleOpen = (event) => {
     setHour(event.target.value);
   };
-
-  if (!tokenExists) {
-    return (
-      <>
-        <AuthError />
-      </>
-    );
-  }
 
   return (
     <React.Fragment>
@@ -146,47 +134,14 @@ export default function Home() {
                     <StyledTableCell align="center">{row.room}</StyledTableCell>
                     <StyledTableCell align="center">{row.date}</StyledTableCell>
                     <StyledTableCell align="center">{row.time}</StyledTableCell>
-                    <StyledTableCell
-                      align="center"
-                      sx={{
-                        display: "flex",
-                        gap: ".5rem",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {!!user.role && user.role !== "ROLE_PATIENT" && (
-                        <Button
-                          variant="contained"
-                          size="small"
-                          color="success"
-                          sx={{
-                            backgroundColor: "#00a887",
-                            textAlign: "center",
-                            boxShadow: "none",
-                          }}
-                          startIcon={<CheckIcon />}
-                        >
-                          {row.confirm}
-                        </Button>
-                      )}
-
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="warning"
-                        sx={{ boxShadow: "none" }}
-                        onClick={openEdit}
-                        startIcon={<EditIcon />}
-                      >
+                    <StyledTableCell align="center" sx={{display: "flex",gap: ".5rem",justifyContent: "center",}}>
+                      <Button variant="contained" size="small" color="success" sx={{backgroundColor: "#00a887", textAlign: "center", boxShadow: "none",}} startIcon={<CheckIcon />}>
+                        {row.confirm}
+                      </Button>
+                      <Button variant="contained" size="small" color="warning" sx={{ boxShadow: "none" }} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                       </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="error"
-                        sx={{ boxShadow: "none" }}
-                        startIcon={<DeleteIcon />}
-                      >
+                      <Button variant="contained" size="small" color="error" sx={{ boxShadow: "none" }} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>

@@ -45,6 +45,8 @@ function createData(id, name, email, confirm, edit, del) {
   return {id, name, email, confirm, edit, del };
 }
 
+
+
 export default function Patients() {
   const [openSave, createStatus] = React.useState(false);
   const openCreate = () => createStatus(true);

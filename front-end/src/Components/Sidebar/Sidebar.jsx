@@ -63,9 +63,6 @@ export default function Sidebar() {
     setMenuOpen(false);
     navigate(route);
   }
-  useEffect(() => {
-    console.log(user);
-  }, [])
     return !user.email ? (
       <></>
     ) : <div>

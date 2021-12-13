@@ -47,6 +47,7 @@ function createData(id, number, specialty, edit, del ) {
 }
 
 export default function Rooms() {
+  const [specialtiesList, setSpecialties] = useState([]); 
   const { register, handleSubmit } = useForm();
   const onSubmit = handleSubmit((sala) =>  {
     axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
@@ -73,28 +74,30 @@ export default function Rooms() {
 
   // GET
   useEffect(() => { 
-    axios.get("http://localhost:8080/api/rooms").then(function (response) {
+    axios.get("http://localhost:8080/api/specialties").then(function (response) {
       const data = response.data;
-      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.roomNumber, "Especialidade", "Editar", "Deletar"))
+      setSpecialties(data);
+    }).then(() => {
+      axios.get("http://localhost:8080/api/rooms").then(function (response) {
+      const data = response.data;
+      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.roomNumber, 
+        dataRow.specialties[0].name, 
+        <ModifyModal specialtiesList={specialtiesList} room={dataRow} />, 
+        "Deletar"))
       setRows(dataRows);
     });
+    })
+    
   }, []);
 
   // CREATE
-  const submit = axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
-    if(response.status === 201) {
-      alert("Sala criada com sucesso")
-    }
-  })
+  // const submit = axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
+  //   if(response.status === 201) {
+  //     alert("Sala criada com sucesso")
+  //   }
+  // })
 
-  // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
-  const editRoom = (id) => {
-    axios.put("http://localhost:8080/api/rooms" + id, sala).then(function (response) {
-    if(response.status === 201) {
-      alert("Sala editada com sucesso")
-    }
-  })
-  }
+  
 
   // DELETE
   const deleteRoom = (id) => {
@@ -159,7 +162,7 @@ export default function Rooms() {
             required
             multiple
             id="tags-outlined"
-            options={specialty}
+            options={specialtiesList}
             getOptionLabel={(option) => option.name}
             filterSelectedOptions
             renderInput={(params) => (
@@ -177,47 +180,65 @@ export default function Rooms() {
             Cancelar
           </Button>
         </Box>
-      </Modal>
-      <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle}>
-          <Typography variant="h5" color="initial">
-            Editar sala
-          </Typography>
-          <TextField required type="number" id="outlined-required" label="Número" />
-          <Autocomplete 
-            required
-            multiple
-            id="tags-outlined"
-            options={specialty}
-            getOptionLabel={(option) => option.name}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Especialidades"
-                placeholder="Especialidades"
-              />
-            )}
-          />
-          <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
-            Salvar
-          </Button>
-          <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
-            Cancelar
-          </Button>
-        </Box>
-      </Modal>
+      </Modal>  
     </React.Fragment>
   );
 }
+const ModifyModal = ({room, specialtiesList}) => {
+  const [ open, setOpen ] = useState(false);
+  const [number, setNumber] = useState(room.roomNumber);
+  const [specialty, setSpecialty] = useState(room.specialties || []);
 
-const specialty = [
-  { id: 0, name: "Acupuntura" },
-  { id: 1, name: "Psicologia" },
-  { id: 2, name: "Nutrição" },
-  { id: 3, name: "Educação Física" },
-  { id: 4, name: "Fonoaudiologia" },
-  { id: 5, name: "Farmácia" },
-  { id: 6, name: "Medicina" },
-  { id: 7, name: "Odontologia" },
-];
+  // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
+  const editRoom = (e) => {
+    e.preventDefault();
+    const toEdit = {
+      roomNumber: number,
+      specialties: specialty.map(s => s.name)
+    }
+    console.log(toEdit);
+    return
+    axios.put("http://localhost:8080/api/rooms").then(function (response) {
+    if(response.status === 201) {
+      alert("Sala editada com sucesso")
+    }
+  })
+  }
+  
+  return (
+    <>
+    <Button onClick={() => setOpen(true)}>Editar</Button>
+    <Modal  open={open} onClose={() => setOpen(false)} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Box component="form" sx={modalStyle} onSubmit={(e) => editRoom(e)} >
+        <Typography variant="h5" color="initial">
+          Editar sala
+        </Typography>
+        <TextField required id="outlined-required" label="Número" defaultValue={room.roomNumber} onChange={(e) => setNumber(e.target.value)} />
+        <Autocomplete 
+          required
+          multiple
+          id="tags-outlined"
+          value={specialty}
+          options={specialtiesList}
+          getOptionLabel={(option) => option.name}
+          filterSelectedOptions
+          onChange={(e, newValue) => setSpecialty(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Especialidades"
+              placeholder="Especialidades"
+            />
+          )}
+        />
+        <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+          Salvar
+        </Button>
+        <Button type="reset" variant="contained" onClick={() => setOpen(false)} sx={{backgroundColor: "#c3c3c3" }}>
+          Cancelar
+        </Button>
+      </Box>
+    </Modal>
+    </>
+  )
+}

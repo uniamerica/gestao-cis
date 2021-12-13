@@ -49,7 +49,7 @@ public class Address implements Serializable {
   private String neighborhood;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "address")
+  @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
   @ToString.Exclude
   private List<Patient> users = new ArrayList<>();
 

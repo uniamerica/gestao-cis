@@ -68,10 +68,9 @@ export default function Patients() {
 
   // DELETE
   const deletePatients = (id) => {
-
     console.log(id);
     axios.delete(`http://localhost:8080/api/patients/${id}`).then(function (response) {
-      if(response.status === 204) {
+      if(response.status === 200) {
         alert("Paciente deletado!")
       }
     })

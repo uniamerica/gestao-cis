@@ -49,7 +49,7 @@ public class Patient extends User implements Serializable {
   private String addressLine2;
 
   @JoinColumn(name = "addressId")
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Address address;
 
   @OneToMany(mappedBy = "patient")

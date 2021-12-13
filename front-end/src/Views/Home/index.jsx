@@ -59,8 +59,8 @@ function createData(name, room, time, date, confirm, edit, del) {
 
 const rows = [
   createData(
-    "fabiofrassonsexy",
-    "69",
+    "fabiofrasson",
+    "70",
     "14:20",
     "01/01/2023",
     "Confirmar",

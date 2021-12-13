@@ -28,7 +28,7 @@ const modalStyle = {
   borderRadius: 1,
   boxShadow: 24,
   p: 4,
-  overflow: 'scroll',
+  overflow: 'auto',
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,7 +39,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    
   },
 }));
 
@@ -50,13 +49,28 @@ function createData(id, number, specialty, edit, del ) {
 export default function Rooms() {
   const [specialtiesList, setSpecialties] = useState([]); 
   const { register, handleSubmit } = useForm();
-  const onSubmit = handleSubmit((sala) =>  {
-    axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
-      if(response.status === 201) {
-        alert("Sala criada com sucesso");
-      }
+
+
+
+  const [ open, setOpen ] = useState(false);
+  const [number, setNumber] = useState('');
+  const [specialty, setSpecialty] = useState('' || []);
+
+
+  const saveRoom = (e) => {
+    e.preventDefault();
+    const toSave = {
+      roomNumber: number,
+      specialties: specialty.map(s => s.name)
     }
-  )})
+    console.log(toSave);
+    axios.post(`http://localhost:8080/api/rooms`, toSave).then(function (response) {
+    if(response.status === 200) {
+      alert("Sala criada com sucesso");
+      setOpen(false);
+    } 
+  })
+  }
 
   // Create
   const [openSave, createStatus] = React.useState(false); 
@@ -88,17 +102,7 @@ export default function Rooms() {
       setRows(dataRows);
     });
     })
-    
   }, []);
-
-  // CREATE
-  // const submit = axios.post("http://localhost:8080/api/rooms", sala).then(function (response) {
-  //   if(response.status === 201) {
-  //     alert("Sala criada com sucesso")
-  //   }
-  // })
-
-  
 
   // DELETE
   const deleteRoom = (id) => {
@@ -153,27 +157,28 @@ export default function Rooms() {
         </Box>
       </Container>
 
-      <Modal  open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle} onSubmit={onSubmit}>
+      <Modal open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle} onSubmit={(e) => saveRoom(e)}>
           <Typography variant="h5" color="initial">
             Cadastro de nova sala
           </Typography>
-          <TextField required type="number" id="outlined-required" label="Número" {...register('roomNumber')} />
-          <Autocomplete
-            required
-            multiple
-            id="tags-outlined"
-            options={specialtiesList}
-            getOptionLabel={(option) => option.name}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Especialidades"
-                placeholder="Especialidades"
-              />
-            )}
-          />
+          <TextField required id="outlined-required" label="Número" onChange={(e) => setNumber(e.target.value)} />
+          <Autocomplete 
+          required
+          multiple
+          id="tags-outlined"
+          options={specialtiesList}
+          getOptionLabel={(option) => option.name}
+          filterSelectedOptions
+          onChange={(e, newValue) => setSpecialty(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Especialidades"
+              placeholder="Especialidades"
+            />
+          )}
+        />
           <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
             Cadastrar
           </Button>
@@ -185,6 +190,7 @@ export default function Rooms() {
     </React.Fragment>
   );
 }
+
 const ModifyModal = ({room, specialtiesList}) => {
   const [ open, setOpen ] = useState(false);
   const [number, setNumber] = useState(room.roomNumber);

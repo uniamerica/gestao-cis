@@ -15,6 +15,7 @@ import { AuthContext } from "../../Contexts/authContext";
 import { useNavigate } from "react-router";
 import Footer from "../../Components/Footer";
 import { api } from "../../services/api";
+import {Link} from 'react-router-dom'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -79,14 +80,14 @@ export default function Login() {
   // LOGIN ADM
   const adminSubmit = handleSubmit(async (data) => {
     try {
-      const { username, password } = data;
+      const { email, password } = data;
 
-      if (!username || !password) {
+      if (!email || !password) {
         throw new Error("Email ou Senha Inválida");
       }
 
-      const response = await api.post("/admins/login", {
-        username,
+      const response = await api.post("admins/login", {
+        email,
         password,
       });
 
@@ -191,6 +192,13 @@ export default function Login() {
               <Button type="submit" variant="contained">
                 Login
               </Button>
+              <Typography
+                variant="p"
+                color="initial"
+                sx={{ margin: "auto", marginTop: "1.5rem" }}
+              >
+                Paciente? <Link to="/">Clique aqui</Link> <br />
+              </Typography>
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
@@ -221,7 +229,7 @@ export default function Login() {
               />
               <TextField
                 required
-                id="outlined-required"
+                id="outlined-required2"
                 label="Senha"
                 type="password"
                 {...register("password")}

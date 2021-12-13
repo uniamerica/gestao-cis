@@ -12,8 +12,11 @@ import Rooms from "./Views/Rooms";
 import Patients from "./Views/Patient";
 import Reclamacoes from './Views/Reclamacoes/Index';
 import Schedule from "./Views/Schedule";
+import { AuthContext } from "./Contexts/authContext";
 
 function App() {
+  const { user } = React.useContext(AuthContext);
+
   return (
     <Fragment>
       <AuthProvider>

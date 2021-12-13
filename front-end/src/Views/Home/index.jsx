@@ -314,25 +314,6 @@ export default function Home() {
               Cancelar
             </Button>
           </Box>
-          <Button
-            type="submit"
-            variant="contained"
-            color="success"
-            sx={{
-              backgroundColor: "#00939F",
-              "&:hover": { backgroundColor: "#006870" },
-            }}
-          >
-            Solicitar alteração
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            onClick={closeEdit}
-            sx={{ backgroundColor: "#c3c3c3" }}
-          >
-            Cancelar
-          </Button>
         </>
       </Modal>
     </React.Fragment>

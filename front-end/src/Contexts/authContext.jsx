@@ -5,7 +5,7 @@ import { decode } from "jsonwebtoken";
 export const AuthContext = createContext({});
 
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState( { } );
 
   useEffect(() => {
     const token = Cookies.get("cis.validator");
@@ -23,6 +23,11 @@ export default function AuthProvider({ children }) {
     const token = Cookies.get("cis.validator");
     return !!token;
   };
+
+  const logout = () => {
+    Cookies.remove("cis.validator");
+    setUser(undefined);
+  }
 
   return (
     <Fragment>

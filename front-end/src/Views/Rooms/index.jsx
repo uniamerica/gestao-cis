@@ -102,8 +102,8 @@ export default function Rooms() {
 
   // DELETE
   const deleteRoom = (id) => {
-    axios.delete("http://localhost:8080/api/rooms/" + id).then(function (response) {
-      if(response.status === 204) {
+    axios.delete(`http://localhost:8080/api/rooms/${id}`).then(function (response) {
+      if(response.status === 200) {
         alert("Sala deletada com sucesso")
       }
     })

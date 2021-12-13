@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -188,6 +189,7 @@ const ModifyModal = ({room, specialtiesList}) => {
   const [ open, setOpen ] = useState(false);
   const [number, setNumber] = useState(room.roomNumber);
   const [specialty, setSpecialty] = useState(room.specialties || []);
+  const navigate = useLocation();
 
   // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
   const editRoom = (e) => {
@@ -197,11 +199,11 @@ const ModifyModal = ({room, specialtiesList}) => {
       specialties: specialty.map(s => s.name)
     }
     console.log(toEdit);
-    return
-    axios.put("http://localhost:8080/api/rooms").then(function (response) {
-    if(response.status === 201) {
-      alert("Sala editada com sucesso")
-    }
+    axios.put(`http://localhost:8080/api/rooms/${room.id}`, toEdit).then(function (response) {
+    if(response.status === 200) {
+      alert("Sala editada com sucesso");
+      setOpen(false);
+    } 
   })
   }
   
@@ -218,7 +220,6 @@ const ModifyModal = ({room, specialtiesList}) => {
           required
           multiple
           id="tags-outlined"
-          value={specialty}
           options={specialtiesList}
           getOptionLabel={(option) => option.name}
           filterSelectedOptions

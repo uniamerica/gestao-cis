@@ -145,7 +145,7 @@ export default function Rooms() {
                       <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                       </Button>
-                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} onClick={() => deleteRoom(row.id)} startIcon={<DeleteIcon />}>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} onClick={() => window.confirm("Deseja deletar a sala?") ? deleteRoom(row.id) : ""} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>
@@ -197,7 +197,7 @@ const ModifyModal = ({room, specialtiesList}) => {
   const [specialty, setSpecialty] = useState(room.specialties || []);
   const navigate = useLocation();
 
-  // EDIT - DEIXAR ISSO PRA OUTRO MOMENTO
+  // EDIT
   const editRoom = (e) => {
     e.preventDefault();
     const toEdit = {

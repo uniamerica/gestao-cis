@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -26,7 +27,7 @@ const modalStyle = {
   borderRadius: 1,
   boxShadow: 24,
   p: 4,
-  overflow: 'scroll',
+  overflow: 'auto',
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -41,13 +42,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function createData(id, email, name, phone, crm, edit, del ) {
-  return {id, email, name, phone, crm, edit, del };
+function createData(id, email, name, phone, specialty, professionalDocument, edit, del ) {
+  return {id, email, name, phone, specialty, professionalDocument, edit, del };
 }
-
-const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiosexy@mail.com", "fabiofrassonsexy", "(45)9345678", "111111", "Editar", "Deletar"),  
-];
 
 export default function Professional() {
   const [openSave, createStatus] = React.useState(false);
@@ -61,12 +58,77 @@ export default function Professional() {
 
   // GET
   useEffect(() => { 
-    axios.get("http://localhost:8080/api/health-professionals").then(function (response) {
+    axios.get("http://localhost:8080/api/specialties").then(function (response) {
       const data = response.data;
-      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.email, dataRow.phone, dataRow.crm, "Especialidade", "Editar", "Deletar"))
+      setSpecialties(data);
+    }).then(() => {
+      axios.get("http://localhost:8080/api/health-professionals").then(function (response) {
+      const data = response.data;
+      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.email, dataRow.name, dataRow.phone, dataRow.specialty, dataRow.professionalDocument, "Editar", "Deletar"))
       setRows(dataRows);
+      <ModifyModal professional={dataRows} specialtiesList={specialtiesList} />;
     });
+    })
   }, []);
+
+  const [specialtiesList, setSpecialties] = useState([]);
+  const [ open, setOpen ] = useState(false);
+  const [professionalName, setprofessionalName] = useState('');
+  const [professionalPassword, setprofessionalPassword] = useState('');
+  const [professionalEmail, setprofessionalEmail] = useState('');
+  const [professionalPhone, setprofessionalPhone] = useState('');
+  const [professionalDocument, setprofessionalDocument] = useState('');
+  const [professionalSpecialty, setProfessionalSpecialty] = useState('' || []);
+
+  
+
+  // CREATE
+  const saveProfessional = (e) => {
+    e.preventDefault();
+    const toSave = {
+      name: professionalName,
+      password: professionalPassword,
+      email: professionalEmail,
+      phone: professionalPhone,
+      professionalDocument: professionalDocument,
+      specialtyId: professionalSpecialty[0].id
+    }
+    console.log(toSave);
+    axios.post(`http://localhost:8080/api/health-professionals`, toSave).then(function (response) {
+    if(response.status === 201) {
+      alert("Profissional Cadastrado");
+      setOpen(false);
+    } 
+  })
+  }
+
+  // DELETE
+  const deleteProfessional = (id) => {
+    axios.delete(`http://localhost:8080/api/health-professionals/${id}`).then(function (response) {
+      if(response.status === 204) {
+        alert("Profissional deletado!")
+      }
+    })
+  }
+
+  // EDIT
+  const editProfessional = (e, id) => {
+    e.preventDefault();
+    const toEdit = {
+      name: professionalName,
+      email: professionalEmail,
+      phone: professionalPhone,
+      professionalDocument: professionalDocument,
+      specialtyId: professionalSpecialty[0].id
+    }
+    console.log(toEdit);
+    axios.put(`http://localhost:8080/api/health-professionals/${id}`, toEdit).then(function (response) {
+    if(response.status === 200) {
+      alert("Profissional editado com sucesso");
+      setOpen(false);
+    } 
+  })
+  }
 
   return (
     <React.Fragment>
@@ -99,14 +161,16 @@ export default function Professional() {
                     <StyledTableCell align="center">{row.email}</StyledTableCell>
                     <StyledTableCell align="center">{row.name}</StyledTableCell>
                     <StyledTableCell align="center">{row.phone}</StyledTableCell>
-                    <StyledTableCell align="center">{row.crm}</StyledTableCell>
-                    <StyledTableCell align="center" sx={{display:'flex', gap: '.5rem', justifyContent: 'center'}}>
-                      <Button variant="contained" size="small" color="warning" onClick={openEdit} sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
-                        {row.edit}
+                    <StyledTableCell align="center">{row.professionalDocument}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Box sx={{display: 'flex', gap: '1rem'}}>
+                        <Button variant="contained" size="small" color="warning" onClick={openEdit} sx={{boxShadow: "none"}} startIcon={<EditIcon />}>
+                          {row.edit}
+                          </Button>
+                        <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} onClick={() => window.confirm("Deseja deletar o profissional?") ? deleteProfessional(row.id) : ""} startIcon={<DeleteIcon />}>
+                          {row.del}
                         </Button>
-                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
-                        {row.del}
-                      </Button>
+                      </Box>
                     </StyledTableCell>
                   </TableRow>
                 ))}
@@ -116,23 +180,24 @@ export default function Professional() {
         </Box>
       </Container>
 
-      <Modal  open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle}>
+      <Modal open={openSave} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle} onSubmit={(e) => saveProfessional(e)}>
           <Typography variant="h5" color="initial">
             Cadastro de novo profissional
           </Typography>
-          <TextField required type="text" id="outlined-required" label="Nome Completo"/>
-          <TextField required type="text" id="outlined-required" label="Senha"/>
-          <TextField required type="mail" id="outlined-required" label="Email"/>
-          <TextField required type="text" id="outlined-required" label="Telefone" />
-          <TextField required type="text" id="outlined-required" label="CRM" />
-          <Autocomplete
+          <TextField required type="text" id="outlined-required" label="Nome Completo" onChange={(e) => setprofessionalName(e.target.value)}/>
+          <TextField required type="mail" id="outlined-required" label="Email" onChange={(e) => setprofessionalEmail(e.target.value)}/>
+          <TextField required type="password" id="outlined-required" label="Senha" onChange={(e) => setprofessionalPassword(e.target.value)}/>
+          <TextField required type="text" id="outlined-required" label="Telefone" onChange={(e) => setprofessionalPhone(e.target.value)} />
+          <TextField required type="text" id="outlined-required" label="CRM" onChange={(e) => setprofessionalDocument(e.target.value)} />
+          <Autocomplete 
             required
             multiple
             id="tags-outlined"
-            options={especialidades}
+            options={specialtiesList}
             getOptionLabel={(option) => option.name}
             filterSelectedOptions
+            onChange={(e, newValue) => setProfessionalSpecialty(newValue)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -149,23 +214,24 @@ export default function Professional() {
           </Button>
         </Box>
       </Modal>
-      <Modal  open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-        <Box component="form" sx={modalStyle}>
+
+      {/* <Modal open={openModify} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box component="form" sx={modalStyle} onSubmit={(e) => editProfessional(e)}>
           <Typography variant="h5" color="initial">
             Editar profissional
           </Typography>
-          <TextField required type="text" id="outlined-required" label="Nome Completo"/>
-          <TextField required type="text" id="outlined-required" label="Senha"/>
-          <TextField required type="mail" id="outlined-required" label="Email"/>
-          <TextField required type="text" id="outlined-required" label="Telefone" />
-          <TextField required type="text" id="outlined-required" label="CRM" />
-          <Autocomplete
+          <TextField required type="text" id="outlined-required" label="Nome Completo" onChange={(e) => setprofessionalName(e.target.value)}/>
+          <TextField required type="mail" id="outlined-required" label="Email" onChange={(e) => setprofessionalEmail(e.target.value)}/>
+          <TextField required type="text" id="outlined-required" label="Telefone" onChange={(e) => setprofessionalPhone(e.target.value)} />
+          <TextField required type="text" id="outlined-required" label="CRM" onChange={(e) => setprofessionalDocument(e.target.value)} />
+          <Autocomplete 
             required
             multiple
             id="tags-outlined"
-            options={especialidades}
+            options={specialtiesList}
             getOptionLabel={(option) => option.name}
             filterSelectedOptions
+            onChange={(e, newValue) => setProfessionalSpecialty(newValue)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -181,18 +247,78 @@ export default function Professional() {
             Cancelar
           </Button>
         </Box>
-      </Modal>
+      </Modal> */}
     </React.Fragment>
   );
 }
 
-const especialidades = [
-  { id: 0, name: "Acupuntura" },
-  { id: 1, name: "Psicologia" },
-  { id: 2, name: "Nutrição" },
-  { id: 3, name: "Educação Física" },
-  { id: 4, name: "Fonoaudiologia" },
-  { id: 5, name: "Farmácia" },
-  { id: 6, name: "Medicina" },
-  { id: 7, name: "Odontologia" },
-];
+const ModifyModal = ({professional, specialtiesList}) => {
+  const [openModify, editStatus] = React.useState(false);
+  const openEdit = () => editStatus(true);
+  const closeEdit = () => editStatus(false);
+
+  const [ open, setOpen ] = useState(false);
+  const [professionalName, setprofessionalName] = useState('');
+  const [professionalEmail, setprofessionalEmail] = useState('');
+  const [professionalPhone, setprofessionalPhone] = useState('');
+  const [professionalDocument, setprofessionalDocument] = useState('');
+  const [professionalSpecialty, setProfessionalSpecialty] = useState('' || []);
+
+  // EDIT
+  const editProfessional = (e) => {
+    e.preventDefault();
+    const toEdit = {
+      name: professionalName,
+      email: professionalEmail,
+      phone: professionalPhone,
+      professionalDocument: professionalDocument,
+      specialtyId: professionalSpecialty[0].id
+    }
+    console.log(toEdit);
+    axios.put(`http://localhost:8080/api/health-professionals/${professional.id}`, toEdit).then(function (response) {
+    if(response.status === 200) {
+      alert("Sala editada com sucesso");
+      setOpen(false);
+    } 
+  })
+  }
+  
+  return (
+    <>
+    <Button onClick={() => setOpen(true)}>Editar</Button>
+    <Modal open={open} onClose={() => setOpen(false)} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Box component="form" sx={modalStyle} onSubmit={(e) => editProfessional(e)}>
+        <Typography variant="h5" color="initial">
+          Editar profissional
+        </Typography>
+        <TextField required type="text" id="outlined-required" label="Nome Completo" onChange={(e) => setprofessionalName(e.target.value)}/>
+        <TextField required type="mail" id="outlined-required" label="Email" onChange={(e) => setprofessionalEmail(e.target.value)}/>
+        <TextField required type="text" id="outlined-required" label="Telefone" onChange={(e) => setprofessionalPhone(e.target.value)} />
+        <TextField required type="text" id="outlined-required" label="CRM" onChange={(e) => setprofessionalDocument(e.target.value)} />
+        <Autocomplete 
+          required
+          multiple
+          id="tags-outlined"
+          options={specialtiesList}
+          getOptionLabel={(option) => option.name}
+          filterSelectedOptions
+          onChange={(e, newValue) => setProfessionalSpecialty(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Especialidades"
+              placeholder="Especialidades"
+            />
+          )}
+        />
+        <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "#00939F", '&:hover': {backgroundColor: "#006870"} }}>
+          Salvar
+        </Button>
+        <Button type="reset" variant="contained" onClick={closeEdit} sx={{backgroundColor: "#c3c3c3" }}>
+          Cancelar
+        </Button>
+      </Box>
+    </Modal>
+    </>
+  )
+}

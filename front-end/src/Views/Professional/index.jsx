@@ -19,7 +19,6 @@ import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -125,7 +124,6 @@ export default function Professional() {
       professionalDocument: professionalDocument,
       specialtyId: professionalSpecialty[0].id,
     };
-    console.log(toSave);
     axios
       .post(`http://localhost:8080/api/health-professionals`, toSave)
       .then(function (response) {
@@ -157,7 +155,6 @@ export default function Professional() {
       professionalDocument: professionalDocument,
       specialtyId: professionalSpecialty[0].id,
     };
-    console.log(toEdit);
     axios
       .put(`http://localhost:8080/api/health-professionals/${id}`, toEdit)
       .then(function (response) {

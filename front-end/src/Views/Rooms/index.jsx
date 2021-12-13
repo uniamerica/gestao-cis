@@ -63,7 +63,6 @@ export default function Rooms() {
       roomNumber: number,
       specialties: specialty.map(s => s.name)
     }
-    console.log(toSave);
     axios.post(`http://localhost:8080/api/rooms`, toSave).then(function (response) {
     if(response.status === 200) {
       alert("Sala criada com sucesso");
@@ -204,7 +203,6 @@ const ModifyModal = ({room, specialtiesList}) => {
       roomNumber: number,
       specialties: specialty.map(s => s.name)
     }
-    console.log(toEdit);
     axios.put(`http://localhost:8080/api/rooms/${room.id}`, toEdit).then(function (response) {
     if(response.status === 200) {
       alert("Sala editada com sucesso");

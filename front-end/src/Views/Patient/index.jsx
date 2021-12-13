@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { TextField, Button, Container, Box, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Modal} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -25,7 +26,7 @@ const modalStyle = {
   borderRadius: 1,
   boxShadow: 24,
   p: 4,
-  overflow: 'scroll',
+  overflow: 'auto',
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -44,9 +45,7 @@ function createData(id, name, email, confirm, edit, del) {
   return {id, name, email, confirm, edit, del };
 }
 
-const rows = [
-  createData("bc0fe7b4-cb3d-42e8-8ed1-d9b8e1c45ff4", "fabiofrassonsexy", "fabiosexy@mail.com", "Confirmar", 'Editar', "Deletar"),  
-];
+
 
 export default function Patients() {
   const [openSave, createStatus] = React.useState(false);
@@ -55,6 +54,28 @@ export default function Patients() {
   const [openModify, editStatus] = React.useState(false);
   const openEdit = () => editStatus(true);
   const closeEdit = () => editStatus(false);
+
+  const [rows, setRows] = useState([]);
+
+  // GET
+  useEffect(() => {
+      axios.get("http://localhost:8080/api/patients").then(function (response) {
+      const data = response.data.content;
+      const dataRows = data.map((dataRow) => createData(dataRow.id, dataRow.name, dataRow.email, "Confirmar", "Editar", "Deletar"))
+      setRows(dataRows);
+    })
+  }, []);
+
+  // DELETE
+  const deletePatients = (id) => {
+
+    console.log(id);
+    axios.delete(`http://localhost:8080/api/patients/${id}`).then(function (response) {
+      if(response.status === 204) {
+        alert("Paciente deletado!")
+      }
+    })
+  }
 
   return(
     <React.Fragment>
@@ -88,7 +109,7 @@ export default function Patients() {
                       <Button variant="contained" size="small" color="warning" sx={{boxShadow: "none"}} onClick={openEdit} startIcon={<EditIcon />}>
                         {row.edit}
                         </Button>
-                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} startIcon={<DeleteIcon />}>
+                      <Button variant="contained" size="small" color="error" sx={{boxShadow: "none"}} onClick={() => window.confirm("Deseja deletar o paciente?") ? deletePatients(row.id) : ""} startIcon={<DeleteIcon />}>
                         {row.del}
                       </Button>
                     </StyledTableCell>

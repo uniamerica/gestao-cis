@@ -11,7 +11,6 @@ import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
-import { useForm } from "react-hook-form";
 
 const modalStyle = {
   transform: "translate(-50%, -50%)",
@@ -80,8 +79,6 @@ export default function Professional() {
   const [professionalDocument, setprofessionalDocument] = useState('');
   const [professionalSpecialty, setProfessionalSpecialty] = useState('' || []);
 
-  
-
   // CREATE
   const saveProfessional = (e) => {
     e.preventDefault();
@@ -93,7 +90,6 @@ export default function Professional() {
       professionalDocument: professionalDocument,
       specialtyId: professionalSpecialty[0].id
     }
-    console.log(toSave);
     axios.post(`http://localhost:8080/api/health-professionals`, toSave).then(function (response) {
     if(response.status === 201) {
       alert("Profissional Cadastrado");
@@ -121,7 +117,6 @@ export default function Professional() {
       professionalDocument: professionalDocument,
       specialtyId: professionalSpecialty[0].id
     }
-    console.log(toEdit);
     axios.put(`http://localhost:8080/api/health-professionals/${id}`, toEdit).then(function (response) {
     if(response.status === 200) {
       alert("Profissional editado com sucesso");
@@ -274,7 +269,6 @@ const ModifyModal = ({professional, specialtiesList}) => {
       professionalDocument: professionalDocument,
       specialtyId: professionalSpecialty[0].id
     }
-    console.log(toEdit);
     axios.put(`http://localhost:8080/api/health-professionals/${professional.id}`, toEdit).then(function (response) {
     if(response.status === 200) {
       alert("Sala editada com sucesso");
